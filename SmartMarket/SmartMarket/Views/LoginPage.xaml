@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             xmlns:views="clr-namespace:SmartMarket.Controls"
+             xmlns:controls1="clr-namespace:SmartMarket.Controls.CustomLabelEntry"
+             xmlns:localization="clr-namespace:SmartMarket.Localization"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="SmartMarket.Views.LoginPage">
+    <ContentPage.Resources>
+        <Style TargetType="Entry">
+            <Setter Property="Margin" Value="5,10,5,10"></Setter>
+            <Setter Property="FontSize" Value="18"></Setter>
+        </Style>
+    </ContentPage.Resources>
+    <views:KeyboardView Padding="0,0,0,0"
+                         VerticalOptions="FillAndExpand">
+        <StackLayout>
+            <!--Header-->
+            <Grid BackgroundColor="Black" 
+              HeightRequest="80">
+                <Label Text="ACCOUNTANT" 
+                   TextColor="White"
+                   FontSize="Large" 
+                   HorizontalOptions="CenterAndExpand"
+                   VerticalOptions="Center"></Label>
+            </Grid>
+            <StackLayout Margin="20" HorizontalOptions="FillAndExpand"
+                     VerticalOptions="CenterAndExpand"
+                     Orientation="Vertical">
+                <!--Icon-->
+                <!--<Image 
+                   HorizontalOptions="Center"></Image>-->
+                <!--Username and Password-->
+                <views:ImageEntry  Placeholder="Username"
+                   Text="{Binding Username,Mode=OneWayToSource}"
+                   x:Name="entUsername"></views:ImageEntry>
+                <views:ImageEntry  Placeholder="Password"
+                   Text="{Binding Password,Mode=OneWayToSource}"
+                   x:Name="entPassword"
+                   IsPassword="True"></views:ImageEntry>
+                <Button Text="LOG IN" Command="{Binding LoginCommand}"
+                    BackgroundColor="#48525e">
+                    <Button.Triggers>
+                        <MultiTrigger TargetType="Button">
+                            <MultiTrigger.Conditions>
+                                <BindingCondition Binding="{Binding Source={x:Reference entUsername},Path=Text.Length}"
+                                              Value="0"></BindingCondition>
+                                <BindingCondition Binding="{Binding Source={x:Reference entPassword},Path=Text.Length}"
+                                              Value="0"></BindingCondition>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="IsEnabled" Value="False"></Setter>
+                        </MultiTrigger>
+                    </Button.Triggers>
+                </Button>
+                <Label Text="OR" 
+                   FontSize="12" 
+                   TextColor="DimGray"
+                   HorizontalOptions="Center"></Label>
+                <Button Text="SIGN UP" Command="{Binding SignUpCommand}"
+                    BackgroundColor="#48525e"></Button>
+                <controls1:EntryLabel IsTopLineVisible="True"
+                                      IsBottomLineVisible="True"
+                                      LabelText="ádasdasa"
+                                      Placeholder="ádasdsadb"
+                                     Text="Twitter" />
+                <controls1:BorderButton Text="{localization:TranslateExtension a}"
+                                        Theme="GreenWhite"></controls1:BorderButton>
+            </StackLayout>
+        </StackLayout>
+    </views:KeyboardView>
+</ContentPage>

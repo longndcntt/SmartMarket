@@ -1,11 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <prism:PrismApplication xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                        xmlns:control="clr-namespace:SmartMarket.Controls.CustomLabelEntry"
              xmlns:prism="clr-namespace:Prism.DryIoc;assembly=Prism.DryIoc.Forms"
              x:Class="SmartMarket.App">
 	<Application.Resources>
 
 		<!-- Application resource dictionary -->
-
-	</Application.Resources>
+        <Color x:Key="SGray">#B5B5B5</Color>
+        <Color x:Key="SDarkTextColor">#5b5b5b</Color>
+        <Color x:Key="SGreen">#18b440</Color>
+        
+        <Style x:Key="BlueLabelEntry" TargetType="control:EntryLabel">
+            <Setter Property="IsTopLineVisible" Value="False" />
+            <Setter Property="IsBottomLineVisible" Value="True" />
+        </Style>
+    </Application.Resources>
 </prism:PrismApplication>

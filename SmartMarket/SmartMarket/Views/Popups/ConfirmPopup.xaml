@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<base:PopupBasePage
+    xmlns:base="clr-namespace:SmartMarket.Views.Base"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    xmlns:controls="clr-namespace:SmartMarket.Controls.CustomLabelEntry"
+    xmlns:localization="clr-namespace:SmartMarket.Localization"
+    x:Class="SmartMarket.Views.Popups.ConfirmPopup">
+    <pages:PopupPage.Animation>
+        <base:PopupAnimation/>
+    </pages:PopupPage.Animation>
+
+    <Grid VerticalOptions="FillAndExpand"
+          HorizontalOptions="FillAndExpand"
+          BackgroundColor="#01ffffff">
+        <Frame BackgroundColor="White"
+               VerticalOptions="CenterAndExpand"
+               HorizontalOptions="FillAndExpand"
+               Padding="20,10"
+               Margin="20"
+               CornerRadius="12"
+               HasShadow="False">
+            <StackLayout Spacing="10">
+                <Image WidthRequest="30"
+                       HeightRequest="30"
+                       Source="app_icon_shadow.png"
+                       HorizontalOptions="Center"/>
+
+                <Label x:Name="LabelMessage"
+                       Text=""
+                       TextColor="{StaticResource SDarkTextColor}"
+                       HorizontalOptions="CenterAndExpand"
+                       HorizontalTextAlignment="Center"
+                       Margin="0,0,0,5"/>
+
+                <StackLayout Orientation="Horizontal"
+                             Spacing="15"
+                             HorizontalOptions="Center">
+                    <controls:BorderButton
+                        x:Name="ButtonClose"
+                        Text="{localization:TranslateExtension Close}"
+                        TextColor="{StaticResource SGreen}"
+                        FontSize="12"
+                        FontAttributes="Bold"
+                        HeightRequest="30"
+                        WidthRequest="100"
+                        Clicked="ClosedPopupEvent"
+                        Theme="GreenWhite"/>
+
+                    <controls:BorderButton
+                        x:Name="ButtonAccept"
+                        Text="{localization:TranslateExtension OK}"
+                        TextColor="White"
+                        FontSize="12"
+                        FontAttributes="Bold"
+                        HeightRequest="30"
+                        WidthRequest="100"
+                        Clicked="AcceptPopupEvent"
+                        Theme="Green"/>
+                </StackLayout>
+            </StackLayout>
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer Tapped="DoNothingEvent"/>
+            </Frame.GestureRecognizers>
+        </Frame>
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Tapped="TouchOutside"/>
+        </Grid.GestureRecognizers>
+    </Grid>
+</base:PopupBasePage>

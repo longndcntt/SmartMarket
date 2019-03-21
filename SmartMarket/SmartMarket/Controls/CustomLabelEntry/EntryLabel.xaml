@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls1="clr-namespace:SmartMarket.Controls.CustomLabelEntry"
+             x:Class="SmartMarket.Controls.CustomLabelEntry.EntryLabel">
+    <ContentView.Content>
+        <Grid RowSpacing="0"
+              ColumnSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="1" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!--Top line-->
+            <BoxView x:Name="TopLine"
+                     Color="{StaticResource SGray}"
+                     Grid.Row="0"
+                     Grid.Column="0"
+                     Grid.ColumnSpan="2"
+                     IsVisible="False"/>
+
+            <!--Icon-->
+            <Image x:Name="ImageIcon"
+                   Grid.Row="1"
+                   Grid.RowSpan="2"
+                   Grid.Column="0"
+                   WidthRequest="30"
+                   HeightRequest="30"
+                   Margin="15,0"
+                   VerticalOptions="Center"/>
+
+            <!--Label-->
+            <Label x:Name="LabelLabel"
+                   Grid.Row="1"
+                   Grid.Column="1"
+                   FontAttributes="Italic"
+                   FontSize="10"
+                   TextColor="{StaticResource SGray}"
+                   Margin="0,10,10,0"/>
+
+            <!--Entry-->
+            <controls1:ExtendedEntry x:Name="EntryEntry"
+                                    Grid.Row="2"
+                                    Grid.Column="1"
+                                    TextColor="{StaticResource SDarkTextColor}"
+                                    FontSize="14"
+                                    Borderless="True"
+                                    Padding="0,15,20,20"
+                                    TextChanged="EntryEntry_OnTextChanged"/>
+
+            <!--Bottom line-->
+            <BoxView x:Name="BottomLine"
+                     Color="{StaticResource SGray}"
+                     Grid.Row="3"
+                     Grid.Column="0"
+                     Grid.ColumnSpan="2"
+                     IsVisible="False"/>
+        </Grid>
+    </ContentView.Content>
+</ContentView>

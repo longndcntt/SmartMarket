@@ -1,5 +1,9 @@
-﻿using Prism;
+﻿using FotoScan.Tablet.Interfaces.LocalDatabase;
+using FotoScan.Tablet.Services.SQLiteService;
+using Prism;
 using Prism.Ioc;
+using SmartMarket.Interfaces.LocalDatabase;
+using SmartMarket.Models;
 using SmartMarket.ViewModels;
 using SmartMarket.Views;
 using Xamarin.Forms;
@@ -23,13 +27,38 @@ namespace SmartMarket
         {
             InitializeComponent();
 
-            await NavigationService.NavigateAsync("NavigationPage/MainPage");
+            await NavigationService.NavigateAsync("TabbedMainPage");
         }
+
+        #region Properties 
+
+        public new static App Current => Application.Current as App;
+        public static double ScreenWidth;
+        public static double ScreenHeight;
+
+        public static bool IsBusy = true;
+
+        private ISqLiteService _sqLiteService;
+        public static AppSettings Settings { get; set; }
+
+        #endregion
+
+        #region InitDatabase
+
+        private void InitDatabase()
+        {
+            var connectionService = DependencyService.Get<IDatabaseConnection>();
+            _sqLiteService = new SqLiteService(connectionService);
+        }
+
+        #endregion
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
+            containerRegistry.RegisterForNavigation<LoginPage, LoginPageViewModel>();
+            containerRegistry.RegisterForNavigation<TabbedMainPage, TabbedMainPageViewModel>();
         }
     }
 }

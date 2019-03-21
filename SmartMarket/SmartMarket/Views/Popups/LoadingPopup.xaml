@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<pages:PopupPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    xmlns:base="clr-namespace:SmartMarket.Views.Base"
+    xmlns:localization="clr-namespace:SmartMarket.Localization"
+    x:Class="SmartMarket.Views.Popups.LoadingPopup">
+    <pages:PopupPage.Animation>
+        <base:PopupAlphaAnimation/>
+    </pages:PopupPage.Animation>
+
+    <!--Make Grid full screen to prevent user to dismiss popup when touch outside-->
+    <!--Fill background color for Grid to make the prevention works-->
+    <!--The touch-outside-prevention cannot work with completely transparent background color-->
+    <Grid VerticalOptions="FillAndExpand"
+          HorizontalOptions="FillAndExpand"
+          BackgroundColor="#01ffffff">
+        <Frame BackgroundColor="#88000000"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"
+               Padding="10"
+               CornerRadius="12"
+               HasShadow="False">
+            <StackLayout>
+                <ActivityIndicator x:Name="LoadingIndicator"
+                                   HorizontalOptions="CenterAndExpand"
+                                   WidthRequest="45"
+                                   HeightRequest="45" />
+                <Label x:Name="LabelLoadingMessage"
+                       Text="{localization:TranslateExtension Loading3dot}"
+                       TextColor="White"
+                       HorizontalOptions="CenterAndExpand" />
+            </StackLayout>
+        </Frame>
+    </Grid>
+</pages:PopupPage>

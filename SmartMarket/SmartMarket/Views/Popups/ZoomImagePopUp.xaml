@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+                 xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+                 xmlns:base="clr-namespace:SmartMarket.Views.Base"
+                 xmlns:controls="clr-namespace:SmartMarket.Controls"
+                 x:Class="SmartMarket.Views.Popups.ZoomImagePopUp">
+    <pages:PopupPage.Animation>
+        <base:PopupNoAnimation/>
+    </pages:PopupPage.Animation>
+    <Grid>
+        <controls:PinchAndPanContainer>
+            <controls:PinchAndPanContainer.Content>
+                <ffimageloading:CachedImage x:Name="ViewImagePopUp"
+                                            CacheType="None"
+                                            Aspect="AspectFit"/>
+            </controls:PinchAndPanContainer.Content>
+        </controls:PinchAndPanContainer>
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Tapped="TapBackToDetailPage" 
+                                  NumberOfTapsRequired="2"/>
+            <SwipeGestureRecognizer Direction="Down" 
+                                    Swiped="SwipeBackToDetailPage"/>
+        </Grid.GestureRecognizers>
+    </Grid>
+</pages:PopupPage>
