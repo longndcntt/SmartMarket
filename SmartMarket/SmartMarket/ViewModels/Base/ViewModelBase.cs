@@ -330,7 +330,7 @@ namespace SmartMarket.ViewModels.Base
 
         public virtual async Task OpenSettingsPageExe()
         {
-            await Navigation.NavigateAsync(PageManager.TabbedPage);
+            await Navigation.NavigateAsync(PageManager.TabbedMainPage);
         }
 
         #endregion

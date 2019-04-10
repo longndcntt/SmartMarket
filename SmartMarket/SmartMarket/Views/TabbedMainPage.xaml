@@ -7,13 +7,14 @@
             BarBackgroundColor="#2196F3"
             BarTextColor="IndianRed"
            xmlns:controls="clr-namespace:SmartMarket.Controls"
+                           xmlns:loginpage="clr-namespace:SmartMarket.Views.LoginAndSignUp"
             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
             xmlns:views="clr-namespace:SmartMarket.Views"
             prism:ViewModelLocator.AutowireViewModel="True"
             x:Class="SmartMarket.Views.TabbedMainPage" >
     <views:MainPage></views:MainPage>
-    <views:LoginPage Title="Login"></views:LoginPage>
-    <views:LoginPage Title="Login"></views:LoginPage>
-    <views:LoginPage Title="Login"></views:LoginPage>
-    <views:LoginPage Title="Login"></views:LoginPage>
+    <views:MainPage></views:MainPage>
+    <loginpage:LoginPage></loginpage:LoginPage>
+    <loginpage:SignUp></loginpage:SignUp>
+    
 </controls:BottomNavTabPage>

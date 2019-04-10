@@ -21,7 +21,7 @@ namespace SmartMarket.Views.Popups
 
         public static MessagePopup Instance => _instance ?? (_instance = new MessagePopup());
 
-        public async Task<MessagePopup> Show(string message = null, string closeButtonText = null, 
+        public async Task<MessagePopup> Show(string message = null, string closeButtonText = null,
             ICommand closeCommand = null, object closeCommandParameter = null,
             bool isAutoClose = false, uint duration = 2000)
         {

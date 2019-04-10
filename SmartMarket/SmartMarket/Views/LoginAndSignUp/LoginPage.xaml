@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             xmlns:views="clr-namespace:SmartMarket.Controls"
+             xmlns:controls1="clr-namespace:SmartMarket.Controls.CustomLabelEntry"
+             xmlns:localization="clr-namespace:SmartMarket.Localization"
+             xmlns:xfxcontrol="clr-namespace:Xfx;assembly=Xfx.Controls"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="SmartMarket.Views.LoginAndSignUp.LoginPage"
+             BackgroundImage="backgroud_login">
+    <ContentPage.Resources>
+        <Style TargetType="Entry">
+            <Setter Property="Margin" Value="5,10,5,10"></Setter>
+            <Setter Property="FontSize" Value="18"></Setter>
+        </Style>
+    </ContentPage.Resources>
+    <views:KeyboardView Padding="0,0,0,0"
+                         VerticalOptions="FillAndExpand">
+        <StackLayout Margin="20" HorizontalOptions="FillAndExpand"
+                     VerticalOptions="EndAndExpand"
+                     Orientation="Vertical">
+            <!--Icon-->
+            <!--<Image 
+                   HorizontalOptions="Center"></Image>-->
+            <!--Username and Password-->
+            <Frame Padding="5,0,5,0" BackgroundColor="Transparent">
+                <Grid RowSpacing="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Image Grid.Column="0" Source="ic_envelope.png"
+                           VerticalOptions="CenterAndExpand"
+                           />
+                    <xfxcontrol:XfxEntry Grid.Column="1" Grid.Row="0" Placeholder="{localization:Translate Username}" 
+                                         VerticalOptions="CenterAndExpand"
+                                         Text="{Binding Username}"/>
+                    <Image Grid.Column="0" Grid.Row="1" Source="ic_lock.png"
+                           VerticalOptions="CenterAndExpand"/>
+                    <xfxcontrol:XfxEntry Grid.Column="1" Grid.Row="1" Placeholder="{localization:Translate Password}" 
+                                        VerticalOptions="CenterAndExpand" 
+                                         Text="{Binding Password}"/>
+                </Grid>
+            </Frame>
+            <controls1:BorderButton Text="{localization:Translate LogIn}" Command="{Binding LoginCommand}"
+                    BackgroundColor="White"
+                                    Theme="White"/>
+            <Label Text="OR" 
+                   FontSize="12" 
+                   TextColor="DimGray"
+                   HorizontalOptions="Center"></Label>
+            <controls1:BorderButton Text="{localization:Translate SignUp}" Command="{Binding SignUpCommand}"
+                    BackgroundColor="White"
+                                     Theme="White"/>
+           
+        </StackLayout>
+    </views:KeyboardView>
+</ContentPage>

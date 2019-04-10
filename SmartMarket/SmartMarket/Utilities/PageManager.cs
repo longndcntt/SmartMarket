@@ -11,7 +11,10 @@ namespace SmartMarket.Utilities
         // Home Flow
         public static readonly string NavigationPage = "NavigationPage";
         public static readonly string HomePage = "HomePage";
-        public static readonly string TabbedPage = "TabbedPage";
+        public static readonly string LoginPage = "LoginPage";
+        public static readonly string TabbedMainPage = "TabbedMainPage";
+        public static readonly string MainPage = "MainPage";
+
         //public static readonly string MerchantHomePage = "MerchantHomePage";
         //public static readonly string ClientHomePage = "ClientHomePage";
         //public static readonly string LeftMenuPage = "LeftMenuPage";

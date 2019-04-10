@@ -21,10 +21,10 @@
                CornerRadius="12"
                HasShadow="False">
             <StackLayout Spacing="10">
-                <Image WidthRequest="30"
+                <!--<Image WidthRequest="30"
                        HeightRequest="30"
                        Source="app_icon_shadow.png"
-                       HorizontalOptions="Center"/>
+                       HorizontalOptions="Center"/>-->
 
                 <Label x:Name="LabelMessage"
                        Text=""
@@ -45,13 +45,12 @@
                     Clicked="ClosedPopupEvent"
                     Theme="Green"/>
             </StackLayout>
-        </Frame>
-        <!--<Frame.GestureRecognizers>
-                <TapGestureRecognizer Tapped=""/>
+        <Frame.GestureRecognizers>
+                <TapGestureRecognizer Tapped="DoNothingEvent"/>
             </Frame.GestureRecognizers>
-       
+        </Frame>
         <Grid.GestureRecognizers>
-            <TapGestureRecognizer Tapped="ClosePopupEvent"/>
-        </Grid.GestureRecognizers>-->
+            <TapGestureRecognizer Tapped="ClosedPopupEvent"/>
+        </Grid.GestureRecognizers>
     </Grid>
 </base:PopupBasePage>

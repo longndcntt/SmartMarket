@@ -3,9 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                         xmlns:control="clr-namespace:SmartMarket.Controls.CustomLabelEntry"
              xmlns:prism="clr-namespace:Prism.DryIoc;assembly=Prism.DryIoc.Forms"
-             x:Class="SmartMarket.App">
+                        xmlns:converters="clr-namespace:SmartMarket.Coverter"
+                        x:Class="SmartMarket.App">
 	<Application.Resources>
 
+        <converters:CovertToCurrency x:Key="CovertToCurrency"></converters:CovertToCurrency>
 		<!-- Application resource dictionary -->
         <Color x:Key="SGray">#B5B5B5</Color>
         <Color x:Key="SDarkTextColor">#5b5b5b</Color>

@@ -14,21 +14,15 @@ namespace SmartMarket.ViewModels
     public class LoginPageViewModel : ViewModelBase
     {
         #region Properties
-        INavigationService _navigationservice;
-        private string _username;
-        private string _password;
-
-        public string Username { get => _username; set { SetProperty(ref _username, value); } }
-        public string Password { get => _password; set { SetProperty(ref _password, value); } }
         #endregion
 
         #region Delegate
         #endregion
 
         #region Constructor
-        public LoginPageViewModel(INavigationService navigationService, IPageDialogService pageDialogService) : base(navigationService, pageDialogService)
+        public LoginPageViewModel(INavigationService navigationService, IPageDialogService pageDialogService) 
+            : base(navigationService: navigationService, dialogService: pageDialogService)
         {
-            _navigationservice = navigationService;
             LoginCommand = new DelegateCommand(LoginExecute);
         }
         #endregion
@@ -111,8 +105,5 @@ namespace SmartMarket.ViewModels
 
         #endregion
 
-        #region Method
-
-        #endregion
     }
 }

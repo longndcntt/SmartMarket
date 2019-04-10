@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DLToolkit.Forms.Controls;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,10 @@ namespace SmartMarket.Views
         public MainPage()
         {
             InitializeComponent();
+        }
+
+        public void CarouselViewControl()
+        {
         }
     }
 }

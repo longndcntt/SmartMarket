@@ -1,11 +1,118 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
+             xmlns:abstractions="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions"
+             xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              x:Class="SmartMarket.Views.MainPage"
              Title="{Binding Title}">
 
-    <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
-        <Label Text="Welcome to Xamarin Forms and Prism!" />
+    <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="FillAndExpand">
+        <StackLayout HeightRequest="100"
+                     WidthRequest="100">
+            <abstractions:CarouselViewControl ItemsSource="{Binding ListEvent}"
+                                          VerticalOptions="FillAndExpand" 
+                                              HorizontalOptions="FillAndExpand"
+                                              Orientation="Horizontal"
+                                              ShowIndicators="True"
+                                              IsSwipeEnabled="True"
+                                              CurrentPageIndicatorTintColor="Yellow"
+                                          Position="{Binding Position}">
+                <abstractions:CarouselViewControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid HorizontalOptions="FillAndExpand">
+                            <forms:CachedImage Source="{Binding .}"
+                                               CacheType="None"/>
+                        </Grid>
+                    </DataTemplate>
+                </abstractions:CarouselViewControl.ItemTemplate>
+            </abstractions:CarouselViewControl>
+        </StackLayout>
+        <flv:FlowListView x:Name="flowListView" FlowColumnCount="2" SeparatorVisibility="None" HasUnevenRows="True"
+                          FlowItemTappedCommand="{Binding ItemTappedCommand}"
+                          SelectedItem="{Binding SelectedItem}"
+			FlowItemsSource="{Binding MyList}">
+            <flv:FlowListView.FlowColumnTemplate>
+                <DataTemplate>
+                    <Frame Padding="5"
+                           Margin="5">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Image Source="sony_product"
+                               Grid.Column="0"
+                                   VerticalOptions="CenterAndExpand"
+                                   WidthRequest="50"
+                                   HeightRequest="50"
+                               Grid.Row="0" Grid.RowSpan="2"/>
+                            <Label FontSize="18"
+                                   Grid.Column="1" Grid.Row="0"
+                                   Text="{Binding ItemName}"
+                                   FontAttributes="Bold"/>
+                            <Label FontSize="16"
+                                   Grid.Column="1" Grid.Row="1"
+                                   Text="{Binding Prince, Converter={StaticResource CovertToCurrency}}"
+                                   FontAttributes="Bold"/>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </flv:FlowListView.FlowColumnTemplate>
+        </flv:FlowListView>
+        <flv:FlowListView  FlowColumnCount="2" SeparatorVisibility="Default" HasUnevenRows="True"
+                          FlowLastTappedItem="{Binding SelectedItemTapped, Mode=OneWayToSource}"
+                           FlowItemTappedCommand="{Binding ItemTappedCommand}"
+			               FlowItemsSource="{Binding MyList}">
+            <flv:FlowListView.FlowColumnTemplate>
+                <DataTemplate>
+                    <Frame Padding="5"
+                           Margin="5"
+                           HorizontalOptions="Fill"
+                              VerticalOptions="Fill">
+                        <Grid HorizontalOptions="CenterAndExpand"
+                              VerticalOptions="CenterAndExpand"
+                              RowSpacing="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition Height="auto"></RowDefinition>
+                                <RowDefinition Height="auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <StackLayout  Grid.Row="0">
+                                <Image Source="sony_product"
+                                   HorizontalOptions="CenterAndExpand"
+                                   VerticalOptions="CenterAndExpand"
+                                   WidthRequest="140"
+                                   HeightRequest="140"
+                                   Aspect="AspectFit"
+                                   FlowDirection="MatchParent"/>
+                            </StackLayout>
+                            <Label FontSize="18"
+                                  Grid.Row="1"
+                                   HorizontalOptions="CenterAndExpand"
+                                   Margin="0"
+                                   Text="{Binding ItemName}"
+                                   FontAttributes="Bold"/>
+                            <Label FontSize="16"
+                                   HorizontalOptions="CenterAndExpand"
+                                   Grid.Row="2"
+                                   TextColor="Red"
+                                   Text="{Binding Prince, Converter={StaticResource CovertToCurrency}}"
+                                   FontAttributes="Bold"/>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </flv:FlowListView.FlowColumnTemplate>
+            <!--<ListView.Behaviors>
+                <behaviors:EventToCommandBehavior EventName="ItemSelected"
+                                                                  Command="{Binding ItemTappedCommand}">
+                </behaviors:EventToCommandBehavior>
+            </ListView.Behaviors>-->
+        </flv:FlowListView>
     </StackLayout>
 
 </ContentPage>

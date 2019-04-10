@@ -4,8 +4,10 @@ using Prism;
 using Prism.Ioc;
 using SmartMarket.Interfaces.LocalDatabase;
 using SmartMarket.Models;
+using SmartMarket.Utilities;
 using SmartMarket.ViewModels;
 using SmartMarket.Views;
+using SmartMarket.Views.LoginAndSignUp;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -26,8 +28,7 @@ namespace SmartMarket
         protected override async void OnInitialized()
         {
             InitializeComponent();
-
-            await NavigationService.NavigateAsync("TabbedMainPage");
+            await NavigationService.NavigateAsync(PageManager.TabbedMainPage);
         }
 
         #region Properties 
@@ -59,6 +60,9 @@ namespace SmartMarket
             containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
             containerRegistry.RegisterForNavigation<LoginPage, LoginPageViewModel>();
             containerRegistry.RegisterForNavigation<TabbedMainPage, TabbedMainPageViewModel>();
+            containerRegistry.RegisterForNavigation<SignUp, SignUpViewModel>();
+            containerRegistry.RegisterForNavigation<ProfileUser, ProfileUserViewModel>();
+            containerRegistry.RegisterForNavigation<NotificationPage, NotificationPageViewModel>();
         }
     }
 }

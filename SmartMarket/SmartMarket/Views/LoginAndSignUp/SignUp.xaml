@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             xmlns:xfxcontrol="clr-namespace:Xfx;assembly=Xfx.Controls"
+             xmlns:localization="clr-namespace:SmartMarket.Localization"
+             xmlns:controls1="clr-namespace:SmartMarket.Controls.CustomLabelEntry"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="SmartMarket.Views.LoginAndSignUp.SignUp"
+             BackgroundImage="splashscreen.jpg">
+    <StackLayout HorizontalOptions="FillAndExpand"
+                 VerticalOptions="CenterAndExpand">
+    <Frame Padding="5,0,5,0" BackgroundColor="Transparent"
+           Margin="10"
+           HorizontalOptions="FillAndExpand"
+           VerticalOptions="CenterAndExpand">
+        <Grid RowSpacing="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <xfxcontrol:XfxEntry Grid.Row="0" Placeholder="{localization:Translate FullName}" 
+                                         VerticalOptions="CenterAndExpand"
+                                         Text="{Binding FullName}"/>
+
+            <xfxcontrol:XfxEntry Grid.Row="1" Placeholder="{localization:Translate PhoneNumber}" 
+                                         VerticalOptions="CenterAndExpand"
+                                         Text="{Binding PhoneNumber}"/>
+
+            <xfxcontrol:XfxEntry Grid.Row="2" Placeholder="{localization:Translate Username}" 
+                                         VerticalOptions="CenterAndExpand"
+                                         Text="{Binding Username}"/>
+          
+            <xfxcontrol:XfxEntry Grid.Row="3" Placeholder="{localization:Translate Password}" 
+                                        VerticalOptions="CenterAndExpand" 
+                                         Text="{Binding Password}"/>
+
+            <DatePicker Grid.Row="4" VerticalOptions="CenterAndExpand"
+                        Date="{Binding DateOfBirth, Mode=OneWayToSource}"/>
+        </Grid>
+    </Frame>
+
+    <controls1:BorderButton Text="{localization:Translate SignUp}" Command="{Binding SignUpCommand}"
+                            Margin="10,5,0,10"
+                            HorizontalOptions="FillAndExpand"
+                            WidthRequest="200"
+                            FontSize="20"
+                            BorderRadius="1"
+                           Theme="WhiteGreen"/>
+    </StackLayout>
+</ContentPage>

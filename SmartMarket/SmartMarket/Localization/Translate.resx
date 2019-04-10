@@ -129,4 +129,28 @@
   <data name="OK" xml:space="preserve">
     <value>Ok</value>
   </data>
+  <data name="LogIn" xml:space="preserve">
+    <value>Log In</value>
+  </data>
+  <data name="PasswordEmpty" xml:space="preserve">
+    <value>Password is empty</value>
+  </data>
+  <data name="SignUp" xml:space="preserve">
+    <value>Sign Up</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>Username</value>
+  </data>
+  <data name="UsernameEmpty" xml:space="preserve">
+    <value>Username is empty</value>
+  </data>
+  <data name="FullName" xml:space="preserve">
+    <value>Full name</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="PhoneNumber" xml:space="preserve">
+    <value>Phone number</value>
+  </data>
 </root>

@@ -2,9 +2,9 @@
 
 namespace SmartMarket.Views
 {
-    public partial class LoginPage : ContentPage
+    public partial class ProfileUser : ContentPage
     {
-        public LoginPage()
+        public ProfileUser()
         {
             InitializeComponent();
         }

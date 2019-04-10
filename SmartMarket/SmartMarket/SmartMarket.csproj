@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="CarouselView.FormsPlugin" Version="5.2.0" />
     <PackageReference Include="DLToolkit.Forms.Controls.FlowListView" Version="2.0.11" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
     <PackageReference Include="Plugin.Multilingual" Version="1.0.2" />
@@ -31,16 +32,23 @@
     <PackageReference Include="SQLiteNetExtensions" Version="2.1.0" />
     <PackageReference Include="Xam.Plugin.Connectivity" Version="3.2.0" />
     <PackageReference Include="Xam.Plugin.SecureStorage" Version="1.0.12" />
-    <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.4.859" />
+    <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.3.840" />
     <PackageReference Include="Xamarin.Forms" Version="3.2.0.839982" />
     <PackageReference Include="Prism.DryIoc.Forms" Version="7.1.0.431" />
+    <PackageReference Include="Xfx.Controls" Version="1.1.3" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Update="Controls\CustomLabelEntry\EntryLabel.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\LoginPage.xaml">
+    <EmbeddedResource Update="Views\LoginAndSignUp\SignUp.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\LoginAndSignUp\LoginPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\NotificationPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Popups\ConfirmPopup.xaml">
@@ -55,9 +63,17 @@
     <EmbeddedResource Update="Views\Popups\ZoomImagePopUp.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Views\ProfileUser.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\TabbedMainPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ViewModels\Login And Signup\" />
+    <Folder Include="Views\User\" />
   </ItemGroup>
 
 </Project>

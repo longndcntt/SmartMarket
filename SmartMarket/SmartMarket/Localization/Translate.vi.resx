@@ -129,4 +129,28 @@
   <data name="OK" xml:space="preserve">
     <value>Chấp nhận</value>
   </data>
+  <data name="LogIn" xml:space="preserve">
+    <value>Đăng nhập</value>
+  </data>
+  <data name="PasswordEmpty" xml:space="preserve">
+    <value>Chưa nhập mật khẩu</value>
+  </data>
+  <data name="SignUp" xml:space="preserve">
+    <value>Đăng ký</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>Tên đăng nhập</value>
+  </data>
+  <data name="UsernameEmpty" xml:space="preserve">
+    <value>Chưa nhập tên đăng nhập</value>
+  </data>
+  <data name="FullName" xml:space="preserve">
+    <value>Họ tên</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Mật khẩu</value>
+  </data>
+  <data name="PhoneNumber" xml:space="preserve">
+    <value>Số điện thoại</value>
+  </data>
 </root>
