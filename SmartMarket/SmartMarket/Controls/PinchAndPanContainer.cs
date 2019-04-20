@@ -1,4 +1,4 @@
-﻿using FotoScan.Tablet.Extensions;
+﻿using SmartMarket.Extensions;
 using System;
 using Xamarin.Forms;
 

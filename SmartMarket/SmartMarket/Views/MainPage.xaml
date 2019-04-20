@@ -4,13 +4,65 @@
              xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
              xmlns:abstractions="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions"
              xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:controls="clr-namespace:SmartMarket.Controls"
+              xmlns:localization="clr-namespace:SmartMarket.Localization"
+             xmlns:buttonBorder="clr-namespace:SmartMarket.Controls.CustomLabelEntry"
              x:Class="SmartMarket.Views.MainPage"
              Title="{Binding Title}">
 
-    <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="FillAndExpand">
-        <StackLayout HeightRequest="100"
+    <ScrollView>
+        <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="FillAndExpand">
+            <Grid BackgroundColor="SkyBlue"
+                  HeightRequest="50"
+                  RowSpacing="0"
+                  Padding="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="50"/>
+                </Grid.ColumnDefinitions>
+                <controls:ImageButton x:Name="backImage"
+                                      Grid.Column="0"
+                                      HorizontalOptions="CenterAndExpand"
+                                      VerticalOptions="CenterAndExpand"
+                                      Source="ic_left_arrow"
+                                      IsVisible="true"
+                                      Style="{StaticResource ImageBase}"
+                                      Command="{Binding BackCommand}"/>
+                <Frame Grid.Column="1"
+                       HorizontalOptions="FillAndExpand"
+                       VerticalOptions="FillAndExpand" Padding="0" Margin="0">
+                <StackLayout  
+                       HorizontalOptions="FillAndExpand"
+                       VerticalOptions="FillAndExpand"
+                              BackgroundColor="White"
+                              Padding="5"
+                              Orientation="Horizontal">
+                    <buttonBorder:ExtendedEntry Text="{Binding ContentSearch}"
+                                                Borderless="True"
+                                                Padding="4"
+                           HorizontalOptions="FillAndExpand"
+                           VerticalOptions="CenterAndExpand"
+                           Placeholder="{localization:Translate Search}"/>
+                    <controls:ImageButton Source="ic_search"
+                                          Style="{StaticResource ImageBase}"
+                                          Margin="5,0"/>
+                </StackLayout>
+                </Frame>
+                <controls:ImageButton Source="ic_shoppingcart"
+                                      Grid.Column="2" 
+                                      IsVisible="True"
+                                      HorizontalOptions="CenterAndExpand"
+                                      VerticalOptions="CenterAndExpand"
+                                      Style="{StaticResource ImageBase}"
+                                      Margin="0"
+                                      Command="{Binding CheckCartCommand}"/>
+            </Grid>
+            
+            
+            <StackLayout HeightRequest="100"
                      WidthRequest="100">
-            <abstractions:CarouselViewControl ItemsSource="{Binding ListEvent}"
+                <abstractions:CarouselViewControl ItemsSource="{Binding ListEvent}"
                                           VerticalOptions="FillAndExpand" 
                                               HorizontalOptions="FillAndExpand"
                                               Orientation="Horizontal"
@@ -18,101 +70,172 @@
                                               IsSwipeEnabled="True"
                                               CurrentPageIndicatorTintColor="Yellow"
                                           Position="{Binding Position}">
-                <abstractions:CarouselViewControl.ItemTemplate>
-                    <DataTemplate>
-                        <Grid HorizontalOptions="FillAndExpand">
-                            <forms:CachedImage Source="{Binding .}"
+                    <abstractions:CarouselViewControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid HorizontalOptions="FillAndExpand">
+                                <forms:CachedImage Source="{Binding .}"
                                                CacheType="None"/>
-                        </Grid>
-                    </DataTemplate>
-                </abstractions:CarouselViewControl.ItemTemplate>
-            </abstractions:CarouselViewControl>
-        </StackLayout>
-        <flv:FlowListView x:Name="flowListView" FlowColumnCount="2" SeparatorVisibility="None" HasUnevenRows="True"
+                            </Grid>
+                        </DataTemplate>
+                    </abstractions:CarouselViewControl.ItemTemplate>
+                </abstractions:CarouselViewControl>
+            </StackLayout>
+            <!--<flv:FlowListView x:Name="flowListView" FlowColumnCount="2" SeparatorVisibility="None" HasUnevenRows="True"
                           FlowItemTappedCommand="{Binding ItemTappedCommand}"
                           SelectedItem="{Binding SelectedItem}"
 			FlowItemsSource="{Binding MyList}">
-            <flv:FlowListView.FlowColumnTemplate>
-                <DataTemplate>
-                    <Frame Padding="5"
+                <flv:FlowListView.FlowColumnTemplate>
+                    <DataTemplate>
+                        <Frame Padding="5"
                            Margin="5">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <Image Source="sony_product"
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Image Source="sony_product"
                                Grid.Column="0"
                                    VerticalOptions="CenterAndExpand"
                                    WidthRequest="50"
                                    HeightRequest="50"
                                Grid.Row="0" Grid.RowSpan="2"/>
-                            <Label FontSize="18"
+                                <Label FontSize="18"
                                    Grid.Column="1" Grid.Row="0"
                                    Text="{Binding ItemName}"
                                    FontAttributes="Bold"/>
-                            <Label FontSize="16"
+                                <Label FontSize="16"
                                    Grid.Column="1" Grid.Row="1"
-                                   Text="{Binding Prince, Converter={StaticResource CovertToCurrency}}"
+                                   Text="{Binding Price, Converter={StaticResource CovertToCurrency}}"
                                    FontAttributes="Bold"/>
-                        </Grid>
-                    </Frame>
-                </DataTemplate>
-            </flv:FlowListView.FlowColumnTemplate>
-        </flv:FlowListView>
-        <flv:FlowListView  FlowColumnCount="2" SeparatorVisibility="Default" HasUnevenRows="True"
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </flv:FlowListView.FlowColumnTemplate>
+            </flv:FlowListView>-->
+
+            <StackLayout>
+                <flv:FlowListView  FlowColumnCount="2" SeparatorVisibility="Default" HasUnevenRows="True"
                           FlowLastTappedItem="{Binding SelectedItemTapped, Mode=OneWayToSource}"
                            FlowItemTappedCommand="{Binding ItemTappedCommand}"
 			               FlowItemsSource="{Binding MyList}">
-            <flv:FlowListView.FlowColumnTemplate>
-                <DataTemplate>
-                    <Frame Padding="5"
+                    <flv:FlowListView.FlowColumnTemplate>
+                        <DataTemplate>
+                            <Frame Padding="5"
                            Margin="5"
                            HorizontalOptions="Fill"
                               VerticalOptions="Fill">
-                        <Grid HorizontalOptions="CenterAndExpand"
+                                <Grid HorizontalOptions="CenterAndExpand"
                               VerticalOptions="CenterAndExpand"
                               RowSpacing="0">
-                            <Grid.RowDefinitions>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition Height="auto"></RowDefinition>
-                                <RowDefinition Height="auto"></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <StackLayout  Grid.Row="0">
-                                <Image Source="sony_product"
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition></RowDefinition>
+                                        <RowDefinition Height="auto"></RowDefinition>
+                                        <RowDefinition Height="auto"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <StackLayout  Grid.Row="0">
+                                        <Image Source="sony_product"
                                    HorizontalOptions="CenterAndExpand"
                                    VerticalOptions="CenterAndExpand"
                                    WidthRequest="140"
                                    HeightRequest="140"
                                    Aspect="AspectFit"
                                    FlowDirection="MatchParent"/>
-                            </StackLayout>
-                            <Label FontSize="18"
+                                    </StackLayout>
+                                    <Label FontSize="18"
                                   Grid.Row="1"
                                    HorizontalOptions="CenterAndExpand"
                                    Margin="0"
                                    Text="{Binding ItemName}"
                                    FontAttributes="Bold"/>
-                            <Label FontSize="16"
+                                    <Label FontSize="16"
                                    HorizontalOptions="CenterAndExpand"
                                    Grid.Row="2"
                                    TextColor="Red"
-                                   Text="{Binding Prince, Converter={StaticResource CovertToCurrency}}"
+                                   Text="{Binding Price, Converter={StaticResource CovertToCurrency}}"
                                    FontAttributes="Bold"/>
-                        </Grid>
-                    </Frame>
-                </DataTemplate>
-            </flv:FlowListView.FlowColumnTemplate>
-            <!--<ListView.Behaviors>
+                                </Grid>
+                            </Frame>
+                        </DataTemplate>
+                    </flv:FlowListView.FlowColumnTemplate>
+                    <!--<ListView.Behaviors>
                 <behaviors:EventToCommandBehavior EventName="ItemSelected"
                                                                   Command="{Binding ItemTappedCommand}">
                 </behaviors:EventToCommandBehavior>
             </ListView.Behaviors>-->
-        </flv:FlowListView>
-    </StackLayout>
-
+                </flv:FlowListView>
+            </StackLayout>
+            <Frame Padding="5">
+                <StackLayout>
+                    <StackLayout Orientation="Horizontal"
+                             HorizontalOptions="FillAndExpand"
+                             VerticalOptions="FillAndExpand"
+                             Padding="0,5,0,5"
+                             Margin="0">
+                        <BoxView BackgroundColor="DimGray"
+                             HeightRequest="1"
+                             WidthRequest="20"
+                             HorizontalOptions="Start"
+                             VerticalOptions="Center"></BoxView>
+                        <buttonBorder:BorderButton Text="Loại sản phẩm b"
+                                               FontSize="14"
+                                               Padding="15,0,15,0"
+                                               Margin="0,5"
+                                               BorderRadius="2"
+                                               HorizontalOptions="Start"
+                                               VerticalOptions="Center"
+                                               Theme="GreenWhite"></buttonBorder:BorderButton>
+                        <BoxView BackgroundColor="DimGray"
+                             HeightRequest="1"
+                             HorizontalOptions="FillAndExpand"
+                             VerticalOptions="Center"></BoxView>
+                    </StackLayout>
+                    <controls:HorizontalScrollList ItemsSource="{Binding MyList}" Margin="0,5,0,0">
+                        <controls:HorizontalScrollList.ItemTemplate>
+                            <DataTemplate>
+                                <Frame Padding="5"
+                           Margin="5"
+                           HorizontalOptions="Fill"
+                              VerticalOptions="Fill">
+                                    <Grid HorizontalOptions="CenterAndExpand"
+                              VerticalOptions="CenterAndExpand"
+                              RowSpacing="0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <StackLayout  Grid.Row="0">
+                                            <Image Source="sony_product"
+                                   HorizontalOptions="CenterAndExpand"
+                                   VerticalOptions="CenterAndExpand"
+                                   WidthRequest="140"
+                                   HeightRequest="140"
+                                   Aspect="AspectFit"
+                                   FlowDirection="MatchParent"/>
+                                        </StackLayout>
+                                        <Label FontSize="18"
+                                  Grid.Row="1"
+                                   HorizontalOptions="CenterAndExpand"
+                                   Margin="0"
+                                   Text="{Binding ItemName}"
+                                   FontAttributes="Bold"/>
+                                        <Label FontSize="16"
+                                   HorizontalOptions="CenterAndExpand"
+                                   Grid.Row="2"
+                                   TextColor="Red"
+                                   Text="{Binding Price, Converter={StaticResource CovertToCurrency}}"
+                                   FontAttributes="Bold"/>
+                                    </Grid>
+                                </Frame>
+                            </DataTemplate>
+                        </controls:HorizontalScrollList.ItemTemplate>
+                    </controls:HorizontalScrollList>
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+    </ScrollView>
 </ContentPage>

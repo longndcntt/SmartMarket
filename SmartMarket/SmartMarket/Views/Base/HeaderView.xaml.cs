@@ -2,7 +2,7 @@
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace FotoScan.Tablet.Views.Base
+namespace SmartMarket.Views.Base
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class HeaderView : ContentView

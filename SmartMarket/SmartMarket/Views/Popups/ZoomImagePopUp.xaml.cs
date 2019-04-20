@@ -1,9 +1,9 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
+using SmartMarket.Utilities;
 using Rg.Plugins.Popup.Extensions;
 using Rg.Plugins.Popup.Pages;
 using Rg.Plugins.Popup.Services;
-using SmartMarket.Utilities;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 

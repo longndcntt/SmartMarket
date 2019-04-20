@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<base:BasePage xmlns:base="clr-namespace:SmartMarket.Views.Base"
+               xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             xmlns:controls="clr-namespace:SmartMarket.Controls"
+             xmlns:buttonBorder="clr-namespace:SmartMarket.Controls.CustomLabelEntry"
+              xmlns:localization="clr-namespace:SmartMarket.Localization"
+             xmlns:converters="clr-namespace:SmartMarket.Converters"
+             xmlns:behaviors="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
+             BackgroundColor="White"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="SmartMarket.Views.CategoryPage">
+    <ContentPage.Resources>
+        <converters:IsTrueConverter x:Key="IsTrueConverter"/>
+    </ContentPage.Resources>
+
+    <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+        <!--Header View-->
+        <Grid BackgroundColor="SkyBlue"
+                  HeightRequest="50"
+                  RowSpacing="0"
+                  Padding="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="50"/>
+            </Grid.ColumnDefinitions>
+            <controls:ImageButton x:Name="backImage"
+                                      Grid.Column="0"
+                                      HorizontalOptions="CenterAndExpand"
+                                      VerticalOptions="CenterAndExpand"
+                                      Source="ic_left_arrow"
+                                      IsVisible="{Binding IsSearch}"
+                                      Style="{StaticResource ImageBase}"
+                                      Command="{Binding BackCommand}"/>
+            <!--HeaderContent-->
+            <StackLayout IsVisible="{Binding IsSearch, Converter={StaticResource IsTrueConverter}}"
+                         Grid.Column="1" Grid.ColumnSpan="2"
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="Center">
+                <Label FontAttributes="Bold"
+                       FontSize="{StaticResource SuperLargeLabelFont}"
+                       Text="Category"
+                       TextColor="{StaticResource SDarkerTextColor}"/>
+            </StackLayout>
+
+            <!--SearchBar-->
+            <Frame Grid.Column="1"
+                   Grid.ColumnSpan="2"
+                   HorizontalOptions="FillAndExpand"
+                   VerticalOptions="FillAndExpand" Padding="0" Margin="0" 
+                   IsVisible="{Binding IsSearch}">
+
+                <StackLayout  
+                       HorizontalOptions="FillAndExpand"
+                       VerticalOptions="FillAndExpand"
+                              BackgroundColor="White"
+                              Padding="5"
+                              Orientation="Horizontal">
+                    <buttonBorder:ExtendedEntry Text="{Binding ContentSearch}"
+                                                Borderless="True"
+                                                Padding="4"
+                           HorizontalOptions="FillAndExpand"
+                           VerticalOptions="CenterAndExpand"
+                           Placeholder="{localization:Translate Search}"/>
+                    <controls:ImageButton Source="ic_search"
+                                          Style="{StaticResource ImageBase}"
+                                          Margin="5,0"/>
+                </StackLayout>
+            </Frame>
+            <controls:ImageButton Source="ic_search"
+                                  Grid.Column="2"
+                                  Style="{StaticResource ImageBase}"
+                                  Command="{Binding IsSearchCommand}"
+                                  IsVisible="{Binding IsSearch, Converter={StaticResource IsTrueConverter}}"
+                                          Margin="5,0"/>
+            <controls:ImageButton Source="ic_shoppingcart"
+                                      Grid.Column="3" 
+                                      IsVisible="True"
+                                      HorizontalOptions="CenterAndExpand"
+                                      VerticalOptions="CenterAndExpand"
+                                      Style="{StaticResource ImageBase}"
+                                      Margin="0"
+                                      Command="{Binding CheckCartCommand}"/>
+        </Grid>
+
+        <ListView ItemsSource="{Binding CategoryList}"
+                  SelectedItem="{Binding SelectedCategory}"
+                  VerticalOptions="FillAndExpand"
+                  HorizontalOptions="FillAndExpand"
+                  Margin="10,5"
+                  HasUnevenRows="True"
+                  x:Name="lstCategory">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <controls:CustomViewCell SelectedBackgroundColor="White">
+                        <Grid Padding="8">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Image Source="{Binding Image}"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"
+                                   HeightRequest="40"
+                                   WidthRequest="40"
+                                     Style="{StaticResource ImageBase}"
+                                   Grid.Column="0"
+                                   Grid.Row="0" Grid.RowSpan="2"/>
+                            <Label Text="{Binding CategoryName}"
+                                   Margin="10,0"
+                                   FontSize="{StaticResource LargeLabelFont}"
+                                   VerticalOptions="End"
+                                   Grid.Row="0"
+                                   Grid.Column="1"/>
+                        </Grid>
+                    </controls:CustomViewCell>
+                    
+                </DataTemplate>
+                
+            </ListView.ItemTemplate>
+            <ListView.Behaviors>
+                <behaviors:EventToCommandBehavior EventName="ItemTapped"
+                                                              Command="{Binding SelectedCategoryCommand}">
+                </behaviors:EventToCommandBehavior>
+            </ListView.Behaviors>
+        </ListView>
+    </StackLayout>
+</base:BasePage>

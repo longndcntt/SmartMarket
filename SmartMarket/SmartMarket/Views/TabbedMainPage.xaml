@@ -1,20 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <controls:BottomNavTabPage xmlns="http://xamarin.com/schemas/2014/forms"
-            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-           xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
-            android:TabbedPage.IsSwipePagingEnabled="True"
-             android:TabbedPage.ToolbarPlacement="Bottom"
-            BarBackgroundColor="#2196F3"
-            BarTextColor="IndianRed"
-           xmlns:controls="clr-namespace:SmartMarket.Controls"
+                           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                           xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+                            xmlns:localization="clr-namespace:SmartMarket.Localization"
+                           android:TabbedPage.IsSwipePagingEnabled="True"
+                           android:TabbedPage.ToolbarPlacement="Bottom"
+                           BarBackgroundColor="{StaticResource SGray}"
+                           BarTextColor="{StaticResource SDarkTextColor}"
+                           xmlns:controls="clr-namespace:SmartMarket.Controls"
                            xmlns:loginpage="clr-namespace:SmartMarket.Views.LoginAndSignUp"
-            xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
-            xmlns:views="clr-namespace:SmartMarket.Views"
-            prism:ViewModelLocator.AutowireViewModel="True"
-            x:Class="SmartMarket.Views.TabbedMainPage" >
-    <views:MainPage></views:MainPage>
-    <views:MainPage></views:MainPage>
-    <loginpage:LoginPage></loginpage:LoginPage>
-    <loginpage:SignUp></loginpage:SignUp>
-    
+                           xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+                           xmlns:views="clr-namespace:SmartMarket.Views"
+                           prism:ViewModelLocator.AutowireViewModel="True"
+                           x:Class="SmartMarket.Views.TabbedMainPage" >
+    <views:MainPage Icon="ic_mainpage"></views:MainPage>
+    <views:CategoryPage Icon="ic_category"></views:CategoryPage>
+    <views:NotificationPage Title="{localization:Translate Notifications}" Icon="ic_notification2"></views:NotificationPage>
+    <views:ProfileUserPage Title="{localization:Translate ProfileUser}" Icon="ic_profile"></views:ProfileUserPage>
 </controls:BottomNavTabPage>

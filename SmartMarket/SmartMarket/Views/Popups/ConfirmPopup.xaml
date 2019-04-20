@@ -1,71 +1,86 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<base:PopupBasePage
-    xmlns:base="clr-namespace:SmartMarket.Views.Base"
-    xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
-    xmlns:controls="clr-namespace:SmartMarket.Controls.CustomLabelEntry"
-    xmlns:localization="clr-namespace:SmartMarket.Localization"
-    x:Class="SmartMarket.Views.Popups.ConfirmPopup">
+<base1:PopupBasePage  xmlns:base1="clr-namespace:SmartMarket.Views.Base" xmlns="http://xamarin.com/schemas/2014/forms"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                     xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+                     xmlns:localization="clr-namespace:SmartMarket.Localization;assembly=SmartMarket"
+                      xmlns:controls="clr-namespace:SmartMarket.Controls.CustomLabelEntry"
+                     x:Class="SmartMarket.Views.Popups.ConfirmPopup">
     <pages:PopupPage.Animation>
-        <base:PopupAnimation/>
+        <base1:PopupNoAnimation/>
     </pages:PopupPage.Animation>
 
     <Grid VerticalOptions="FillAndExpand"
           HorizontalOptions="FillAndExpand"
           BackgroundColor="#01ffffff">
         <Frame BackgroundColor="White"
-               VerticalOptions="CenterAndExpand"
-               HorizontalOptions="FillAndExpand"
-               Padding="20,10"
+               Padding="0"
                Margin="20"
-               CornerRadius="12"
-               HasShadow="False">
-            <StackLayout Spacing="10">
-                <Image WidthRequest="30"
-                       HeightRequest="30"
-                       Source="app_icon_shadow.png"
-                       HorizontalOptions="Center"/>
+               CornerRadius="8"
+               HasShadow="True"
+               VerticalOptions="CenterAndExpand">
+            <StackLayout Spacing="0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
 
-                <Label x:Name="LabelMessage"
-                       Text=""
-                       TextColor="{StaticResource SDarkTextColor}"
-                       HorizontalOptions="CenterAndExpand"
-                       HorizontalTextAlignment="Center"
-                       Margin="0,0,0,5"/>
+                    <StackLayout Grid.Row="0">
+                        <Grid Margin="20,15,32,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
 
-                <StackLayout Orientation="Horizontal"
-                             Spacing="15"
-                             HorizontalOptions="Center">
-                    <controls:BorderButton
-                        x:Name="ButtonClose"
-                        Text="{localization:TranslateExtension Close}"
-                        TextColor="{StaticResource SGreen}"
-                        FontSize="12"
-                        FontAttributes="Bold"
-                        HeightRequest="30"
-                        WidthRequest="100"
-                        Clicked="ClosedPopupEvent"
-                        Theme="GreenWhite"/>
+                            <Label x:Name="LabelConfirmTitle"
+                                   Text="{localization:TranslateExtension Confirm}"
+                                   Grid.Column="0"
+                                   TextColor="{StaticResource SDarkerTextColor}"
+                                   FontSize="{DynamicResource SuperLargeLabelFont}"/>
 
-                    <controls:BorderButton
-                        x:Name="ButtonAccept"
-                        Text="{localization:TranslateExtension OK}"
-                        TextColor="White"
-                        FontSize="12"
-                        FontAttributes="Bold"
-                        HeightRequest="30"
-                        WidthRequest="100"
-                        Clicked="AcceptPopupEvent"
-                        Theme="Green"/>
-                </StackLayout>
+                        </Grid>
+                        <BoxView BackgroundColor="#d0d0d0" HeightRequest="0.5"
+                     Margin="20, 0, 20, 5" />
+                    </StackLayout>
+
+                    <!--Message-->
+                    <ScrollView Grid.Row="1">
+                        <Label x:Name="LabelConfirmMessage"
+                               Margin="20,0,20,25"
+                               FontSize="{DynamicResource SmallLabelFont}"
+                               TextColor="{StaticResource SDarkerTextColor}" 
+                               HorizontalOptions="FillAndExpand"/>
+                    </ScrollView>
+
+                    <Grid Grid.Row="2"
+                          BackgroundColor="#C91C3E"
+                          HeightRequest="60">
+                        <StackLayout Orientation="Horizontal"
+                                     VerticalOptions="CenterAndExpand"
+                                     HorizontalOptions="EndAndExpand">
+                            <controls:BorderButton x:Name="ButtonConfirmAccept"
+                                                  Text="{localization:TranslateExtension Yes}"
+                                                   BorderRadius="1"
+                                                  Clicked="AcceptPopupEvent"
+                                                  Margin="0,0,5,0"/>
+                            <controls:BorderButton x:Name="ButtonConfirmClose"
+                                                  Text="{localization:TranslateExtension No}"
+                                                   BorderRadius="1"
+                                                  Clicked="ClosedPopupEvent"
+                                                  Margin="0,0,20,0"/>
+                        </StackLayout>
+                    </Grid>
+                </Grid>
+
             </StackLayout>
             <Frame.GestureRecognizers>
-                <TapGestureRecognizer Tapped="DoNothingEvent"/>
+                <TapGestureRecognizer Tapped="DoNothingEvent" />
             </Frame.GestureRecognizers>
         </Frame>
         <Grid.GestureRecognizers>
-            <TapGestureRecognizer Tapped="TouchOutside"/>
+            <TapGestureRecognizer Tapped="ClosedPopupEvent" />
         </Grid.GestureRecognizers>
     </Grid>
-</base:PopupBasePage>
+
+</base1:PopupBasePage>

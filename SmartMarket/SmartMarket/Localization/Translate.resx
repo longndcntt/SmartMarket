@@ -153,4 +153,55 @@
   <data name="PhoneNumber" xml:space="preserve">
     <value>Phone number</value>
   </data>
+  <data name="LoginSignUp" xml:space="preserve">
+    <value>Login / Signup</value>
+  </data>
+  <data name="CreateStore" xml:space="preserve">
+    <value>Create New Store</value>
+  </data>
+  <data name="DigitalCoin" xml:space="preserve">
+    <value>Digital Coin</value>
+  </data>
+  <data name="GeneralInformation" xml:space="preserve">
+    <value>General Information</value>
+  </data>
+  <data name="Helps" xml:space="preserve">
+    <value>Helps</value>
+  </data>
+  <data name="LogOut" xml:space="preserve">
+    <value>LogOut</value>
+  </data>
+  <data name="Notifications" xml:space="preserve">
+    <value>Notifications</value>
+  </data>
+  <data name="PurchasedProducts" xml:space="preserve">
+    <value>Purchased Products</value>
+  </data>
+  <data name="ViewedProducts" xml:space="preserve">
+    <value>Viewed Products</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="Message" xml:space="preserve">
+    <value>Message</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="AllProduct" xml:space="preserve">
+    <value>All Products</value>
+  </data>
+  <data name="MainPage" xml:space="preserve">
+    <value>Main Page</value>
+  </data>
+  <data name="ProfileUser" xml:space="preserve">
+    <value>Profile User</value>
+  </data>
 </root>

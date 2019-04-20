@@ -9,12 +9,15 @@ namespace SmartMarket.Models
     [Table("ItemTabel")]
     public class ItemModel
     {
-        [PrimaryKey]
-        public Guid Id { get; set; } = new Guid();
+        [PrimaryKey, AutoIncrement]
+        public int Id { get; set; }
+
+        [ForeignKey(typeof(Category))]
+        public int CategoryId { get; set; }
+
         public string ItemName { get; set; }
-        public double Prince { get; set; }
+        public double Price { get; set; }
         public string Image { get; set; }
-        [ManyToMany(typeof(UserModel))]
-        public List<UserModel> UserList { get; set; }
+        public byte[] ImageByte { get; set; }
     }
 }

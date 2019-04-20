@@ -2,7 +2,41 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
-             prism:ViewModelLocator.AutowireViewModel="True"
-             x:Class="SmartMarket.Views.ProfileUser">
-  
+    xmlns:base="clr-namespace:SmartMarket.Views.Base"
+             xmlns:controls="clr-namespace:SmartMarket.Controls"
+             xmlns:localization="clr-namespace:SmartMarket.Localization"
+             x:Class="SmartMarket.Views.ProfileUser"
+               prism:ViewModelLocator.AutowireViewModel="True">
+    <ScrollView>
+        <StackLayout Padding="5">
+            <Frame Padding="10">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image WidthRequest="50"
+                           HeightRequest="50"
+                           Source="envelope"
+                           Grid.RowSpan="2" Grid.Row="0"
+                           Grid.Column="0"/>
+                    <StackLayout Grid.Column="1"
+                                 Grid.Row="1"
+                                 IsVisible="{Binding IsLogin}">
+                        <Label Text="{localization:Translate LoginSignUp}"></Label>
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding LoginSignupCommand}"></TapGestureRecognizer>
+                        </StackLayout.GestureRecognizers>
+                    </StackLayout>
+                </Grid>
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding CheckInformationCommand}"/>
+                </Frame.GestureRecognizers>
+            </Frame>
+        </StackLayout>
+    </ScrollView>
 </ContentPage>

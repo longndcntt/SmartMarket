@@ -2,5 +2,7 @@
 {
     public enum ParamKey
     {
+        Category,
+        SelectedItem,
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Xamarin.Forms;
 
-namespace FotoScan.Tablet.Extensions
+namespace SmartMarket.Extensions
 {
     public static class ColorExtensions
     {

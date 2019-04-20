@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<controls:BottomNavTabPage xmlns="http://xamarin.com/schemas/2014/forms"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+            android:TabbedPage.IsSwipePagingEnabled="True"
+             android:TabbedPage.ToolbarPlacement="Bottom"
+                           xmlns:loginpage="clr-namespace:SmartMarket.Views.LoginAndSignUp"
+            BarBackgroundColor="{StaticResource Blue}"
+            BarTextColor="{StaticResource SGray}"
+           xmlns:controls="clr-namespace:SmartMarket.Controls"
+                           xmlns:localization="clr-namespace:SmartMarket.Localization"
+            prism:ViewModelLocator.AutowireViewModel="True"
+            x:Class="SmartMarket.Views.LoginAndSignUp.LoginSignUpTabbedPage">
+    <loginpage:LoginPage Title="{localization:Translate LogIn}" Icon="ic_login"></loginpage:LoginPage>
+    <loginpage:SignUp Title="{localization:Translate SignUp}" Icon="ic_signup"></loginpage:SignUp>
+</controls:BottomNavTabPage>

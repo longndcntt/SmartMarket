@@ -1,4 +1,4 @@
-﻿namespace FotoScan.Tablet.Interfaces
+﻿namespace SmartMarket.Interfaces
 {
     public interface IAppInfo
     {

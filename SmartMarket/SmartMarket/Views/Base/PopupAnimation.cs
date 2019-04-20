@@ -57,19 +57,4 @@ namespace SmartMarket.Views.Base
 
         #endregion
     }
-
-    public class PopupAlphaAnimation : FadeAnimation
-    {
-        #region Constructors
-        public PopupAlphaAnimation()
-        {
-            DurationIn = 100;
-            DurationOut = 100;
-            EasingIn = Easing.CubicIn;
-            EasingOut = Easing.CubicOut;
-            HasBackgroundAnimation = true;
-        }
-        #endregion
-
-    }
 }

@@ -1,4 +1,5 @@
 ﻿using Android.Content;
+using Android.Graphics.Drawables;
 using SmartMarket.Controls.CustomLabelEntry;
 using SmartMarket.Droid.Controls.CustomEntryLabelRenderer;
 using Xamarin.Forms;
@@ -21,11 +22,18 @@ namespace SmartMarket.Droid.Controls.CustomEntryLabelRenderer
             {
                 var element = (ExtendedEntry)e.NewElement;
 
-                if (element.Borderless)
-                    this.Control.Background = null;
-
-                this.Control.SetPadding((int)element.Padding.Left, (int)element.Padding.Top, 
-                    (int)element.Padding.Right, (int)element.Padding.Bottom);
+                if (Control != null)
+                {
+                    if (element.Borderless)
+                    {
+                        this.Control.Background = new ColorDrawable(Color.Transparent.ToAndroid());
+                        Control.Background = null;
+                    }
+                    this.Control.SetPadding((int)element.Padding.Left, (int)element.Padding.Top,
+                  (int)element.Padding.Right, (int)element.Padding.Bottom);
+                }
+                
+              
             }
         }
     }

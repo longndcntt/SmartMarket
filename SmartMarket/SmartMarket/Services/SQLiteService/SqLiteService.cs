@@ -2,19 +2,18 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq.Expressions;
-using FotoScan.Tablet.Interfaces.LocalDatabase;
 using SmartMarket.Interfaces.LocalDatabase;
 using SmartMarket.Models;
 using SQLite;
 using SQLiteNetExtensions.Extensions;
 
-namespace FotoScan.Tablet.Services.SQLiteService
+namespace SmartMarket.Services.SQLiteService
 {
     public class SqLiteService : ISqLiteService
     {
         #region Properties
 
-        protected const string DatabaseName = "FotoScan.db";
+        protected const string DatabaseName = "SmartMarket.db";
 
         private SQLiteConnection _database;
 
@@ -47,11 +46,10 @@ namespace FotoScan.Tablet.Services.SQLiteService
             var listTable = new List<Type>
             {
                 typeof(UserModel),
-                //typeof(LeadModel),
-                //typeof(EventModel),
-                ////typeof(UploadModel),
-                //typeof(LeadTypeModel),
-                //typeof(ScannerResult),
+                typeof(ItemModel),
+                typeof(Category),
+                typeof(ItemDetails),
+                typeof(ImageItemDetail),
                 typeof(AppSettings),
             };
 

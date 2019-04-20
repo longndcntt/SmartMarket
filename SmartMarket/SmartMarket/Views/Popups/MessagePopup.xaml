@@ -1,56 +1,83 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<base:PopupBasePage
-    xmlns:base="clr-namespace:SmartMarket.Views.Base" xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
-    xmlns:controls="clr-namespace:SmartMarket.Controls.CustomLabelEntry"
-    xmlns:localization="clr-namespace:SmartMarket.Localization"
-    x:Class="SmartMarket.Views.Popups.MessagePopup">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<base:PopupBasePage xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+                    xmlns:base="clr-namespace:SmartMarket.Views.Base;assembly=SmartMarket"
+                    xmlns:localization="clr-namespace:SmartMarket.Localization;assembly=SmartMarket"
+                    xmlns:controls="clr-namespace:SmartMarket.Controls.CustomLabelEntry"
+                    x:Class="SmartMarket.Views.Popups.MessagePopup">
     <pages:PopupPage.Animation>
-        <base:PopupAnimation/>
+        <base:PopupAnimation />
     </pages:PopupPage.Animation>
 
     <Grid VerticalOptions="FillAndExpand"
-          HorizontalOptions="FillAndExpand"
-          BackgroundColor="#01ffffff">
+        HorizontalOptions="FillAndExpand"
+        BackgroundColor="#01ffffff">
         <Frame BackgroundColor="White"
-               VerticalOptions="CenterAndExpand"
-               HorizontalOptions="FillAndExpand"
-               Padding="20,10"
-               Margin="20"
-               CornerRadius="12"
-               HasShadow="False">
-            <StackLayout Spacing="10">
-                <!--<Image WidthRequest="30"
-                       HeightRequest="30"
-                       Source="app_icon_shadow.png"
-                       HorizontalOptions="Center"/>-->
+           Padding="0"
+           Margin="20"
+           CornerRadius="8"
+           HasShadow="True"
+           VerticalOptions="CenterAndExpand">
+            <StackLayout Spacing="0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
 
-                <Label x:Name="LabelMessage"
-                       Text=""
-                       TextColor="{StaticResource SDarkTextColor}"
-                       HorizontalOptions="CenterAndExpand"
-                       HorizontalTextAlignment="Center"
-                       Margin="0,0,0,5"/>
-                
-                <controls:BorderButton
-                    x:Name="ButtonClose"
-                    Text="{localization:TranslateExtension Close}"
-                    TextColor="White"
-                    FontSize="12"
-                    FontAttributes="Bold"
-                    HeightRequest="30"
-                    WidthRequest="100"
-                    HorizontalOptions="Center"
-                    Clicked="ClosedPopupEvent"
-                    Theme="Green"/>
+                    <StackLayout Grid.Row="0">
+                        <Grid Margin="20,15,32,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <Label x:Name="LabelMessageTitle"
+                                   Text="{localization:Translate Message}"
+                                   Grid.Column="0"
+                                   TextColor="{StaticResource SDarkerTextColor}"
+                                   FontSize="{DynamicResource SuperLargeLabelFont}"/>
+                        </Grid>
+                        <BoxView BackgroundColor="#d0d0d0" HeightRequest="0.5"
+                     Margin="20, 0, 20, 5" />
+                    </StackLayout>
+
+                    <ScrollView Grid.Row="1">
+                        <Label x:Name="LabelMessageContent"
+                               Margin="20,0,20,25"
+                               FontSize="{DynamicResource SmallLabelFont}"
+                               TextColor="{StaticResource SDarkerTextColor}"
+                               HorizontalOptions="FillAndExpand"/>
+                    </ScrollView>
+
+                    <Grid Grid.Row="2"
+                          x:Name="LayoutButton"
+                          BackgroundColor="{StaticResource Blue}"
+                          Padding="5"
+                          HeightRequest="50">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <controls:BorderButton x:Name="ButtonMessageClose"
+                                      Grid.Column="1"
+                                      Text="{localization:TranslateExtension OK}"
+                                               BorderRadius="2"
+                                      VerticalOptions="CenterAndExpand"
+                                      HorizontalOptions="EndAndExpand"
+                                      Clicked="ClosedPopupEvent"
+                                      Margin="0,0,20,0"/>
+                    </Grid>
+                </Grid>
             </StackLayout>
-        <Frame.GestureRecognizers>
-                <TapGestureRecognizer Tapped="DoNothingEvent"/>
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer Tapped="DoNothingEvent" />
             </Frame.GestureRecognizers>
         </Frame>
         <Grid.GestureRecognizers>
-            <TapGestureRecognizer Tapped="ClosedPopupEvent"/>
+            <TapGestureRecognizer Tapped="ClosedPopupEvent" />
         </Grid.GestureRecognizers>
     </Grid>
 </base:PopupBasePage>

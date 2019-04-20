@@ -1,18 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using FotoScan.Tablet.Interfaces;
-using FotoScan.Tablet.Interfaces.LocalDatabase;
 using Plugin.SecureStorage;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
 using Prism.Services;
+using SmartMarket.Interfaces;
 using SmartMarket.Interfaces.HttpService;
+using SmartMarket.Interfaces.LocalDatabase;
 using SmartMarket.Models;
 using SmartMarket.Utilities;
 
@@ -277,8 +275,9 @@ namespace SmartMarket.ViewModels.Base
         public bool IsTokenExpire { get; set; } = false;
 
         #region Properties
-
+       
         private string _username;
+
         public string Username
         {
             get => _username;

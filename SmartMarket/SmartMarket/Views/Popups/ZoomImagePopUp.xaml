@@ -3,8 +3,8 @@
                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                  xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
                  xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
-                 xmlns:base="clr-namespace:SmartMarket.Views.Base"
-                 xmlns:controls="clr-namespace:SmartMarket.Controls"
+                 xmlns:controls="clr-namespace:SmartMarket.Controls;assembly=SmartMarket"
+                 xmlns:base="clr-namespace:SmartMarket.Views.Base;assembly=SmartMarket"
                  x:Class="SmartMarket.Views.Popups.ZoomImagePopUp">
     <pages:PopupPage.Animation>
         <base:PopupNoAnimation/>

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using SmartMarket.Models;
 
-namespace FotoScan.Tablet.Interfaces.LocalDatabase
+namespace SmartMarket.Interfaces.LocalDatabase
 {
     public interface ISqLiteService
     {

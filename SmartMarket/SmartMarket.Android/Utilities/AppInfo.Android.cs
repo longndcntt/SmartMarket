@@ -2,8 +2,8 @@
 using System.Globalization;
 using Android.Content;
 using Android.Content.PM;
-using FotoScan.Tablet.Interfaces;
 using SmartMarket.Droid.Utilities;
+using SmartMarket.Interfaces;
 using Xamarin.Forms;
 using Application = Android.App.Application;
 
@@ -77,30 +77,24 @@ namespace SmartMarket.Droid.Utilities
             }
         }
 
-        public void ShowSettingsUI()
-        {
-            throw new NotImplementedException();
-        }
-
         #endregion
 
         #region ShowSettingsUI
 
-        //public void ShowSettingsUI() => PlatformShowSettingsUI();
-        //private void PlatformShowSettingsUI()
-        //{
-        //    var context = XamForms.Context;
+        public void ShowSettingsUI() => PlatformShowSettingsUI();
+        private void PlatformShowSettingsUI()
+        {
+            var context = XamForms.Context;
 
-        //    var settingsIntent = new Intent();
-        //    settingsIntent.SetAction(global::Android.Provider.Settings.ActionApplicationDetailsSettings);
-        //    settingsIntent.AddCategory(Intent.CategoryDefault);
-        //    settingsIntent.SetData(global::Android.Net.Uri.Parse("package:" + PlatformGetPackageName()));
-        //    settingsIntent.AddFlags(ActivityFlags.NewTask);
-        //    settingsIntent.AddFlags(ActivityFlags.NoHistory);
-        //    settingsIntent.AddFlags(ActivityFlags.ExcludeFromRecents);
-        //    context.StartActivity(settingsIntent);
-        //}
-
+            var settingsIntent = new Intent();
+            settingsIntent.SetAction(global::Android.Provider.Settings.ActionApplicationDetailsSettings);
+            settingsIntent.AddCategory(Intent.CategoryDefault);
+            settingsIntent.SetData(global::Android.Net.Uri.Parse("package:" + PlatformGetPackageName()));
+            settingsIntent.AddFlags(ActivityFlags.NewTask);
+            settingsIntent.AddFlags(ActivityFlags.NoHistory);
+            settingsIntent.AddFlags(ActivityFlags.ExcludeFromRecents);
+            context.StartActivity(settingsIntent);
+        }
         #endregion
     }
 }

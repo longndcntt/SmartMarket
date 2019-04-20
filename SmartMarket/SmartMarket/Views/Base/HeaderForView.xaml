@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:SmartMarket.Controls"
+             x:Class="SmartMarket.Views.Base.HeaderForView">
+    <ContentView.Content>
+        <Grid BackgroundColor="SkyBlue"
+            HeightRequest="60"
+            RowSpacing="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="60"/>
+            </Grid.ColumnDefinitions>
+            <controls:ImageButton x:Name="backImage"
+                                 Grid.Column="0"
+                                 HorizontalOptions="CenterAndExpand"
+                                 VerticalOptions="CenterAndExpand"
+                                  Source=""
+                                  Style="{StaticResource ImageBase}"/>
+            <BoxView Grid.Column="0"
+                 x:Name="backBox"
+                 BackgroundColor="Transparent"/>
+
+            <Label x:Name="headerTitle"
+               Grid.Column="1" 
+               HorizontalOptions="CenterAndExpand"
+               VerticalOptions="CenterAndExpand"
+               FontSize="{StaticResource LargeLabelFont}"
+               TextColor="{StaticResource CancelColor}"/>
+
+            <controls:ImageButton x:Name="nextImage"
+               Grid.Column="2" 
+               IsVisible="False"
+               HorizontalOptions="CenterAndExpand"
+               VerticalOptions="CenterAndExpand"
+               Style="{StaticResource ImageSettingsBlack}"/>
+            <BoxView Grid.Column="2"
+                 x:Name="nextBox"
+                 BackgroundColor="Transparent"/>
+        </Grid>
+    </ContentView.Content>
+</ContentView>

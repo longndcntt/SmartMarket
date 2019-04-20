@@ -1,9 +1,10 @@
-﻿using FotoScan.Tablet.Interfaces.LocalDatabase;
-using FotoScan.Tablet.Services.SQLiteService;
-using Prism;
+﻿using Prism;
 using Prism.Ioc;
+using SmartMarket.Interfaces.HttpService;
 using SmartMarket.Interfaces.LocalDatabase;
 using SmartMarket.Models;
+using SmartMarket.Services.HttpService;
+using SmartMarket.Services.SQLiteService;
 using SmartMarket.Utilities;
 using SmartMarket.ViewModels;
 using SmartMarket.Views;
@@ -25,10 +26,12 @@ namespace SmartMarket
 
         public App(IPlatformInitializer initializer) : base(initializer) { }
 
-        protected override async void OnInitialized()
+        protected override void OnInitialized()
         {
+            InitDatabase();
             InitializeComponent();
-            await NavigationService.NavigateAsync(PageManager.TabbedMainPage);
+
+            StartApp();
         }
 
         #region Properties 
@@ -54,6 +57,19 @@ namespace SmartMarket
 
         #endregion
 
+        #region StartApp
+
+        private async void StartApp()
+        {
+            Settings = new AppSettings();
+            Settings = _sqLiteService.GetSettings();
+
+            await NavigationService.NavigateAsync($"{PageManager.TabbedMainPage}");
+
+        }
+
+        #endregion
+
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterForNavigation<NavigationPage>();
@@ -63,6 +79,13 @@ namespace SmartMarket
             containerRegistry.RegisterForNavigation<SignUp, SignUpViewModel>();
             containerRegistry.RegisterForNavigation<ProfileUser, ProfileUserViewModel>();
             containerRegistry.RegisterForNavigation<NotificationPage, NotificationPageViewModel>();
+            containerRegistry.RegisterForNavigation<LoginSignUpTabbedPage, LoginSignUpTabbedPageViewModel>();
+            containerRegistry.RegisterForNavigation<ProfileUserPage, ProfileUserPageViewModel>();
+            containerRegistry.RegisterForNavigation<CategoryPage, CategoryPageViewModel>();
+            containerRegistry.RegisterForNavigation<CategoryDetailsPage, CategoryDetailsPageViewModel>();
+
+            containerRegistry.Register<IHttpRequest, HttpRequest>();
+            containerRegistry.Register<ISqLiteService, SqLiteService>();
         }
     }
 }

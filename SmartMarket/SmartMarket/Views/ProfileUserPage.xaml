@@ -1,0 +1,181 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             xmlns:localization="clr-namespace:SmartMarket.Localization"
+             xmlns:controls="clr-namespace:SmartMarket.Controls"
+             xmlns:converters="clr-namespace:SmartMarket.Converters"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="SmartMarket.Views.ProfileUserPage">
+    <ContentPage.Resources>
+        <converters:IsTrueConverter x:Key="IsTrueConverter"/>
+    </ContentPage.Resources>
+    <StackLayout Padding="5"
+                 Spacing="5">
+        <controls:FrameButton Padding="15">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Image WidthRequest="50"
+                           HeightRequest="50"
+                           Source="envelope"
+                           Grid.RowSpan="2" Grid.Row="0"
+                           Grid.Column="0"/>
+                <StackLayout Grid.Column="1"
+                                 Grid.Row="0"
+                                 IsVisible="{Binding IsLogin, Converter={StaticResource IsTrueConverter}}">
+                    <Label Text="{localization:Translate LoginSignUp}"
+                           VerticalOptions="CenterAndExpand"
+                           FontSize="{StaticResource LargeLabelFont}"
+                           Margin="5,0"></Label>
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding LoginSignupCommand}"></TapGestureRecognizer>
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+                <StackLayout Grid.Column="1"
+                                 Grid.Row="0"
+                                 IsVisible="{Binding IsLogin}">
+                    <Label VerticalOptions="CenterAndExpand"
+                           Margin="5,0"
+                           FontSize="{StaticResource LargeLabelFont}"
+                           Text="{Binding UserInfo.ClientName}"></Label>
+                </StackLayout>
+                <StackLayout Grid.Column="1"
+                                 Grid.Row="1"
+                                 IsVisible="{Binding IsLogin}">
+                    <Label VerticalOptions="CenterAndExpand"
+                           Margin="5,0"
+                           FontSize="{StaticResource NormalLabelFont}"
+                           Text="{localization:Translate GeneralInformation}"></Label>
+                </StackLayout>
+            </Grid>
+            <controls:FrameButton.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding CheckInformationCommand}"/>
+            </controls:FrameButton.GestureRecognizers>
+        </controls:FrameButton>
+
+        <Frame Padding="0">
+            <StackLayout Style="{StaticResource ContentSettingPage}" 
+                                 Spacing="15">
+                <!--viewed products-->
+                <BoxView Color="DimGray" HeightRequest="1" VerticalOptions="Start" Margin="5"/>
+                <StackLayout Orientation="Horizontal"
+                         Spacing="10">
+                    <Image Source="ic_viewedproducts"
+                    HorizontalOptions="Start"/>
+                    <Label Text="{localization:TranslateExtension ViewedProducts}"
+                                   FontSize="{DynamicResource NormalLabelFont}"
+                                   HorizontalOptions="FillAndExpand"
+                                   VerticalOptions="CenterAndExpand"
+                                   TextColor="Black"
+                                   Margin="5,8"/>
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding FAQCommand}"/>
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal"
+                         Spacing="10">
+                    <Image Source="ic_purchasedproducts"
+                    HorizontalOptions="Start"/>
+                    <Label Text="{localization:TranslateExtension PurchasedProducts}"
+                                   FontSize="{DynamicResource NormalLabelFont}"
+                                   HorizontalOptions="FillAndExpand"
+                                   VerticalOptions="CenterAndExpand"
+                                   TextColor="Black"
+                                   Margin="5,8"/>
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding FAQCommand}"/>
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal"
+                         Spacing="10">
+                    <Image Source="ic_notification"
+                    HorizontalOptions="Start"/>
+                    <Label Text="{localization:TranslateExtension Notifications}"
+                                   FontSize="{DynamicResource NormalLabelFont}"
+                                   HorizontalOptions="FillAndExpand"
+                                   VerticalOptions="CenterAndExpand"
+                                   TextColor="Black"
+                                   Margin="5,8"/>
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding FAQCommand}"/>
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal"
+                         Spacing="10">
+                    <Image Source="ic_transfercash"
+                    HorizontalOptions="Start"/>
+                    <Label Text="{localization:TranslateExtension DigitalCoin}"
+                                   FontSize="{DynamicResource NormalLabelFont}"
+                                   HorizontalOptions="FillAndExpand"
+                                   VerticalOptions="CenterAndExpand"
+                                   TextColor="Black"
+                                   Margin="5,8"/>
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding FAQCommand}"/>
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal"
+                         Spacing="10">
+                    <Image Source="ic_store"
+                    HorizontalOptions="Start"/>
+                    <Label Text="{localization:TranslateExtension CreateStore}"
+                                   FontSize="{DynamicResource NormalLabelFont}"
+                                   HorizontalOptions="FillAndExpand"
+                                   VerticalOptions="CenterAndExpand"
+                                   TextColor="Black"
+                                   Margin="5,8"/>
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding FAQCommand}"/>
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+                <BoxView Color="DimGray" HeightRequest="1" VerticalOptions="Start" Margin="5"/>
+            </StackLayout>
+        </Frame>
+
+        <Frame Padding="0">
+            <StackLayout Style="{StaticResource ContentSettingPage}" 
+                                 Spacing="15">
+                <BoxView Color="DimGray" HeightRequest="1" VerticalOptions="Start" Margin="3"/>
+                <StackLayout Orientation="Horizontal"
+                         Spacing="10">
+                    <Image Source="ic_help"
+                    HorizontalOptions="Start"/>
+                    <Label Text="{localization:TranslateExtension Helps}"
+                                   FontSize="{DynamicResource NormalLabelFont}"
+                                   HorizontalOptions="FillAndExpand"
+                                   VerticalOptions="CenterAndExpand"
+                                   TextColor="Black"
+                                   Margin="5,8"/>
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding FAQCommand}"/>
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+                
+                <StackLayout Orientation="Horizontal"
+                         Spacing="10">
+                    <Image Source="ic_logout"
+                    HorizontalOptions="Start"/>
+                    <Label Text="{localization:TranslateExtension LogOut}"
+                                   FontSize="{DynamicResource NormalLabelFont}"
+                                   HorizontalOptions="FillAndExpand"
+                                   VerticalOptions="CenterAndExpand"
+                                   TextColor="Black"
+                                   Margin="5,8"/>
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding FAQCommand}"/>
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+                <BoxView Color="DimGray" HeightRequest="1" VerticalOptions="Start" Margin="5"/>
+            </StackLayout>
+        </Frame>
+    </StackLayout>
+        
+</ContentPage>

@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
-using Rg.Plugins.Popup.Extensions;
-using Rg.Plugins.Popup.Pages;
 using SmartMarket.Localization;
 using SmartMarket.Utilities;
+using Rg.Plugins.Popup.Extensions;
+using Rg.Plugins.Popup.Pages;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -11,17 +11,29 @@ namespace SmartMarket.Views.Popups
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LoadingPopup : PopupPage
     {
+        #region Properties
+
         public static bool IsLoading { get; private set; }
+
+        #endregion
+
+        #region Constructors
 
         public LoadingPopup()
         {
             InitializeComponent();
         }
 
+        #endregion
+
+        #region Disappear
+
         protected override void OnDisappearing()
         {
             IsLoading = false;
         }
+
+        #endregion
 
         #region Instance
 
@@ -31,20 +43,20 @@ namespace SmartMarket.Views.Popups
 
         public async Task Show(string loadingMessage = null)
         {
-            Device.BeginInvokeOnMainThread(() =>
+            await DeviceExtension.BeginInvokeOnMainThreadAsync(() =>
             {
-                LabelLoadingMessage.Text = !string.IsNullOrWhiteSpace(loadingMessage)
-                    ? loadingMessage : TranslateExtension.Get("Loading3dot");
+                LabelMessage.Text = !string.IsNullOrWhiteSpace(loadingMessage)
+                    ? loadingMessage : TranslateExtension.Get("Loading");
             });
 
             if (IsLoading) return;
 
+            IsLoading = true;
+
             await DeviceExtension.BeginInvokeOnMainThreadAsync(async () =>
             {
-                LoadingIndicator.IsRunning = true;
-                IsLoading = true;
-
-                await App.Current.MainPage.Navigation.PushPopupAsync(this);
+                Indicator.IsRunning = true;
+                await Application.Current.MainPage.Navigation.PushPopupAsync(this);
             });
         }
 
@@ -54,14 +66,14 @@ namespace SmartMarket.Views.Popups
 
         public async Task Hide()
         {
-            if(IsLoading)
+            if (IsLoading)
             {
                 await Task.Delay(200);
+                IsLoading = false;
 
                 await DeviceExtension.BeginInvokeOnMainThreadAsync(async () =>
                 {
-                    LoadingIndicator.IsRunning = false;
-                    IsLoading = false;
+                    Indicator.IsRunning = false;
                     await Navigation.PopPopupAsync();
                 });
             }
@@ -69,10 +81,14 @@ namespace SmartMarket.Views.Popups
 
         #endregion
 
-        // Lock hard ware back button
+        #region OnBackButtonPressed
+
         protected override bool OnBackButtonPressed()
         {
             return true;
         }
+
+        #endregion
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using SmartMarket.Views.Base;
+using Xamarin.Forms;
 
 namespace SmartMarket.Views
 {

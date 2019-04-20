@@ -9,13 +9,35 @@
 
         <converters:CovertToCurrency x:Key="CovertToCurrency"></converters:CovertToCurrency>
 		<!-- Application resource dictionary -->
-        <Color x:Key="SGray">#B5B5B5</Color>
-        <Color x:Key="SDarkTextColor">#5b5b5b</Color>
-        <Color x:Key="SGreen">#18b440</Color>
-        
+        <Color x:Key="SGray">#e4e4e4</Color>
+        <Color x:Key="SDarkTextColor">#545454</Color>
+        <Color x:Key="SDarkerTextColor">#242424</Color>
+        <Color x:Key="SGreen">#16c72e</Color>
+        <Color x:Key="Blue">#3080e8</Color>
+        <Color x:Key="Red">#c71f16</Color>
+        <Color x:Key="CircleButtonColor">#4030e8</Color>
+        <Color x:Key="SkyBlue">#30c9e8</Color>
+
+        <x:Double x:Key="SmallLabelFont">14</x:Double>
+        <x:Double x:Key="NormalLabelFont">16</x:Double>
+        <x:Double x:Key="LargeLabelFont">18</x:Double>
+        <x:Double x:Key="SuperLargeLabelFont">22</x:Double>
+
+
         <Style x:Key="BlueLabelEntry" TargetType="control:EntryLabel">
             <Setter Property="IsTopLineVisible" Value="False" />
             <Setter Property="IsBottomLineVisible" Value="True" />
+        </Style>
+
+        <Style x:Key="ContentSettingPage" TargetType="StackLayout">
+            <Setter Property="BackgroundColor" Value="White"/>
+            <Setter Property="Padding" Value="10"/>
+        </Style>
+
+        <Style x:Key="ImageBase" TargetType="Image">
+            <Setter Property="Margin" Value="0,0,0,0"/>
+            <Setter Property="HeightRequest" Value="24"/>
+            <Setter Property="WidthRequest" Value="24"/>
         </Style>
     </Application.Resources>
 </prism:PrismApplication>

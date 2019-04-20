@@ -38,7 +38,7 @@ namespace SmartMarket.Views.Base
             // Do nothing
         }
 
-        protected async void AutoClosePopupAfter(uint duration)
+        protected async void AutoClosedPopupAfter(uint duration)
         {
             int id = _popupId;
             await Task.Delay((int)duration);
@@ -78,19 +78,17 @@ namespace SmartMarket.Views.Base
             set => SetValue(ClosedPopupCommandParameterProperty, value);
         }
 
-        protected async Task ClosedPopup(bool processCloseCommand = true)
+        private async Task ClosedPopup()
         {
-            IsClosed = true;
-
             await DeviceExtension.BeginInvokeOnMainThreadAsync(async () =>
             {
                 await Navigation.PopPopupAsync();
             });
 
-            if (processCloseCommand)
-                ClosedPopupCommand?.Execute(ClosedPopupCommandParameter);
-
+            ClosedPopupCommand?.Execute(ClosedPopupCommandParameter);
             _popupId++;
+
+            IsClosed = true;
         }
 
         #endregion

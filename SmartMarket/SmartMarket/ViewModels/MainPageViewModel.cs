@@ -1,5 +1,6 @@
 ﻿using Prism.Commands;
 using Prism.Navigation;
+using SmartMarket.Localization;
 using SmartMarket.Models;
 using SmartMarket.Utilities;
 using SmartMarket.ViewModels.Base;
@@ -45,46 +46,46 @@ namespace SmartMarket.ViewModels
         }
         #endregion
         public MainPageViewModel(INavigationService navigationService)
-            : base(navigationService)
+            : base(navigationService: navigationService)
         {
-            Title = "Main Page";
+            Title = TranslateExtension.Get("MainPage");
             ItemTappedCommand = new DelegateCommand(ItemTappedExcute);
             MyList = new ObservableCollection<ItemModel>()
             {
                 new ItemModel()
                 {
                     ItemName = "But Long1",
-                    Prince = 20000,
+                    Price = 20000,
                     Image= "006-notification",
                 },
                 new ItemModel()
                 {
                     ItemName = "But Long2",
-                    Prince = 20000,
+                    Price = 20000,
                     Image= "006-notification"
                 },
                 new ItemModel()
                 {
                     ItemName = "But Long3",
-                    Prince = 20000,
+                    Price = 20000,
                     Image= "006-notification"
                 },
                 new ItemModel()
                 {
                     ItemName = "But Long4",
-                    Prince = 20000,
+                    Price = 20000,
                     Image= "006-notification"
                 },
                 new ItemModel()
                 {
                     ItemName = "But Long5",
-                    Prince = 20000,
+                    Price = 20000,
                     Image= "006-notification"
                 },
                 new ItemModel()
                 {
                     ItemName = "But Long6",
-                    Prince = 20000,
+                    Price = 20000,
                     Image= "006-notification"
                 },
             };
@@ -94,15 +95,6 @@ namespace SmartMarket.ViewModels
                 "one.png","two.jpg","one.png","two.jpg"
             };
 
-            //  var a = SqLiteService.Get<UserModel>(x => x.Id == 1);
-            var user = new UserModel()
-            {
-                Id = 2,
-                ClientId = 12,
-                ProductsList = MyList,
-            };
-
-            var b =SqLiteService.Insert(user);
         }
 
         private void LoginExcute()

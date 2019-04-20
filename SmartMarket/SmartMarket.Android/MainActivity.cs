@@ -4,12 +4,12 @@ using Android.OS;
 using Android.Views;
 using CarouselView.FormsPlugin.Android;
 using FFImageLoading.Forms.Platform;
-using FotoScan.Tablet.Interfaces;
 using Plugin.Permissions;
 using Prism;
 using Prism.Ioc;
 using SmartMarket.Droid.Services.SQLiteService;
 using SmartMarket.Droid.Utilities;
+using SmartMarket.Interfaces;
 using SmartMarket.Interfaces.LocalDatabase;
 
 namespace SmartMarket.Droid
@@ -30,7 +30,6 @@ namespace SmartMarket.Droid
             base.OnCreate(bundle);
             Init(bundle);
 
-            global::Xamarin.Forms.Forms.Init(this, bundle);
 
             LoadApplication(new App(new AndroidInitializer()));
         }

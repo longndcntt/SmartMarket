@@ -24,8 +24,9 @@ namespace SmartMarket.Droid.Controls.CustomEntryLabelRenderer
                 
                 this.Control.SetBackgroundResource(GetBackground(element.Theme));
                 this.Control.SetAllCaps(false);
+                //this.Control.SetPadding(0,0,0,0);
                 this.Control.SetPadding((int)element.Padding.Left, (int)element.Padding.Top,
-                    (int)element.Padding.Right, (int)element.Padding.Bottom);
+                   (int)element.Padding.Right, (int)element.Padding.Bottom);
             }
         }
 

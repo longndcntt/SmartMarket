@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FotoScan.Tablet.Extensions
+namespace SmartMarket.Extensions
 {
     public static class DoubleExtensions
     {

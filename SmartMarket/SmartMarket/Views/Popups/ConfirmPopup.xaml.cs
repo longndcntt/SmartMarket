@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Rg.Plugins.Popup.Extensions;
 using SmartMarket.Utilities;
 using SmartMarket.Views.Base;
+using Rg.Plugins.Popup.Extensions;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -12,46 +12,66 @@ namespace SmartMarket.Views.Popups
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ConfirmPopup : PopupBasePage
     {
-        private bool _processCloseCommandWhenTouchOutside;
+        #region Constructors
 
         public ConfirmPopup()
         {
             InitializeComponent();
         }
 
-        
+        #endregion
+
         #region Instance
 
         private static ConfirmPopup _instance;
 
-        public static ConfirmPopup Instance => _instance ?? (_instance = new ConfirmPopup());
+        public static ConfirmPopup Instance => _instance ?? (_instance = new ConfirmPopup() { IsClosed = true });
 
-        public async Task<ConfirmPopup> Show(string message = null, string closeButtonText = null,
-            ICommand closeCommand = null, object closeCommandParameter = null, bool processCloseCommandWhenTouchOutside = true,
-            string acceptButtonText = null, ICommand acceptCommand = null, object acceptCommandParameter = null)
+        public async Task<ConfirmPopup> Show(string title = null, string message = null, string closeButtonText = null,
+            ICommand closeCommand = null, object closeCommandParameter = null,
+            string acceptButtonText = null, ICommand acceptCommand = null, object acceptCommandParameter = null,
+            bool isAutoClose = false, uint duration = 2000)
         {
-            await DeviceExtension.BeginInvokeOnMainThreadAsync(async () =>
+            // Close Loading Popup if it is showing
+            await LoadingPopup.Instance.Hide();
+
+            await DeviceExtension.BeginInvokeOnMainThreadAsync( () =>
             {
-                IsClosed = false;
-                _processCloseCommandWhenTouchOutside = processCloseCommandWhenTouchOutside;
+                if (title != null)
+                    LabelConfirmTitle.Text = title;
 
                 if (message != null)
-                    LabelMessage.Text = message;
+                    LabelConfirmMessage.Text = message;
 
                 if (closeButtonText != null)
-                    ButtonClose.Text = closeButtonText;
+                    ButtonConfirmClose.Text = closeButtonText;
 
                 ClosedPopupCommand = closeCommand;
                 ClosedPopupCommandParameter = closeCommandParameter;
 
                 if (acceptButtonText != null)
-                    ButtonAccept.Text = acceptButtonText;
+                    ButtonConfirmAccept.Text = acceptButtonText;
 
                 AcceptCommand = acceptCommand;
                 AcceptCommandParameter = acceptCommandParameter;
 
-                await App.Current.MainPage.Navigation.PushPopupAsync(this);
+                IsAutoClose = isAutoClose;
+                Duration = duration;
+
             });
+
+            if (IsClosed)
+            {
+                IsClosed = false;
+
+                if (isAutoClose && duration > 0)
+                    AutoClosedPopupAfter(duration);
+
+                await DeviceExtension.BeginInvokeOnMainThreadAsync(async () =>
+                {
+                    await Application.Current.MainPage.Navigation.PushPopupAsync(this);
+                });
+            }
 
             return this;
         }
@@ -59,26 +79,24 @@ namespace SmartMarket.Views.Popups
         #endregion
 
         #region Events
+
         private async void AcceptPopupEvent(object sender, EventArgs e)
         {
-            IsClosed = true;
-
             await DeviceExtension.BeginInvokeOnMainThreadAsync(async () =>
             {
                 await Navigation.PopPopupAsync();
             });
 
+            // waiting for close animation finished
+            await Task.Delay(300);
+
             AcceptCommand?.Execute(AcceptCommandParameter);
-        }
 
-
-        private async void TouchOutside(object sender, EventArgs e)
-        {
-            await ClosedPopup(processCloseCommand: _processCloseCommandWhenTouchOutside);
+            //_popupId++;
+            IsClosed = true;
         }
 
         #endregion
-
 
         #region AcceptCommand
 
@@ -110,5 +128,13 @@ namespace SmartMarket.Views.Popups
 
         #endregion
 
+        #region RefreshUI
+
+        //public void RefreshUI()
+        //{
+        //    InitializeComponent();
+        //}
+
+        #endregion
     }
 }
