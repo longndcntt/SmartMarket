@@ -12,6 +12,7 @@
 
     <ScrollView>
         <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="FillAndExpand">
+            <!--Header View-->
             <Grid BackgroundColor="SkyBlue"
                   HeightRequest="50"
                   RowSpacing="0"

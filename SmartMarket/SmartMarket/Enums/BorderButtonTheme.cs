@@ -37,5 +37,10 @@
         /// </summary>
         Yellow,
 
+        /// <summary>
+        /// Yellow Red, no border
+        /// </summary>
+        Red,
+
     }
 }

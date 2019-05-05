@@ -9,8 +9,8 @@ namespace SmartMarket.Models
     [Table("ItemDetails")]
     public class ItemDetails
     {
-        [PrimaryKey]
-        public Guid Id { get; set; } = new Guid();
+        [PrimaryKey,AutoIncrement]
+        public int Id { get; set; } 
 
         [ForeignKey(typeof(ItemModel))]
         public int ProductId { get; set; }

@@ -31,5 +31,17 @@ namespace SmartMarket.Controls.CustomLabelEntry
         }
 
         #endregion
+
+        #region MyRegion
+        public static readonly BindableProperty MaxLinesLabelProperty =
+            BindableProperty.Create(nameof(MaxLinesLabel), typeof(int), typeof(ExtendedLabel), 3);
+
+
+        public int MaxLinesLabel
+        {
+            get => (int)GetValue(MaxLinesLabelProperty);
+            set => SetValue(MaxLinesLabelProperty, value);
+        }
+        #endregion
     }
 }

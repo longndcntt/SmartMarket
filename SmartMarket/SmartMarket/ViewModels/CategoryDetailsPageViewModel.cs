@@ -62,7 +62,7 @@ namespace SmartMarket.ViewModels
 
         #region Override Navigate new to
 
-        public override void OnNavigatedNewTo(INavigationParameters parameters)
+        public override void OnNavigatedNewToAsync(INavigationParameters parameters)
         {
             if (parameters != null)
             {
@@ -119,6 +119,7 @@ namespace SmartMarket.ViewModels
                     var param = new NavigationParameters
                 {
                     {ParamKey.SelectedItem.ToString(), selectedItem},
+                            {ParamKey.Category.ToString(), SelectedCategory},
                     //{nameof(StatusOfLeadModel), StatusOfLeadModel.CreateLead},
                 };
 
@@ -134,14 +135,15 @@ namespace SmartMarket.ViewModels
                  if (SelectedItemTapped.Id != -1)
                  {
                      var selectedItem = SqLiteService.Get<ItemModel>(x => x.Id == SelectedItemTapped.Id);
-                     await MessagePopup.Instance.Show(SelectedItemTapped.Id.ToString());
+                     //await MessagePopup.Instance.Show(SelectedItemTapped.Id.ToString());
                      var param = new NavigationParameters
-                 {
-                    {ParamKey.SelectedItem.ToString(), selectedItem},
+                        {
+                            {ParamKey.SelectedItem.ToString(), selectedItem},
+                            {ParamKey.Category.ToString(), SelectedCategory},
                          //{nameof(StatusOfLeadModel), StatusOfLeadModel.CreateLead},
-                     };
+                        };
 
-                     await Navigation.NavigateAsync(PageManager.CategoryDetailsPage, parameters: param);
+                     await Navigation.NavigateAsync(PageManager.ItemDetailsPage, parameters: param);
                  }
              });
         }

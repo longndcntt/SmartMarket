@@ -204,4 +204,13 @@
   <data name="ProfileUser" xml:space="preserve">
     <value>Profile User</value>
   </data>
+  <data name="AddToCart" xml:space="preserve">
+    <value>Add to cart</value>
+  </data>
+  <data name="BuyIt" xml:space="preserve">
+    <value>Buy it</value>
+  </data>
+  <data name="NumberOfOrder" xml:space="preserve">
+    <value>Number of order</value>
+  </data>
 </root>

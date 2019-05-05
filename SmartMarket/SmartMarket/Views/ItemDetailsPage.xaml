@@ -1,0 +1,232 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<base:BasePage xmlns:base="clr-namespace:SmartMarket.Views.Base"
+               xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+               xmlns:controls="clr-namespace:SmartMarket.Controls"
+                xmlns:localization="clr-namespace:SmartMarket.Localization"
+               xmlns:converters="clr-namespace:SmartMarket.Converters"
+               xmlns:buttonBorder="clr-namespace:SmartMarket.Controls.CustomLabelEntry"
+               xmlns:converters1="clr-namespace:SmartMarket.Coverter"
+               xmlns:abstractions="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions"
+               xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+               xmlns:local="clr-namespace:SmartMarket.Behaviors"
+               prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="SmartMarket.Views.ItemDetailsPage">
+
+    <ContentPage.Resources>
+        <converters:IsTrueConverter x:Key="IsTrueConverter"/>
+        <converters1:CovertToCurrency x:Key="CovertToCurrency"/>
+        <converters:RatingConverter x:Key="ratingConverter"/>
+    </ContentPage.Resources>
+
+    <ScrollView Padding="0">
+        <StackLayout HorizontalOptions="FillAndExpand"
+                 VerticalOptions="FillAndExpand"
+                     Padding="0,0,0,10">
+            <Grid BackgroundColor="SkyBlue"
+                  HeightRequest="50"
+                  RowSpacing="0"
+                  Padding="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="50"/>
+                </Grid.ColumnDefinitions>
+                <controls:ImageButton x:Name="backImage"
+                                      Grid.Column="0"
+                                      HorizontalOptions="CenterAndExpand"
+                                      VerticalOptions="CenterAndExpand"
+                                      Source="ic_left_arrow"
+                                      IsVisible="{Binding IsSearch}"
+                                      Style="{StaticResource ImageBase}"
+                                      Command="{Binding BackCommand}"/>
+                <!--HeaderContent-->
+                <StackLayout IsVisible="True"
+                         Grid.Column="1" Grid.ColumnSpan="2"
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="Center">
+                    <Label FontAttributes="Bold"
+                       FontSize="{StaticResource SuperLargeLabelFont}"
+                       Text="{Binding ItemSelected.ItemName}"
+                       TextColor="{StaticResource SDarkerTextColor}"/>
+                </StackLayout>
+
+                <!--SearchBar-->
+                <Frame Grid.Column="1"
+                   Grid.ColumnSpan="2"
+                   HorizontalOptions="FillAndExpand"
+                   VerticalOptions="FillAndExpand" Padding="0" Margin="0" 
+                   IsVisible="{Binding IsSearch}">
+
+                    <StackLayout  
+                       HorizontalOptions="FillAndExpand"
+                       VerticalOptions="FillAndExpand"
+                              BackgroundColor="White"
+                              Padding="5"
+                              Orientation="Horizontal">
+                        <buttonBorder:ExtendedEntry Text="{Binding ContentSearch}"
+                                                Borderless="True"
+                                                Padding="4"
+                           HorizontalOptions="FillAndExpand"
+                           VerticalOptions="CenterAndExpand"
+                           Placeholder="{localization:Translate Search}"/>
+                        <controls:ImageButton Source="ic_search"
+                                          Style="{StaticResource ImageBase}"
+                                          Margin="5,0"/>
+                    </StackLayout>
+                </Frame>
+                <controls:ImageButton Source="ic_search"
+                                  Grid.Column="2"
+                                  Style="{StaticResource ImageBase}"
+                                  Command="{Binding IsSearchCommand}"
+                                  IsVisible="{Binding IsSearch, Converter={StaticResource IsTrueConverter}}"
+                                          Margin="5,0"/>
+                <controls:ImageButton Source="ic_shoppingcart"
+                                      Grid.Column="3" 
+                                      IsVisible="True"
+                                      HorizontalOptions="CenterAndExpand"
+                                      VerticalOptions="CenterAndExpand"
+                                      Style="{StaticResource ImageBase}"
+                                      Margin="0"
+                                      Command="{Binding CheckCartCommand}"/>
+            </Grid>
+            <Grid VerticalOptions="FillAndExpand"
+                  HorizontalOptions="FillAndExpand">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <StackLayout Grid.Row="0">
+                    <abstractions:CarouselViewControl ItemsSource="{Binding ItemSelectedImage}"
+                                          VerticalOptions="FillAndExpand" 
+                                              HorizontalOptions="FillAndExpand"
+                                              Orientation="Horizontal"
+                                              ShowIndicators="True"
+                                              IsSwipeEnabled="True"
+                                              CurrentPageIndicatorTintColor="Yellow"
+                                          Position="{Binding Position}">
+                        <abstractions:CarouselViewControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid HorizontalOptions="FillAndExpand">
+                                    <forms:CachedImage Source="{Binding Image}"
+                                               CacheType="None"
+                                                   Aspect="AspectFit"/>
+                                </Grid>
+                            </DataTemplate>
+                        </abstractions:CarouselViewControl.ItemTemplate>
+                    </abstractions:CarouselViewControl>
+                </StackLayout>
+                <StackLayout Grid.Row="1"
+                       Padding="10">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <StackLayout  Grid.Row="0" Grid.Column="0">
+                            <Label FontAttributes="Bold"
+                       FontSize="{StaticResource LargeLabelFont}"
+                       Text="{Binding ItemSelected.ItemName}"
+                       TextColor="{StaticResource SDarkerTextColor}"/>
+                            <Label  FontSize="{StaticResource NormalLabelFont}"
+                       Text="{Binding ItemSelectedDetails.Manufacturer}"
+                       TextColor="{StaticResource Purple}"/>
+                        </StackLayout>
+                        <Label FontSize="{StaticResource SuperLargeLabelFont}"
+                                             Grid.Row="0" Grid.Column="1"
+                                           Text="{Binding ItemSelected.Price,Converter={StaticResource CovertToCurrency}}"
+                                            TextColor="{StaticResource SGreen}"
+                                            VerticalOptions="CenterAndExpand"
+                                            HorizontalOptions="EndAndExpand">
+                        </Label>
+                        <buttonBorder:ExtendedLabel  FontSize="{StaticResource NormalLabelFont}"
+                                             Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                                           Text="{Binding ItemSelectedDetails.Detail}"
+                                            TextColor="{StaticResource SDarkerTextColor}"
+                                                 MaxLinesLabel="4"
+                                            VerticalOptions="CenterAndExpand"
+                                            HorizontalOptions="EndAndExpand">
+                            <buttonBorder:ExtendedLabel.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ShowMoreItemDetailCommand}"/>
+                            </buttonBorder:ExtendedLabel.GestureRecognizers>
+                        </buttonBorder:ExtendedLabel>
+                    </Grid>
+                    <StackLayout HorizontalOptions="EndAndExpand"
+                                     Orientation="Horizontal">
+                        <Label Text="{localization:Translate NumberOfOrder}"
+                                   VerticalOptions="CenterAndExpand"
+                                   FontSize="{StaticResource NormalLabelFont}"/>
+                        <Entry Keyboard="Numeric"
+                                   VerticalOptions="CenterAndExpand"
+                               Text="{Binding Count}"/>
+                    </StackLayout>
+                    <buttonBorder:BorderButton Text="{localization:Translate AddToCart}"
+                                                   HorizontalOptions="FillAndExpand"
+                                                   FontSize="{StaticResource NormalLabelFont}"
+                                                   Theme="Red"
+                                                   TextColor="White"
+                                                   Command="{Binding AddToCartCommand}"/>
+
+                    <buttonBorder:BorderButton Text="{localization:Translate BuyIt}"
+                                                   HorizontalOptions="FillAndExpand"
+                                                   Theme="Red"
+                                                   TextColor="White"
+                                                   FontSize="{StaticResource NormalLabelFont}"
+                                                   Command="{Binding NavigateToCartCommand}"/>
+                    <base:RatingStars Rating="3"/>
+                    <ListView ItemsSource="{Binding ReviewProductList}"
+                                  HasUnevenRows="True"
+                              VerticalOptions="FillAndExpand"
+                              Margin="0,5"
+                               SelectionMode="None"
+                      SeparatorVisibility="None">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <controls:CustomViewCell SelectedBackgroundColor="White">
+                                    <Frame Padding="10" Margin="10">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="auto"/>
+                                                <RowDefinition Height="auto"/>
+                                                <RowDefinition Height="auto"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Label TextColor="{StaticResource SDarkerTextColor}"
+                                                       Grid.Column="0" Grid.Row="0"
+                                                   FontSize="{StaticResource LargeLabelFont}"
+                                                   Text="{Binding Source={x:Reference ratingStars}, Path=Rating, Converter={StaticResource ratingConverter}}"/>
+                                            <Label Text="Name of user"
+                                                       Grid.Column="1" Grid.Row="0"
+                                                       FontSize="{StaticResource NormalLabelFont}"
+                                                       TextColor="{StaticResource SGray}"/>
+                                            <base:RatingStars Rating="{Binding Rate}"
+                                                                  Grid.Row="1" Grid.Column="0"
+                                                                  x:Name="ratingStars"/>
+                                            <Label Text="{Binding ReviewedDateTime}"
+                                                       Grid.Row="1" Grid.Column="1"
+                                                       FontSize="{StaticResource NormalLabelFont}"
+                                                       TextColor="{StaticResource SGray}"/>
+                                            <Label Text="{Binding Content}"
+                                                       Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                                                       FontSize="{StaticResource NormalLabelFont}"
+                                                       TextColor="{StaticResource SGray}"/>
+                                        </Grid>
+                                    </Frame>
+                                </controls:CustomViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackLayout>
+            </Grid>
+        </StackLayout>
+    </ScrollView>
+</base:BasePage>

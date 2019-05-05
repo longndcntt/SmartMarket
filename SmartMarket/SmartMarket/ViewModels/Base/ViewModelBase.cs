@@ -147,14 +147,14 @@ namespace SmartMarket.ViewModels.Base
                 var navMode = parameters.GetNavigationMode();
                 switch (navMode)
                 {
-                    case NavigationMode.New: OnNavigatedNewTo(parameters); break;
+                    case NavigationMode.New: OnNavigatedNewToAsync(parameters); break;
                     case NavigationMode.Back: OnNavigatedBackTo(parameters); break;
                 }
             }
 
         }
 
-        public virtual void OnNavigatedNewTo(INavigationParameters parameters)
+        public virtual void OnNavigatedNewToAsync(INavigationParameters parameters)
         {
 #if DEBUG
             Debug.WriteLine("Navigate new to");

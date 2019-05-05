@@ -9,12 +9,13 @@
 
         <converters:CovertToCurrency x:Key="CovertToCurrency"></converters:CovertToCurrency>
 		<!-- Application resource dictionary -->
-        <Color x:Key="SGray">#e4e4e4</Color>
+        <Color x:Key="SGray">#616161</Color>
+        <Color x:Key="Purple">#8E24AA</Color>
         <Color x:Key="SDarkTextColor">#545454</Color>
         <Color x:Key="SDarkerTextColor">#242424</Color>
-        <Color x:Key="SGreen">#16c72e</Color>
+        <Color x:Key="SGreen">#4CAF50</Color>
         <Color x:Key="Blue">#3080e8</Color>
-        <Color x:Key="Red">#c71f16</Color>
+        <Color x:Key="Red">#D50000</Color>
         <Color x:Key="CircleButtonColor">#4030e8</Color>
         <Color x:Key="SkyBlue">#30c9e8</Color>
 

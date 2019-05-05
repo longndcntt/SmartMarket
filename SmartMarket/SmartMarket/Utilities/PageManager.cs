@@ -20,8 +20,8 @@ namespace SmartMarket.Utilities
 
         public static readonly string CategoryDetailsPage = "CategoryDetailsPage";
 
+        public static readonly string ItemDetailsPage = "ItemDetailsPage";
 
-        
         //public static readonly string MerchantHomePage = "MerchantHomePage";
         //public static readonly string ClientHomePage = "ClientHomePage";
         //public static readonly string LeftMenuPage = "LeftMenuPage";

@@ -26,9 +26,9 @@ namespace SmartMarket.ViewModels
             LoginCommand = new DelegateCommand(LoginExecute);
         }
         #endregion
-        public override void OnNavigatedNewTo(INavigationParameters parameters)
+        public override void OnNavigatedNewToAsync(INavigationParameters parameters)
         {
-            base.OnNavigatedNewTo(parameters);
+            base.OnNavigatedNewToAsync(parameters);
         }
         #region LoginCommand 
 

@@ -204,4 +204,13 @@
   <data name="ProfileUser" xml:space="preserve">
     <value>Tài khoản</value>
   </data>
+  <data name="AddToCart" xml:space="preserve">
+    <value>Thêm vào giỏ</value>
+  </data>
+  <data name="BuyIt" xml:space="preserve">
+    <value>Mua</value>
+  </data>
+  <data name="NumberOfOrder" xml:space="preserve">
+    <value>Số lượng</value>
+  </data>
 </root>
