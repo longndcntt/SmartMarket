@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -13,6 +15,10 @@ using SmartMarket.Interfaces.HttpService;
 using SmartMarket.Interfaces.LocalDatabase;
 using SmartMarket.Models;
 using SmartMarket.Utilities;
+using SmartMarket.Enums;
+using SmartMarket.ViewModels.Base;
+using SmartMarket.Views.Popups;
+using System.Linq;
 
 namespace SmartMarket.ViewModels.Base
 {
@@ -50,7 +56,26 @@ namespace SmartMarket.ViewModels.Base
             set => SetProperty(ref _userInfo, value);
         }
 
+        private Order _orderOfUser;
+        public Order OrderOfUser
+        {
+            get => _orderOfUser;
+            set => _orderOfUser = value;
+        }
 
+        private ObservableCollection<OrderDetails> _itemOfOrder;
+        public ObservableCollection<OrderDetails> ItemOfOrder
+        {
+            get => _itemOfOrder;
+            set => _itemOfOrder = value;
+        }
+
+        private bool _isNullCart;
+        public bool IsNullCart
+        {
+            get => _isNullCart;
+            set => _isNullCart = value;
+        }
         #endregion
 
         #region Constructor
@@ -275,7 +300,7 @@ namespace SmartMarket.ViewModels.Base
         public bool IsTokenExpire { get; set; } = false;
 
         #region Properties
-       
+
         private string _username;
 
         public string Username
@@ -285,6 +310,7 @@ namespace SmartMarket.ViewModels.Base
         }
 
         private string _password;
+
         public string Password
         {
             get => _password;
@@ -343,6 +369,33 @@ namespace SmartMarket.ViewModels.Base
 
         }
 
+        #endregion
+
+        #region NavigateCardPage
+        public async void NavigateShowCardPage()
+        {
+            await CheckBusy(async () =>
+            {
+                await Navigation.NavigateAsync(PageManager.ShowCardPage);
+            });
+            //var order = SqLiteService.Get<Order>(x => x.Id == 0);
+            //if (order == null)
+            //{
+            //    IsNullCart = true;
+            //    OrderOfUser = new Order();
+            //    ItemOfOrder = new ObservableCollection<OrderDetails>();
+            //}
+            // else
+            //{
+            //    var listItemOfCartTemp = ((SqLiteService.GetList<OrderDetails>(x => string.IsNullOrEmpty(x.Id)) as IEnumerable<OrderDetails>));
+            //    if (listItemOfCartTemp != null)
+            //    {
+            //        ItemOfOrder = new ObservableCollection<OrderDetails>(listItemOfCartTemp);
+            //    }
+
+            //}
+
+        }
         #endregion
     }
 }

@@ -213,4 +213,37 @@
   <data name="NumberOfOrder" xml:space="preserve">
     <value>Số lượng</value>
   </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Xóa</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>Tổng cộng</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Sửa</value>
+  </data>
+  <data name="Express" xml:space="preserve">
+    <value>Tốc hành ( trong 1 ngày làm việc)</value>
+  </data>
+  <data name="FreeShip" xml:space="preserve">
+    <value>Miễn phí ( trong 4-6 ngày làm việc)</value>
+  </data>
+  <data name="Items" xml:space="preserve">
+    <value>Sản phẩm</value>
+  </data>
+  <data name="OrderInformations" xml:space="preserve">
+    <value>Thông tin giỏ hàng</value>
+  </data>
+  <data name="ProceedToCheckout" xml:space="preserve">
+    <value>Thanh toán</value>
+  </data>
+  <data name="Quantity" xml:space="preserve">
+    <value>Số lượng</value>
+  </data>
+  <data name="ShippingAddress" xml:space="preserve">
+    <value>Địa chỉ giao hàng</value>
+  </data>
+  <data name="Standard" xml:space="preserve">
+    <value>Tiêu chuẩn ( trong 2-3 ngày làm việc)</value>
+  </data>
 </root>

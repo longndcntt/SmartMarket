@@ -11,6 +11,10 @@
         /// Green border, White background
         /// </summary>
         GreenWhite,
+        /// <summary>
+        /// Red border, White background
+        /// </summary>
+        RedWhite,
 
         /// <summary>
         /// Green background, no border

@@ -1,12 +1,18 @@
 ﻿using Prism.Commands;
+using Prism.Mvvm;
 using Prism.Navigation;
+using SmartMarket.Enums;
+using SmartMarket.Interfaces.LocalDatabase;
 using SmartMarket.Localization;
 using SmartMarket.Models;
 using SmartMarket.Utilities;
 using SmartMarket.ViewModels.Base;
 using SmartMarket.Views.Popups;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace SmartMarket.ViewModels
@@ -14,6 +20,7 @@ namespace SmartMarket.ViewModels
     public class MainPageViewModel : ViewModelBase
     {
         #region Constructor
+        public ICommand CheckCartCommand { get; set; }
         private int _position = 0;
         public int Position
         {
@@ -35,7 +42,7 @@ namespace SmartMarket.ViewModels
         public ItemModel SelectedItemTapped
         {
             get => _selectedItem;
-            set => SetProperty(ref _selectedItem , value);
+            set => SetProperty(ref _selectedItem, value);
         }
 
         private ObservableCollection<string> _listEvent;
@@ -45,9 +52,32 @@ namespace SmartMarket.ViewModels
             set => SetProperty(ref _listEvent, value);
         }
         #endregion
-        public MainPageViewModel(INavigationService navigationService)
-            : base(navigationService: navigationService)
+        public MainPageViewModel(INavigationService navigationService, ISqLiteService sqLiteService)
+           : base(navigationService: navigationService, sqliteService: sqLiteService)
         {
+            //Check Cart
+            var order = SqLiteService.Get<Order>(x => x.Id == 0);
+            if (order == null)
+            {
+                IsNullCart = false;
+                OrderOfUser = new Order();
+                ItemOfOrder = new ObservableCollection<OrderDetails>();
+                SqLiteService.Insert(OrderOfUser);
+            }
+            else
+            {
+                var listItemOfCartTemp = SqLiteService.GetList<OrderDetails>(x => x.Id != "");
+                ItemOfOrder = new ObservableCollection<OrderDetails>();
+                if (listItemOfCartTemp != null)
+                {
+                    ItemOfOrder = new ObservableCollection<OrderDetails>(listItemOfCartTemp);
+                }
+
+            }
+            //
+
+            CheckCartCommand = new DelegateCommand(NavigateShowCardPage);
+
             Title = TranslateExtension.Get("MainPage");
             ItemTappedCommand = new DelegateCommand(ItemTappedExcute);
             MyList = new ObservableCollection<ItemModel>()
@@ -100,6 +130,8 @@ namespace SmartMarket.ViewModels
         private void LoginExcute()
         {
             Navigation.NavigateAsync(PageManager.LoginPage);
+            var listItemOfCartTemp = SqLiteService.GetList<OrderDetails>(x => string.IsNullOrEmpty(x.Id));
+
         }
 
         public ICommand ItemTappedCommand { get; set; }
@@ -107,7 +139,7 @@ namespace SmartMarket.ViewModels
         private async void ItemTappedExcute()
         {
             await MessagePopup.Instance.Show(SelectedItemTapped.ItemName);
-           // await Navigation.NavigateAsync(PageManager.LoginPage);
+            // await Navigation.NavigateAsync(PageManager.LoginPage);
         }
     }
 }

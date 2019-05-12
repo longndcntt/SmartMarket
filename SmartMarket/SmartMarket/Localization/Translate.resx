@@ -213,4 +213,37 @@
   <data name="NumberOfOrder" xml:space="preserve">
     <value>Number of order</value>
   </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Express" xml:space="preserve">
+    <value>Express (1 Business Day)</value>
+  </data>
+  <data name="FreeShip" xml:space="preserve">
+    <value>Free Shipping (4-6 Business Day)</value>
+  </data>
+  <data name="Items" xml:space="preserve">
+    <value>Items</value>
+  </data>
+  <data name="OrderInformations" xml:space="preserve">
+    <value>Order Informations</value>
+  </data>
+  <data name="ProceedToCheckout" xml:space="preserve">
+    <value>Proceed to checkout</value>
+  </data>
+  <data name="Quantity" xml:space="preserve">
+    <value>Quantity</value>
+  </data>
+  <data name="ShippingAddress" xml:space="preserve">
+    <value>Shipping address</value>
+  </data>
+  <data name="Standard" xml:space="preserve">
+    <value>Standard (2-4 Business Day)</value>
+  </data>
 </root>

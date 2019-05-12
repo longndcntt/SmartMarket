@@ -87,6 +87,8 @@ namespace SmartMarket
             containerRegistry.Register<IHttpRequest, HttpRequest>();
             containerRegistry.Register<ISqLiteService, SqLiteService>();
             containerRegistry.RegisterForNavigation<ItemDetailsPage, ItemDetailsPageViewModel>();
+            containerRegistry.RegisterForNavigation<ShowCardPage, ShowCardPageViewModel>();
+            containerRegistry.RegisterForNavigation<ProceedToCheckoutPage, ProceedToCheckoutPageViewModel>();
         }
     }
 }

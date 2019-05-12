@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             prism:ViewModelLocator.AutowireViewModel="True"
+                xmlns:localization="clr-namespace:SmartMarket.Localization"
+             xmlns:controls="clr-namespace:SmartMarket.Controls"
+             xmlns:radio="clr-namespace:SmartMarket.Controls.InputKit"
+             x:Class="SmartMarket.Views.ProceedToCheckoutPage">
+    <ScrollView>
+        <StackLayout  HorizontalOptions="FillAndExpand"
+                     VerticalOptions="FillAndExpand">
+            <Grid BackgroundColor="SkyBlue"
+                  HeightRequest="50"
+                  RowSpacing="0"
+                  Padding="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="50"/>
+                </Grid.ColumnDefinitions>
+                <controls:ImageButton x:Name="backImage"
+                                      Grid.Column="0"
+                                      HorizontalOptions="CenterAndExpand"
+                                      VerticalOptions="CenterAndExpand"
+                                      Source="ic_left_arrow"
+                                      Style="{StaticResource ImageBase}"
+                                      Command="{Binding BackCommand}"/>
+                <!--HeaderContent-->
+                <StackLayout IsVisible="True"
+                         Grid.Column="1" Grid.ColumnSpan="2"
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="Center">
+                    <Label FontAttributes="Bold"
+                       FontSize="{StaticResource SuperLargeLabelFont}"
+                       Text="{localization:Translate ProceedToCheckout}"
+                       TextColor="{StaticResource SDarkerTextColor}"/>
+                </StackLayout>
+            </Grid>
+
+            <StackLayout HorizontalOptions="FillAndExpand"
+                     VerticalOptions="FillAndExpand"
+                     Padding="10,20">
+
+
+                <StackLayout x:Name="listItem"
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="Start"
+                         Spacing="0"/>
+                
+                <Frame Padding="10"
+                   HorizontalOptions="FillAndExpand"
+                   VerticalOptions="StartAndExpand">
+                    <StackLayout Orientation="Vertical"
+                             HorizontalOptions="FillAndExpand"
+                             VerticalOptions="StartAndExpand">
+                        <radio:SelectionView SelectionType="RadioButton"
+                                         ItemsSource="{Binding ChooseShippingList}"
+                                         ItemDisplayBinding="{Binding .}"
+                                             SelectedIndex="{Binding SelectedShipping}"
+                                         ColumnNumber="1"
+                                         RowSpacing="10"/>
+                    </StackLayout>
+                </Frame>
+                
+                <Frame Padding="10"
+                   HorizontalOptions="FillAndExpand"
+                   HeightRequest="60">
+                    <StackLayout Orientation="Horizontal"
+                             HorizontalOptions="FillAndExpand"
+                             VerticalOptions="Center"
+                             Padding="10">
+                        <Label Text="{localization:Translate Total}"
+                           VerticalOptions="CenterAndExpand"
+                           FontSize="{StaticResource SuperLargeLabelFont}"
+                           HorizontalOptions="StartAndExpand"
+                           TextColor="{StaticResource SGray}"/>
+                        <Label Text="{Binding SubTotal,Converter={StaticResource Key=CovertToCurrency}}"
+                           VerticalOptions="CenterAndExpand"
+                           FontSize="{StaticResource SuperLargeLabelFont}"
+                           HorizontalOptions="EndAndExpand"
+                           TextColor="{StaticResource SGreen}"/>
+                    </StackLayout>
+                </Frame>
+
+                <Frame Padding="10"
+                   HorizontalOptions="FillAndExpand"
+                   VerticalOptions="StartAndExpand">
+                    <Grid HorizontalOptions="FillAndExpand"
+                             VerticalOptions="StartAndExpand">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="7*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Text="{localization:Translate ShippingAddress}"
+                               Grid.Row="0" Grid.Column="0"
+                               FontAttributes="Bold"
+                               VerticalOptions="CenterAndExpand"
+                               FontSize="{StaticResource NormalLabelFont}"
+                               TextColor="{StaticResource SGray}"></Label>
+                        <Label Text="Address Temp"
+                               Grid.Row="1" Grid.Column="0"
+                               VerticalOptions="CenterAndExpand"
+                               FontSize="{StaticResource NormalLabelFont}"
+                               TextColor="{StaticResource SGray}"/>
+                        <Button BackgroundColor="White"
+                                BorderColor="White"
+                                Grid.RowSpan="2"
+                                Grid.Row="0" Grid.Column="1"
+                                HorizontalOptions="EndAndExpand"
+                                VerticalOptions="CenterAndExpand"
+                                Text="{localization:Translate Edit}"
+                                TextColor="{StaticResource Purple}"
+                                Command="{Binding EditAddressCommand}"/>
+                    </Grid>
+                </Frame>
+                <Frame Padding="10"
+                   HorizontalOptions="FillAndExpand"
+                   VerticalOptions="StartAndExpand">
+                    <Grid HorizontalOptions="FillAndExpand"
+                             VerticalOptions="StartAndExpand">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="7*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Text="{localization:Translate ShippingAddress}"
+                               Grid.Row="0" Grid.Column="0"
+                               FontAttributes="Bold"
+                               VerticalOptions="CenterAndExpand"
+                               FontSize="{StaticResource NormalLabelFont}"
+                               TextColor="{StaticResource SGray}"></Label>
+                        <Label Text="Address Temp"
+                               Grid.Row="1" Grid.Column="0"
+                               VerticalOptions="CenterAndExpand"
+                               FontSize="{StaticResource NormalLabelFont}"
+                               TextColor="{StaticResource SGray}"/>
+                        <Button BackgroundColor="White"
+                                BorderColor="White"
+                                Grid.RowSpan="2"
+                                Grid.Row="0" Grid.Column="1"
+                                HorizontalOptions="EndAndExpand"
+                                VerticalOptions="CenterAndExpand"
+                                Text="{localization:Translate Edit}"
+                                TextColor="{StaticResource Purple}"
+                                Command="{Binding EditAddressCommand}"/>
+                    </Grid>
+                </Frame>
+            </StackLayout>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

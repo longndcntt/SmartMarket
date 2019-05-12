@@ -5,6 +5,7 @@ using Prism.Services;
 using SmartMarket.Enums;
 using SmartMarket.Interfaces.LocalDatabase;
 using SmartMarket.Models;
+using SmartMarket.Utilities;
 using SmartMarket.ViewModels.Base;
 using SmartMarket.Views.Popups;
 using System;
@@ -187,17 +188,89 @@ namespace SmartMarket.ViewModels
         #endregion
 
         #region AddToCartCommand
+        private bool isExist = false;
         public ICommand AddToCartCommand { get; set; }
-        private void AddToCartExcute()
+        private async void AddToCartExcute()
         {
+            var oderDetails = new OrderDetails()
+            {
+                Id = DateTime.Now.ToString(),
+                Amount = Int32.Parse(Count),
+                Name = ItemSelected.ItemName,
+                ProductId = ItemSelected.Id,
+                Image = ItemSelected.Image,
+                Price = ItemSelected.Price,
+                Manufacturer = ItemSelectedDetails.Manufacturer,
+            };
+            if (!IsNullCart)
+            {
+                IsNullCart = false;
+                var listItemOfCartTemp = SqLiteService.GetList<OrderDetails>(x => x.Id != "");
+                ItemOfOrder = new ObservableCollection<OrderDetails>();
+                if (listItemOfCartTemp != null)
+                {
+                    foreach (var item in listItemOfCartTemp)
+                    {
+                        isExist = false;
+                        if (oderDetails.ProductId == item.ProductId)
+                        {
+                            item.Amount = oderDetails.Amount + item.Amount;
+                            SqLiteService.Update(item);
+                            isExist = true;
+                            break;
+                        } 
+                    }
+                    ItemOfOrder = new ObservableCollection<OrderDetails>(listItemOfCartTemp);
+                }
+                if (!isExist)
+                {
+                    var a = SqLiteService.Insert(oderDetails);
+                }
+            }
         }
 
         #endregion
 
-        #region MyRegion
+        #region NavigateToCartCommand
         public ICommand NavigateToCartCommand { get; set; }
-        private void NavigateToCartExcute()
+        private async void NavigateToCartExcute()
         {
+            var oderDetails = new OrderDetails()
+            {
+                Id = DateTime.Now.ToString(),
+                Amount = Int32.Parse(Count),
+                Name = ItemSelected.ItemName,
+                ProductId = ItemSelected.Id,
+                Price = ItemSelected.Price,
+                Image = ItemSelected.Image,
+                Manufacturer = ItemSelectedDetails.Manufacturer,
+            };
+            if (!IsNullCart)
+            {
+                IsNullCart = false;
+                var listItemOfCartTemp = SqLiteService.GetList<OrderDetails>(x => x.Id != "");
+                ItemOfOrder = new ObservableCollection<OrderDetails>();
+                if (listItemOfCartTemp != null)
+                {
+                    foreach (var item in listItemOfCartTemp)
+                    {
+                        isExist = false;
+                        if (oderDetails.ProductId == item.ProductId)
+                        {
+                            item.Amount = oderDetails.Amount + item.Amount;
+                            SqLiteService.Update(item);
+                            isExist = true;
+                            break;
+                        }
+                    }
+                    ItemOfOrder = new ObservableCollection<OrderDetails>(listItemOfCartTemp);
+                }
+                if (!isExist)
+                {
+                    var a = SqLiteService.Insert(oderDetails);
+                }
+            }
+            await Navigation.NavigateAsync(PageManager.ShowCardPage);
         }
         #endregion
 

@@ -45,6 +45,8 @@ namespace SmartMarket.Services.SQLiteService
             // Create database
             var listTable = new List<Type>
             {
+                typeof(Order),
+                typeof(OrderDetails),
                 typeof(UserModel),
                 typeof(ReviewProduct),
                 typeof(ItemModel),

@@ -21,7 +21,10 @@ namespace SmartMarket.Coverter
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return null;
+            CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");   // try with "en-US"
+            string s = value.ToString();//.Substring(0, value.ToString().Length - 1);
+            double plain = double.Parse(s, NumberStyles.Currency, cul);
+            return plain;
         }
     }
 }

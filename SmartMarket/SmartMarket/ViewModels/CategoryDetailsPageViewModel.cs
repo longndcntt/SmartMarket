@@ -24,6 +24,7 @@ namespace SmartMarket.ViewModels
         {
             IsSearchCommand = new DelegateCommand(IsSearchChangeExcute);
             ItemTappedCommand = new DelegateCommand(SelectedItemExcutWithoutPara);
+
         }
 
       
@@ -72,6 +73,8 @@ namespace SmartMarket.ViewModels
                     if (SelectedCategory != null)
                     {
                         var listTemp = SqLiteService.GetList<ItemModel>(x => x.CategoryId == SelectedCategory.Id).ToList();
+
+
                         if (listTemp.Count > 0)
                         {
                             ItemModelList = new ObservableCollection<ItemModel>(listTemp);

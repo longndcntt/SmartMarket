@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<base:BasePage xmlns:base="clr-namespace:SmartMarket.Views.Base"
+               xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             xmlns:localization="clr-namespace:SmartMarket.Localization"
+               xmlns:converters1="clr-namespace:SmartMarket.Coverter"
+               xmlns:converters="clr-namespace:SmartMarket.Converters"
+               xmlns:buttonBorder="clr-namespace:SmartMarket.Controls.CustomLabelEntry"
+               xmlns:controls="clr-namespace:SmartMarket.Controls"
+               prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="SmartMarket.Views.ShowCardPage">
+    <ContentPage.Resources>
+        <converters:IsTrueConverter x:Key="IsTrueConverter"/>
+        <converters1:CovertToCurrency x:Key="CovertToCurrency"/>
+        <converters:RatingConverter x:Key="ratingConverter"/>
+    </ContentPage.Resources>
+    <ScrollView>
+        <StackLayout HorizontalOptions="FillAndExpand"
+                     VerticalOptions="FillAndExpand"
+                     Padding="10,20">
+            <Grid BackgroundColor="SkyBlue"
+                  HeightRequest="50"
+                  RowSpacing="0"
+                  Padding="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="50"/>
+                </Grid.ColumnDefinitions>
+                <controls:ImageButton x:Name="backImage"
+                                      Grid.Column="0"
+                                      HorizontalOptions="CenterAndExpand"
+                                      VerticalOptions="CenterAndExpand"
+                                      Source="ic_left_arrow"
+                                      Style="{StaticResource ImageBase}"
+                                      Command="{Binding BackCommand}"/>
+                <!--HeaderContent-->
+                <StackLayout IsVisible="True"
+                         Grid.Column="1" Grid.ColumnSpan="2"
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="Center">
+                    <Label FontAttributes="Bold"
+                       FontSize="{StaticResource SuperLargeLabelFont}"
+                       Text="{localization:Translate OrderInformations}"
+                       TextColor="{StaticResource SDarkerTextColor}"/>
+                </StackLayout>
+            </Grid>
+            <Frame Padding="10"
+                   HorizontalOptions="FillAndExpand"
+                   HeightRequest="60">
+                <StackLayout Orientation="Horizontal"
+                             HorizontalOptions="FillAndExpand"
+                             VerticalOptions="Center"
+                             Padding="10">
+                    <Label Text="{localization:Translate Total}"
+                           VerticalOptions="CenterAndExpand"
+                           FontSize="{StaticResource SuperLargeLabelFont}"
+                           HorizontalOptions="StartAndExpand"
+                           TextColor="{StaticResource SGray}"/>
+                    <Label Text="{Binding Total,Converter={StaticResource Key=CovertToCurrency}}"
+                           VerticalOptions="CenterAndExpand"
+                           FontSize="{StaticResource SuperLargeLabelFont}"
+                           HorizontalOptions="EndAndExpand"
+                           TextColor="{StaticResource SGreen}"/>
+                </StackLayout>
+            </Frame>
+            <StackLayout x:Name="listItem"
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="FillAndExpand"
+                         Spacing="0"/>
+            <buttonBorder:BorderButton Text="{localization:Translate ProceedToCheckout}"
+                                                   HorizontalOptions="FillAndExpand"
+                                                   Theme="Red"
+                                                   TextColor="White"
+                                                   FontSize="{StaticResource NormalLabelFont}"
+                                                   Command="{Binding NavigateToCheckoutCommand}"/>
+        </StackLayout>
+    </ScrollView>
+</base:BasePage>
