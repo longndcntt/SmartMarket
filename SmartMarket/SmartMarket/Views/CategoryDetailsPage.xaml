@@ -3,6 +3,7 @@
                xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+               NavigationPage.HasNavigationBar="False"
              xmlns:controls="clr-namespace:SmartMarket.Controls"
              xmlns:buttonBorder="clr-namespace:SmartMarket.Controls.CustomLabelEntry"
              xmlns:localization="clr-namespace:SmartMarket.Localization"

@@ -246,4 +246,22 @@
   <data name="Standard" xml:space="preserve">
     <value>Tiêu chuẩn ( trong 2-3 ngày làm việc)</value>
   </data>
+  <data name="AddMoneyToWallet" xml:space="preserve">
+    <value>Thêm tiền vào ví</value>
+  </data>
+  <data name="WalletBallance" xml:space="preserve">
+    <value>Ví điện tử</value>
+  </data>
+  <data name="Category" xml:space="preserve">
+    <value>Danh mục</value>
+  </data>
+  <data name="GoToShop" xml:space="preserve">
+    <value>Đến cửa hàng</value>
+  </data>
+  <data name="Statics" xml:space="preserve">
+    <value>Thống kê</value>
+  </data>
+  <data name="UploadItem" xml:space="preserve">
+    <value>Đăng sản phẩm</value>
+  </data>
 </root>

@@ -6,22 +6,23 @@ using System.Collections.ObjectModel;
 
 namespace SmartMarket.Models
 {
-    [Table("UserTable")]
+    [Table("UserModel")]
     public class UserModel
     {
         [PrimaryKey]
-        public int Id { get; set; }
-        public int ClientId { get; set; }
-        public string ClientName { get; set; }
+        public int Id { get; set; } = 0;
         public string Email { get; set; }
-        public string UserName { get; set; }
         public string FullName { get; set; }
-        public bool IsDeactivated { get; set; }
-        public bool AccountLocked { get; set; }
-        public int PreferedUILanguageId { get; set; }
-
-        [JsonProperty("Access_Token")]
-        [Ignore]
-        public string AccessToken { get; set; }
+        public string Password { get; set; }
+        public string DateTImeKey { get; set; }
+        public string Keystore { get; set; }
+        public string Address { get; set; }
+        public string DayofBirth { get; set; }
+        public bool Gender { get; set; } //True is Male, False is Female
+        public string NumberID { get; set; }
+        public string PhoneNumber { get; set; }
+        public string PortraitImage { get; set; }
+        public string IdentityImage { get; set; }
+        public double Coin { get; set; }
     }
 }

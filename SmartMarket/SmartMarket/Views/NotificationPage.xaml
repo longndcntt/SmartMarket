@@ -2,7 +2,170 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             xmlns:controls="clr-namespace:SmartMarket.Controls"
+             xmlns:localization="clr-namespace:SmartMarket.Localization"
+             NavigationPage.HasNavigationBar="False"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="SmartMarket.Views.NotificationPage">
-  
+    <ContentPage.Resources>
+        <Style TargetType="Image">
+            <Setter Property="HeightRequest" Value="25"/>
+            <Setter Property="WidthRequest" Value="25"/>
+        </Style>
+    </ContentPage.Resources>
+    <ScrollView>
+        <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <!--Header View-->
+            <Grid BackgroundColor="SkyBlue"
+                  HeightRequest="50"
+                  RowSpacing="0"
+                  Padding="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="50"/>
+                </Grid.ColumnDefinitions>
+               
+                <!--HeaderContent-->
+                <StackLayout Grid.Column="1" Grid.ColumnSpan="2"
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="Center">
+                    <Label FontAttributes="Bold"
+                       FontSize="{StaticResource SuperLargeLabelFont}"
+                       Text="{localization:Translate Notifications}"
+                       TextColor="{StaticResource SDarkerTextColor}"/>
+                </StackLayout>
+            </Grid>
+            <StackLayout Spacing="5" Padding="5">
+                <controls:FrameButton>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="8*"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Source="ic_buyItem"
+                               Grid.Column="0"/>
+                        <StackLayout HorizontalOptions="FillAndExpand"
+                                     VerticalOptions="StartAndExpand"
+                                     Grid.Column="1">
+                            <Label Text="Đã thực hiện giao dịch gửi 300 coin đến người bán hàng lần 2"/>
+                            <Label Margin="0,3,0,2"
+                                   VerticalOptions="EndAndExpand"
+                                   Text="{Binding Time2}"/>
+                        </StackLayout>
+                    </Grid>
+                </controls:FrameButton>
+                <controls:FrameButton>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="8*"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Source="ic_buyItem"
+                               Grid.Column="0"/>
+                        <StackLayout HorizontalOptions="FillAndExpand"
+                                     VerticalOptions="StartAndExpand"
+                                     Grid.Column="1">
+                            <Label Text="Đã thực hiện giao dịch gửi 300 coin đến người bán hàng lần 1"/>
+                            <Label Margin="0,3,0,2"
+                                   VerticalOptions="EndAndExpand"
+                                   Text="{Binding Time1}"/>
+                        </StackLayout>
+                    </Grid>
+                </controls:FrameButton>
+                <!---->
+                <controls:FrameButton>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="8*"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Source="ic_buyItem"
+                               Grid.Column="0"/>
+                        <StackLayout HorizontalOptions="FillAndExpand"
+                                     VerticalOptions="StartAndExpand"
+                                     Grid.Column="1">
+                            <Label Text="Đã thực hiện giao dịch gửi 400 coin đến người bán hàng lần 2"/>
+                            <Label Margin="0,3,0,2"
+                                   VerticalOptions="EndAndExpand"
+                                   Text="16/05/2019 - 20:15:16"/>
+                        </StackLayout>
+                    </Grid>
+                </controls:FrameButton>
+                <controls:FrameButton>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="8*"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Source="ic_buyItem"
+                               Grid.Column="0"/>
+                        <StackLayout HorizontalOptions="FillAndExpand"
+                                     VerticalOptions="StartAndExpand"
+                                     Grid.Column="1">
+                            <Label Text="Đã thực hiện giao dịch gửi 400 coin đến người bán hàng lần 1"/>
+                            <Label Margin="0,3,0,2"
+                                   VerticalOptions="EndAndExpand"
+                                   Text="16/05/2019 - 20:14:46"/>
+                        </StackLayout>
+                    </Grid>
+                </controls:FrameButton>
+                <controls:FrameButton>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="8*"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Source="ic_buyItem"
+                               Grid.Column="0"/>
+                        <StackLayout HorizontalOptions="FillAndExpand"
+                                     VerticalOptions="StartAndExpand"
+                                     Grid.Column="1">
+                            <Label Text="Đã thực hiện giao dịch gửi 500 coin đến người bán hàng lần 2"/>
+                            <Label Margin="0,3,0,2"
+                                   VerticalOptions="EndAndExpand"
+                                   Text="16/05/2019 - 19:53:02"/>
+                        </StackLayout>
+                    </Grid>
+                </controls:FrameButton>
+                <controls:FrameButton>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="8*"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Source="ic_buyItem"
+                               Grid.Column="0"/>
+                        <StackLayout HorizontalOptions="FillAndExpand"
+                                     VerticalOptions="StartAndExpand"
+                                     Grid.Column="1">
+                            <Label Text="Đã thực hiện giao dịch gửi 500 coin đến người bán hàng lần 1"/>
+                            <Label Margin="0,3,0,2"
+                                   VerticalOptions="EndAndExpand"
+                                   Text="16/05/2019 - 19:52:32"/>
+                        </StackLayout>
+                    </Grid>
+                </controls:FrameButton>
+                <controls:FrameButton>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="8*"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Source="ic_buyItem"
+                               Grid.Column="0"/>
+                        <StackLayout HorizontalOptions="FillAndExpand"
+                                     VerticalOptions="StartAndExpand"
+                                     Grid.Column="1">
+                            <Label Text="Đã thực hiện giao dịch gửi 150 coin đến người bán hàng lần 2"/>
+                            <Label Margin="0,3,0,2"
+                                   VerticalOptions="EndAndExpand"
+                                   Text="15/05/2019 - 17:01:19"/>
+                        </StackLayout>
+                    </Grid>
+                </controls:FrameButton>
+            </StackLayout>
+        </StackLayout>
+    </ScrollView>
 </ContentPage>

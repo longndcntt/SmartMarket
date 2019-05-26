@@ -25,13 +25,24 @@ namespace SmartMarket.ViewModels
             get { return _isLogin; }
             set { SetProperty(ref _isLogin, value); }
         }
+
+        private string _clientName;
+
+        public string ClientName
+        {
+            get { return _clientName; }
+            set { SetProperty(ref _clientName, value); }
+        }
         #endregion
 
         public ProfileUserPageViewModel(INavigationService navigationService, ISqLiteService sqLiteService, IHttpRequest httpRequest, IAppInfo appInfo)
         : base(navigationService: navigationService, sqliteService: sqLiteService, httpRequest: httpRequest, appInfo: appInfo)
         {
             LoginSignupCommand = new DelegateCommand(NavigateToLoginPage);
+            NavigateWalletBalancePage = new DelegateCommand(NavigateWalletBalancePageExcute);
+            // IsLogin = App.Settings.IsLogin;
             IsLogin = App.Settings.IsLogin;
+            ClientName = "Người bán hàng 1";
         }
 
         #region LoginSignupCommand
@@ -47,6 +58,15 @@ namespace SmartMarket.ViewModels
 
         #region CheckInformationCommand
         public ICommand CheckInformationCommand { get; set; }
+        #endregion
+
+        #region NavigateWalletBalancePage
+        public ICommand NavigateWalletBalancePage { get; set; }
+        private async void NavigateWalletBalancePageExcute()
+        {
+            await Navigation.NavigateAsync(PageManager.WalletBalancePage);
+        }
+
         #endregion
     }
 }

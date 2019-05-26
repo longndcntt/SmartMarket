@@ -7,6 +7,7 @@
              xmlns:controls="clr-namespace:SmartMarket.Controls"
               xmlns:localization="clr-namespace:SmartMarket.Localization"
              xmlns:buttonBorder="clr-namespace:SmartMarket.Controls.CustomLabelEntry"
+               NavigationPage.HasNavigationBar="False"
              x:Class="SmartMarket.Views.MainPage"
              Title="{Binding Title}">
 

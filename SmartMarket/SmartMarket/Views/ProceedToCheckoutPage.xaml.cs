@@ -2,13 +2,14 @@
 using SmartMarket.Localization;
 using SmartMarket.Models;
 using SmartMarket.ViewModels;
+using SmartMarket.Views.Base;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using Xamarin.Forms;
 
 namespace SmartMarket.Views
 {
-    public partial class ProceedToCheckoutPage : ContentPage
+    public partial class ProceedToCheckoutPage : BasePage
     {
         public ProceedToCheckoutPage()
         {
@@ -75,17 +76,29 @@ namespace SmartMarket.Views
                 };
 
                 //Price
-                CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");   // try with "en-US"
-                string a = double.Parse(item.Price.ToString()).ToString("#,###", cul.NumberFormat);
-                a += "đ";
+                //CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");   // try with "en-US"
+                //string a = double.Parse(item.Price.ToString()).ToString("#,###", cul.NumberFormat);
+                // a += "đ";
+                var stackPrice = new StackLayout()
+                {
+                    Orientation = StackOrientation.Horizontal,
+                };
                 var labelPrice = new Label()
                 {
-                    Text = a,
+                    Text = item.Price.ToString(),
                     FontSize = (double)App.Current.Resources["LargeLabelFont"],
                     TextColor = (Color)App.Current.Resources["Blue"],
                     VerticalOptions = LayoutOptions.CenterAndExpand,
                     HorizontalOptions = LayoutOptions.Start,
                 };
+                var imageCoin = new Image()
+                {
+                    Source = "ic_coin",
+                    WidthRequest = 25,
+                    HeightRequest = 25,
+                };
+                stackPrice.Children.Add(labelPrice);
+                stackPrice.Children.Add(imageCoin);
 
                 //Quantity
                 var labelQuantity = new Label()
@@ -115,7 +128,7 @@ namespace SmartMarket.Views
 
                 stack.Children.Add(labelName);
                 stack.Children.Add(labelManu);
-                stack.Children.Add(labelPrice);
+                stack.Children.Add(stackPrice);
                 stack.Children.Add(stackQuantity);
                 grid.Children.Add(image, 0, 0);
                 grid.Children.Add(stack, 1, 0);

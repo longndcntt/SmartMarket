@@ -5,16 +5,20 @@
                             xmlns:localization="clr-namespace:SmartMarket.Localization"
                            android:TabbedPage.IsSwipePagingEnabled="True"
                            android:TabbedPage.ToolbarPlacement="Bottom"
-                           BarBackgroundColor="{StaticResource SGray}"
+                           BarBackgroundColor="#d8d8d8"
                            BarTextColor="{StaticResource SDarkTextColor}"
                            xmlns:controls="clr-namespace:SmartMarket.Controls"
                            xmlns:loginpage="clr-namespace:SmartMarket.Views.LoginAndSignUp"
                            xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
                            xmlns:views="clr-namespace:SmartMarket.Views"
+                            BackgroundImage="background"
                            prism:ViewModelLocator.AutowireViewModel="True"
+                            NavigationPage.HasNavigationBar="False"
                            x:Class="SmartMarket.Views.TabbedMainPage" >
-    <views:MainPage Icon="ic_mainpage"></views:MainPage>
-    <views:CategoryPage Icon="ic_category"></views:CategoryPage>
+    <views:MainPage Title="{localization:Translate MainPage}" Icon="ic_mainpage"></views:MainPage>
+    <!--<views:CategoryPage Title="Category" Icon="ic_category"></views:CategoryPage>-->
+    <views:CategoryPage Title="{localization:Translate Category}" Icon="ic_category"></views:CategoryPage>
     <views:NotificationPage Title="{localization:Translate Notifications}" Icon="ic_notification2"></views:NotificationPage>
     <views:ProfileUserPage Title="{localization:Translate ProfileUser}" Icon="ic_profile"></views:ProfileUserPage>
+
 </controls:BottomNavTabPage>

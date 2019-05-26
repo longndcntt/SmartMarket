@@ -91,15 +91,7 @@ namespace SmartMarket.Services.HttpService
             }
         }
 
-        public T Deserialize<T>(string input) where T : class
-        {
-            throw new NotImplementedException();
-        }
-
-        public string ObjectToSerialize<T>(T objectToSerialize)
-        {
-            throw new NotImplementedException();
-        }
+      
 
         #endregion
     }

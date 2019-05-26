@@ -19,6 +19,7 @@ using SmartMarket.Enums;
 using SmartMarket.ViewModels.Base;
 using SmartMarket.Views.Popups;
 using System.Linq;
+using Plugin.FirebasePushNotification.Abstractions;
 
 namespace SmartMarket.ViewModels.Base
 {
@@ -396,6 +397,31 @@ namespace SmartMarket.ViewModels.Base
             //}
 
         }
+        #endregion
+
+        #region Firebase Remote Notification
+
+        public virtual async Task OnFirebaseNotificationReceived(object sender,
+            FirebasePushNotificationDataEventArgs args)
+        {
+            try
+            {
+                if (args.Data.ContainsKey("Type"))
+                {
+                    string message = args.Data.ContainsKey("body") ? (string)args.Data["body"] : "";
+
+                    if (!string.IsNullOrEmpty(message))
+                        await MessagePopup.Instance.Show(message);
+                }
+
+                Debug.WriteLine("Firebase Notification: Received Notification\n");
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+            }
+        }
+
         #endregion
     }
 }

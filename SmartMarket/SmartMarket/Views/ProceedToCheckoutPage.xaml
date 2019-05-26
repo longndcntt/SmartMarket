@@ -1,11 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<base:BasePage xmlns:base="clr-namespace:SmartMarket.Views.Base"
+               xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
                 xmlns:localization="clr-namespace:SmartMarket.Localization"
+               NavigationPage.HasNavigationBar="False"
              xmlns:controls="clr-namespace:SmartMarket.Controls"
              xmlns:radio="clr-namespace:SmartMarket.Controls.InputKit"
+             xmlns:buttonBorder="clr-namespace:SmartMarket.Controls.CustomLabelEntry"
              x:Class="SmartMarket.Views.ProceedToCheckoutPage">
     <ScrollView>
         <StackLayout  HorizontalOptions="FillAndExpand"
@@ -76,11 +79,18 @@
                            FontSize="{StaticResource SuperLargeLabelFont}"
                            HorizontalOptions="StartAndExpand"
                            TextColor="{StaticResource SGray}"/>
-                        <Label Text="{Binding SubTotal,Converter={StaticResource Key=CovertToCurrency}}"
-                           VerticalOptions="CenterAndExpand"
+                        <StackLayout VerticalOptions="CenterAndExpand"
+                                     HorizontalOptions="EndAndExpand"
+                                     Orientation="Horizontal">
+                            <Label Text="{Binding SubTotal}"
+                           VerticalOptions="Center"
                            FontSize="{StaticResource SuperLargeLabelFont}"
-                           HorizontalOptions="EndAndExpand"
                            TextColor="{StaticResource SGreen}"/>
+                            <Image Source="ic_coin"
+                               VerticalOptions="Center"
+                                   WidthRequest="30"
+                                   HeightRequest="30"/>
+                        </StackLayout>
                     </StackLayout>
                 </Frame>
 
@@ -103,7 +113,7 @@
                                VerticalOptions="CenterAndExpand"
                                FontSize="{StaticResource NormalLabelFont}"
                                TextColor="{StaticResource SGray}"></Label>
-                        <Label Text="Address Temp"
+                        <Label Text="KTX Khu B"
                                Grid.Row="1" Grid.Column="0"
                                VerticalOptions="CenterAndExpand"
                                FontSize="{StaticResource NormalLabelFont}"
@@ -132,17 +142,25 @@
                             <ColumnDefinition Width="7*"/>
                             <ColumnDefinition Width="3*"/>
                         </Grid.ColumnDefinitions>
-                        <Label Text="{localization:Translate ShippingAddress}"
+                        <Label Text="{localization:Translate WalletBalance}"
                                Grid.Row="0" Grid.Column="0"
                                FontAttributes="Bold"
                                VerticalOptions="CenterAndExpand"
                                FontSize="{StaticResource NormalLabelFont}"
-                               TextColor="{StaticResource SGray}"></Label>
-                        <Label Text="Address Temp"
+                               TextColor="{StaticResource SGray}"/>
+                        <StackLayout HorizontalOptions="StartAndExpand"
                                Grid.Row="1" Grid.Column="0"
-                               VerticalOptions="CenterAndExpand"
+                                     VerticalOptions="Center"
+                                      Orientation="Horizontal">
+                            <Label Text="{Binding AmountCoin}"
+                               VerticalOptions="Center"
                                FontSize="{StaticResource NormalLabelFont}"
                                TextColor="{StaticResource SGray}"/>
+                            <Image Source="ic_coin"
+                               VerticalOptions="Center"
+                                   WidthRequest="25"
+                                   HeightRequest="25"/>
+                        </StackLayout>
                         <Button BackgroundColor="White"
                                 BorderColor="White"
                                 Grid.RowSpan="2"
@@ -151,10 +169,16 @@
                                 VerticalOptions="CenterAndExpand"
                                 Text="{localization:Translate Edit}"
                                 TextColor="{StaticResource Purple}"
-                                Command="{Binding EditAddressCommand}"/>
+                                Command="{Binding NavigateToWalletCommand}"/>
                     </Grid>
                 </Frame>
+                <buttonBorder:BorderButton Text="{localization:Translate Confirm}"
+                                                   HorizontalOptions="FillAndExpand"
+                                                   Theme="Red"
+                                                   TextColor="White"
+                                                   FontSize="{StaticResource NormalLabelFont}"
+                                                   Command="{Binding CheckoutCommand}"/>
             </StackLayout>
         </StackLayout>
     </ScrollView>
-</ContentPage>
+</base:BasePage>

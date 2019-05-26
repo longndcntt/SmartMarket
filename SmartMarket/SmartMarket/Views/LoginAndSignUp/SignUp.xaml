@@ -26,22 +26,27 @@
                 <RowDefinition Height="auto"></RowDefinition>
             </Grid.RowDefinitions>
             <xfxcontrol:XfxEntry Grid.Row="0" Placeholder="{localization:Translate FullName}" 
+                                 FontSize="{StaticResource NormalLabelFont}"
                                          VerticalOptions="CenterAndExpand"
                                          Text="{Binding FullName}"/>
 
             <xfxcontrol:XfxEntry Grid.Row="1" Placeholder="{localization:Translate PhoneNumber}" 
+                                 FontSize="{StaticResource NormalLabelFont}"
                                          VerticalOptions="CenterAndExpand"
                                          Text="{Binding PhoneNumber}"/>
 
-            <xfxcontrol:XfxEntry Grid.Row="2" Placeholder="{localization:Translate Username}" 
+            <xfxcontrol:XfxEntry Grid.Row="2" Placeholder="Email" 
+                                 FontSize="{StaticResource NormalLabelFont}"
                                          VerticalOptions="CenterAndExpand"
-                                         Text="{Binding Username}"/>
+                                         Text="{Binding Email}"/>
           
             <xfxcontrol:XfxEntry Grid.Row="3" Placeholder="{localization:Translate Password}" 
+                                 FontSize="{StaticResource NormalLabelFont}"
                                         VerticalOptions="CenterAndExpand" 
                                          Text="{Binding Password}"/>
 
             <DatePicker Grid.Row="4" VerticalOptions="CenterAndExpand"
+                                 FontSize="{StaticResource NormalLabelFont}"
                         Date="{Binding DateOfBirth, Mode=OneWayToSource}"/>
         </Grid>
     </Frame>

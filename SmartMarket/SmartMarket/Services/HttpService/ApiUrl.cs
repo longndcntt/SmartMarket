@@ -1,7 +1,7 @@
 ﻿
 namespace SmartMarket.Services.HttpService
 {
-    public class ApiUrl
+    public static class ApiUrl
     {
         //public static string HttpUrl { get; set; } = CrossSecureStorage.Current.GetValue("HttpUrl");
 
@@ -10,53 +10,48 @@ namespace SmartMarket.Services.HttpService
         //    return $"{App.Settings.HttpUrl}api/{link}";
         //}
 
-        private  readonly string _homeUrl;
-
-        public ApiUrl(string homeUrl)
+        public static string Link(string link)
         {
-            _homeUrl = homeUrl;
+            return $"{App.Settings.HttpUrl1}{link}";
         }
-
-        private string LinkApi(string api)
-        {
-            return $"{_homeUrl}{api}";
-        }
-
 
         #region API URL
 
-        public  string UserLogin()
+        public static string GetWallet()
         {
-            return LinkApi("user/login/");
+            return Link("tokens/balance?Address=");
         }
 
-        public  string EventGetByClientId()
+        public static string BuyToken()
         {
-            return LinkApi("event/GetByClientIdV1/");
+
+            return Link("tokens/buy");
         }
 
-        public  string TestServer()
+        public static string BuyItem()
         {
-            //return Link("file/Test");
-            return LinkApi("filefastupload/test");
+            return Link("tokens/transfer");
         }
 
-        public  string UploadFile()
+        public static string UploadFile()
         {
-            return LinkApi("file/Upload");
+            return Link("file/Upload");
         }
 
-        /*"http://test-fastupload.fairflexx.net/api/filefastupload/testdb"*/
-        public  string FastUploadFile()
+        public static string Schedule()
         {
-            return LinkApi("filefastupload/upload");
+            return Link("tokens/schudele");
         }
 
-        public  string Test()
+        public static string UploadToBlockChain()
         {
-            return LinkApi("file/test");
+            return Link("publish");
         }
 
+        public static string UserRegister()
+        {
+            return Link("publish");
+        }
         #endregion
     }
 }

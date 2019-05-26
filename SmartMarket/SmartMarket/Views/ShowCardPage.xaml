@@ -7,6 +7,7 @@
                xmlns:converters1="clr-namespace:SmartMarket.Coverter"
                xmlns:converters="clr-namespace:SmartMarket.Converters"
                xmlns:buttonBorder="clr-namespace:SmartMarket.Controls.CustomLabelEntry"
+               NavigationPage.HasNavigationBar="False"
                xmlns:controls="clr-namespace:SmartMarket.Controls"
                prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="SmartMarket.Views.ShowCardPage">

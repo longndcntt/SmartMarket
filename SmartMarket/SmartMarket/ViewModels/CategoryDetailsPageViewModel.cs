@@ -88,7 +88,7 @@ namespace SmartMarket.ViewModels
                                     Id = i,
                                     ItemName = "SP" + i,
                                     CategoryId = SelectedCategory.Id,
-                                    Price = 20000 + i * 10000,
+                                    Price = 200 + i * 100,
                                     Image = "sony_product"
                                 };
                                 SqLiteService.Insert(item);

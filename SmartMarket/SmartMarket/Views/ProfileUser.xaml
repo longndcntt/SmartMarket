@@ -5,6 +5,7 @@
     xmlns:base="clr-namespace:SmartMarket.Views.Base"
              xmlns:controls="clr-namespace:SmartMarket.Controls"
              xmlns:localization="clr-namespace:SmartMarket.Localization"
+               NavigationPage.HasNavigationBar="False"
              x:Class="SmartMarket.Views.ProfileUser"
                prism:ViewModelLocator.AutowireViewModel="True">
     <ScrollView>

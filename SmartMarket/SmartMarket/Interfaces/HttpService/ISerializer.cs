@@ -12,9 +12,9 @@ namespace SmartMarket.Interfaces.HttpService
 
         #region Parse XML
 
-        T Deserialize<T>(string input) where T : class;
+        //T Deserialize<T>(string input) where T : class;
 
-        string ObjectToSerialize<T>(T objectToSerialize);
+        //string ObjectToSerialize<T>(T objectToSerialize);
 
         #endregion
     }

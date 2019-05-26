@@ -16,11 +16,12 @@ namespace SmartMarket.Utilities
         private const string HttpHomeUrl = "http://svoucheruit.azurewebsites.net/";
         //private const string HttpHomeUrl = "http://192.168.137.1/"; // Localhost
         public const int TimeoutMiliseconds = 60000;
-        private static ApiUrl _apiUrl;
-        public static ApiUrl ApiUrl => _apiUrl ?? (_apiUrl = new ApiUrl(HttpHomeUrl));
+        //private static ApiUrl _apiUrl;
+        //public static ApiUrl ApiUrl => _apiUrl ?? (_apiUrl = new ApiUrl(HttpHomeUrl));
 
         // Common
         public static string DateTimeFormat = "dd/MM/yyyy HH:mm:ss";
+        public static string DateTimeFormatForNoti = "dd/MM/yyyy - HH:mm";
         public static string DateFormat = "dd/MM/yyyy";
 
     }

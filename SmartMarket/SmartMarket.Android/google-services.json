@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "407828583621",
+    "firebase_url": "https://smartmarketfcm.firebaseio.com",
+    "project_id": "smartmarketfcm",
+    "storage_bucket": "smartmarketfcm.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:407828583621:android:de41c99b9b1cf737",
+        "android_client_info": {
+          "package_name": "com.ise.smartmarket"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "407828583621-pq7tgn2rkq88s4h8erg2c72urpk4oon7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4ZWt0n88OVYc5S5Pbu0h-bfNp1BcO-E0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "407828583621-pq7tgn2rkq88s4h8erg2c72urpk4oon7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -5,6 +5,8 @@ using Android.OS;
 using Android.Runtime;
 using Android.Util;
 using Plugin.CurrentActivity;
+using Plugin.FirebasePushNotification;
+using SmartMarket.Utilities;
 
 namespace SmartMarket.Droid
 {
@@ -26,8 +28,24 @@ namespace SmartMarket.Droid
         {
             base.OnCreate();
             CrossCurrentActivity.Current.Init(this);
+
+            #region Firebase Notification
+            //If debug you should reset the token each time.
+#if DEBUG
+            FirebasePushNotificationManager.Initialize(this, true);
+#else
+              FirebasePushNotificationManager.Initialize(this,false);
+#endif
+
+            ////Handle notification when app is closed here
+            //CrossFirebasePushNotification.Current.OnNotificationReceived += (s, p) =>
+            //{
+            //    PageManager.GetCurrentPageBaseViewModel()?.OnFirebaseNotificationReceived(s, p);
+            //};
+
+            #endregion
         }
-        
+
         #region LifeCycle
 
         public override void OnTerminate()

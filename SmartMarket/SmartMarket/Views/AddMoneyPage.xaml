@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<base:BasePage xmlns:base="clr-namespace:SmartMarket.Views.Base"
+               xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+               xmlns:localization="clr-namespace:SmartMarket.Localization"
+               xmlns:controls="clr-namespace:SmartMarket.Controls"
+               xmlns:radio="clr-namespace:SmartMarket.Controls.InputKit"
+               NavigationPage.HasNavigationBar="False"
+               xmlns:customlabelentry="clr-namespace:SmartMarket.Controls.CustomLabelEntry"
+               prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="SmartMarket.Views.AddMoneyPage">
+    <ScrollView>
+        <StackLayout VerticalOptions="FillAndExpand"
+                     HorizontalOptions="FillAndExpand">
+            <Grid BackgroundColor="SkyBlue"
+                  HeightRequest="50"
+                  RowSpacing="0"
+                  Padding="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="50"/>
+                </Grid.ColumnDefinitions>
+                <controls:ImageButton x:Name="backImage"
+                                      Grid.Column="0"
+                                      HorizontalOptions="CenterAndExpand"
+                                      VerticalOptions="CenterAndExpand"
+                                      Source="ic_left_arrow"
+                                      Style="{StaticResource ImageBase}"
+                                      Command="{Binding BackCommand}"/>
+                <!--HeaderContent-->
+                <StackLayout IsVisible="True"
+                         Grid.Column="1" Grid.ColumnSpan="2"
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="Center">
+                    <Label FontAttributes="Bold"
+                       FontSize="{StaticResource SuperLargeLabelFont}"
+                       Text="{localization:Translate WalletBalance}"
+                       TextColor="{StaticResource SDarkerTextColor}"/>
+                </StackLayout>
+            </Grid>
+            
+            <Frame Grid.Row="0"
+                       HorizontalOptions="FillAndExpand">
+                <StackLayout Orientation="Horizontal"
+                             HorizontalOptions="Center">
+                    <Label Text="{Binding AmountCoin,StringFormat='Available is : {0:N}'}"
+                           TextColor="{StaticResource SGreen}"
+                           HorizontalOptions="CenterAndExpand"
+                           VerticalOptions="CenterAndExpand"
+                           FontSize="28"/>
+                    <Image Source="ic_coin"
+                           HorizontalOptions="Start"
+                           HeightRequest="20"
+                           WidthRequest="20"/>
+                </StackLayout>
+            </Frame>
+
+            <Frame Grid.Row="0"
+                       HorizontalOptions="FillAndExpand">
+                <StackLayout Orientation="Horizontal"
+                             HorizontalOptions="Center">
+                    <Label Text="1.000 đ = 1"
+                           TextColor="{StaticResource SGreen}"
+                           HorizontalOptions="CenterAndExpand"
+                           VerticalOptions="CenterAndExpand"
+                           FontSize="18"/>
+                    <Image Source="ic_coin"
+                           HorizontalOptions="Start"
+                           HeightRequest="14"
+                           WidthRequest="14"/>
+                </StackLayout>
+            </Frame>
+            
+            <Grid VerticalOptions="FillAndExpand"
+                  HorizontalOptions="FillAndExpand"
+                  Padding="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Frame Grid.Row="0"
+                       HorizontalOptions="FillAndExpand"
+                       VerticalOptions="FillAndExpand">
+                    <StackLayout HorizontalOptions="FillAndExpand">
+                        <Label Text="Amount of Money"
+                               FontSize="26"/>
+                        <Entry Text="{Binding AddAmountMoney}"
+                           TextColor="{StaticResource SGreen}"
+                           HorizontalOptions="FillAndExpand"
+                           VerticalOptions="CenterAndExpand"
+                           FontSize="28"/>
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                            <Label Text="{Binding AddAmountCoin, StringFormat='~ {0:N}'}"
+                               FontSize="26"
+                                   TextColor="{StaticResource Blue}"/>
+                            <Image Source="ic_coin"/>
+                        </StackLayout>
+                        
+                    </StackLayout>
+                </Frame>
+                <Frame Padding="10"
+                       Grid.Row="1"
+                   HorizontalOptions="FillAndExpand"
+                   VerticalOptions="StartAndExpand">
+                    <StackLayout Orientation="Vertical"
+                             HorizontalOptions="FillAndExpand"
+                             VerticalOptions="StartAndExpand">
+                        <radio:SelectionView SelectionType="RadioButton"
+                                         ItemsSource="{Binding ChooseWayCheckoutList}"
+                                         ItemDisplayBinding="{Binding .}"
+                                             SelectedIndex="{Binding SelectedWayCheckout}"
+                                         ColumnNumber="1"
+                                         RowSpacing="10"/>
+                    </StackLayout>
+                </Frame>
+                <customlabelentry:BorderButton Text="{localization:Translate Confirm}"
+                                               Theme="WhiteRed"
+                                               TextColor="White"
+                                               Command="{Binding AddCoinCommand}"
+                                      FontSize="{StaticResource NormalLabelFont}"
+                                      Grid.Row="2"/>
+              
+                
+            </Grid>
+        </StackLayout>
+    </ScrollView>
+</base:BasePage>

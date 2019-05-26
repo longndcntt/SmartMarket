@@ -246,4 +246,22 @@
   <data name="Standard" xml:space="preserve">
     <value>Standard (2-4 Business Day)</value>
   </data>
+  <data name="AddMoneyToWallet" xml:space="preserve">
+    <value>Add Money To Wallet</value>
+  </data>
+  <data name="WalletBallance" xml:space="preserve">
+    <value>Wallet Balance</value>
+  </data>
+  <data name="Category" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="GoToShop" xml:space="preserve">
+    <value>Go to shop</value>
+  </data>
+  <data name="Statics" xml:space="preserve">
+    <value>Statics</value>
+  </data>
+  <data name="UploadItem" xml:space="preserve">
+    <value>Upload item </value>
+  </data>
 </root>

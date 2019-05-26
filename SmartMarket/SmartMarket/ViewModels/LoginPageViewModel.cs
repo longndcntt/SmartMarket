@@ -3,11 +3,15 @@ using Prism.Navigation;
 using Prism.Services;
 using SmartMarket.Localization;
 using SmartMarket.Models;
+using SmartMarket.Services.HttpService;
 using SmartMarket.Utilities;
 using SmartMarket.ViewModels.Base;
 using SmartMarket.Views.Popups;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace SmartMarket.ViewModels
 {
@@ -25,6 +29,8 @@ namespace SmartMarket.ViewModels
         {
             LoginCommand = new DelegateCommand(LoginExecute);
         }
+
+        
         #endregion
         public override void OnNavigatedNewToAsync(INavigationParameters parameters)
         {
@@ -37,43 +43,30 @@ namespace SmartMarket.ViewModels
         {
             await CheckBusy(async () =>
             {
-                await LoadingPopup.Instance.Show(TranslateExtension.Get("Login"));
-
-                if (string.IsNullOrEmpty(Username))
-                {
-                    await MessagePopup.Instance.Show(TranslateExtension.Get("UsernameEmpty"));
-                    return;
-                }
-                if (string.IsNullOrEmpty(Password))
-                {
-                    await MessagePopup.Instance.Show(TranslateExtension.Get("PasswordEmpty"));
-                    return;
-                }
-
                 //await Task.Run(async () =>
-                //{
-                //    var url = ApiUrl.UserLogin();
+                // {
+                //     var url = ApiUrl.Get();
 
-                //    var param = new UserIdentity { UserName = Username };
-                //    param.Password = param.CryptPassword(Password);
+                //     var param = new UserIdentity { UserName = Username };
+                //     param.Password = param.CryptPassword(Password);
 
-                //    var encodeString = "fotoscan:fotoscan";
-                //    var encodedBasicToken = System.Convert.ToBase64String(System.Text.Encoding.GetEncoding("ISO-8859-1").GetBytes(encodeString));
+                //     var encodeString = "fotoscan:fotoscan";
+                //     var encodedBasicToken = System.Convert.ToBase64String(System.Text.Encoding.GetEncoding("ISO-8859-1").GetBytes(encodeString));
 
-                //    var checkHeader = HttpRequest.DefaultRequestHeaders.Authorization;
+                //     var checkHeader = HttpRequest.DefaultRequestHeaders.Authorization;
 
-                //    if (checkHeader != null)
-                //    {
-                //        HttpRequest.DefaultRequestHeaders.Remove("Authorization");
-                //    }
+                //     if (checkHeader != null)
+                //     {
+                //         HttpRequest.DefaultRequestHeaders.Remove("Authorization");
+                //     }
 
                 //    // Add Token to the Http Request header
                 //    HttpRequest.DefaultRequestHeaders.Add("Authorization", "Basic " + encodedBasicToken);
 
-                //    var httpContent = param.ObjectToStringContent();
-                //    var response = await HttpRequest.PutTaskAsync<UserModel>(url, httpContent);
-                //    await LoginCallBack(response);
-                //});
+                //     var httpContent = param.ObjectToStringContent();
+                //     var response = await HttpRequest.PutTaskAsync<UserModel>(url, httpContent);
+                //     await LoginCallBack(response);
+                // });
 
             });
         }
@@ -107,6 +100,8 @@ namespace SmartMarket.ViewModels
         }
 
         #endregion
+
+      
 
     }
 }

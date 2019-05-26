@@ -4,5 +4,7 @@
     {
         Category,
         SelectedItem,
+        CoinInWallet,
+        TransactionID,
     }
 }
