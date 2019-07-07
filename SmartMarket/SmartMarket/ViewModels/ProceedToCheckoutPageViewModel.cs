@@ -47,6 +47,11 @@ namespace SmartMarket.ViewModels
                 TranslateExtension.Get("Express"),
             };
             CheckoutCommand = new DelegateCommand(CheckoutExcute);
+
+            if (App.Settings.IsLogin)
+            {
+                UserInfo = SqLiteService.Get<UserModel>(x => x.Id != 0);
+            }
         }
         #endregion
 
@@ -164,7 +169,7 @@ namespace SmartMarket.ViewModels
                 var url = ApiUrl.Schedule();
                 var buyItem = new BuyItem()
                 {
-                    AddressFrom = "0x262036d0E87D7fA0a201cF2443aA3450dE388b4b",
+                    AddressFrom = UserInfo.WalletAddress,
                     AddressTo = "0xd5488AD7D33c7d82414c50365C1FaF2081648D9d",
                     Amount = new double[] { SubTotal / 2, SubTotal / 2 },
                     Time = new int[] { 20, 50 },
@@ -191,7 +196,7 @@ namespace SmartMarket.ViewModels
                 if (transaction != null)
                 {
                     var signer = new Signer();
-                    var privatekey = "0x3885cd7c87a62465c2794f92cd96329899d6da4393ae5ef92344345618cf40ea";
+                    var privatekey = UserInfo.WalletAddress;
                     var stringSigned = signer.Sign(privatekey, transaction);
                     //var transactionID = transaction.Transaction;
                     if (!string.IsNullOrEmpty(stringSigned))

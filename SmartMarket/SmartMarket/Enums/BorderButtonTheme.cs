@@ -24,7 +24,7 @@
         /// <summary>
         /// White border, Green background
         /// </summary>
-        WhiteGreen,
+        WhiteBlue,
 
         /// <summary>
         /// White border, Red background

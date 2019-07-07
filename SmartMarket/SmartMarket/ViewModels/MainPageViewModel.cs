@@ -1,19 +1,23 @@
 ﻿using Prism.Commands;
 using Prism.Mvvm;
+using SmartMarket.Models.API;
 using Prism.Navigation;
-using SmartMarket.Enums;
+using SmartMarket.Interfaces.HttpService;
 using SmartMarket.Interfaces.LocalDatabase;
 using SmartMarket.Localization;
 using SmartMarket.Models;
+using SmartMarket.Services.HttpService;
 using SmartMarket.Utilities;
 using SmartMarket.ViewModels.Base;
 using SmartMarket.Views.Popups;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Diagnostics;
+using System.Collections.ObjectModel;
+using SmartMarket.Enums;
 
 namespace SmartMarket.ViewModels
 {
@@ -79,7 +83,7 @@ namespace SmartMarket.ViewModels
             CheckCartCommand = new DelegateCommand(NavigateShowCardPage);
 
             Title = TranslateExtension.Get("MainPage");
-            ItemTappedCommand = new DelegateCommand(ItemTappedExcute);
+            ItemTappedCommand = new DelegateCommand(SelectedItemExcutWithoutPara);
             MyList = new ObservableCollection<ItemModel>()
             {
                 new ItemModel()
@@ -114,6 +118,7 @@ namespace SmartMarket.ViewModels
                 },
                 new ItemModel()
                 {
+                    Id = 4,
                     ItemName = "But Long6",
                     Price = 20000,
                     Image= "006-notification"
@@ -134,12 +139,56 @@ namespace SmartMarket.ViewModels
 
         }
 
-        public ICommand ItemTappedCommand { get; set; }
 
         private async void ItemTappedExcute()
         {
             await MessagePopup.Instance.Show(SelectedItemTapped.ItemName);
             // await Navigation.NavigateAsync(PageManager.LoginPage);
         }
+
+        #region SelectedItemExcute
+        public ICommand ItemTappedCommand { get; set; }
+        public async void SelectedItemExcute(string itemId)
+        {
+            await CheckBusy(async () =>
+            {
+                if (!string.IsNullOrEmpty(itemId))
+                {
+                    var iteNumberId = Int32.Parse(itemId);
+                    var selectedItem = SqLiteService.Get<ItemModel>(x => x.Id == iteNumberId);
+                    var selectedCategory = SqLiteService.Get<Category>(x => x.Id == selectedItem.CategoryId);
+                    var param = new NavigationParameters
+                {
+                    {ParamKey.SelectedItem.ToString(), selectedItem},
+                            {ParamKey.Category.ToString(), selectedCategory},
+                    //{nameof(StatusOfLeadModel), StatusOfLeadModel.CreateLead},
+                };
+
+                    await Navigation.NavigateAsync(PageManager.ItemDetailsPage, parameters: param);
+                }
+            });
+        }
+
+        private async void SelectedItemExcutWithoutPara()
+        {
+            await CheckBusy(async () =>
+            {
+                if (SelectedItemTapped.Id != -1)
+                {
+                    var selectedItem = SqLiteService.Get<ItemModel>(x => x.Id == SelectedItemTapped.Id);
+                    //await MessagePopup.Instance.Show(SelectedItemTapped.Id.ToString());
+                    var selectedCategory = SqLiteService.Get<Category>(x => x.Id == selectedItem.CategoryId);
+                    var param = new NavigationParameters
+                        {
+                            {ParamKey.SelectedItem.ToString(), selectedItem},
+                            {ParamKey.Category.ToString(), selectedCategory},
+                         //{nameof(StatusOfLeadModel), StatusOfLeadModel.CreateLead},
+                        };
+
+                    await Navigation.NavigateAsync(PageManager.ItemDetailsPage, parameters: param);
+                }
+            });
+        }
+        #endregion
     }
 }

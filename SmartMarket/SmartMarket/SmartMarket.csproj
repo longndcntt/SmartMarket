@@ -23,6 +23,7 @@
   <ItemGroup>
     <PackageReference Include="CarouselView.FormsPlugin" Version="5.2.0" />
     <PackageReference Include="DLToolkit.Forms.Controls.FlowListView" Version="2.0.11" />
+    <PackageReference Include="dotMorten.Xamarin.Forms.AutoSuggestBox" Version="0.7.0" />
     <PackageReference Include="Nethereum.Signer" Version="3.3.0" />
     <PackageReference Include="Nethereum.Web3" Version="3.3.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
@@ -39,6 +40,8 @@
     <PackageReference Include="Xamarin.Forms" Version="3.2.0.839982" />
     <PackageReference Include="Prism.DryIoc.Forms" Version="7.1.0.431" />
     <PackageReference Include="Xfx.Controls" Version="1.1.3" />
+    <PackageReference Include="XLabs.Forms" Version="2.0.5782" />
+    <PackageReference Include="XLabs.Platform" Version="2.0.5782" />
   </ItemGroup>
 
   <ItemGroup>
@@ -94,6 +97,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\ProfileUser.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\SearchItemPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\ShowCardPage.xaml">

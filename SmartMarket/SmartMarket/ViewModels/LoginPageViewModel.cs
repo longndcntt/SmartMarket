@@ -1,6 +1,9 @@
 ﻿using Prism.Commands;
+using Prism.Mvvm;
+using SmartMarket.Models.API;
 using Prism.Navigation;
-using Prism.Services;
+using SmartMarket.Interfaces.HttpService;
+using SmartMarket.Interfaces.LocalDatabase;
 using SmartMarket.Localization;
 using SmartMarket.Models;
 using SmartMarket.Services.HttpService;
@@ -9,9 +12,11 @@ using SmartMarket.ViewModels.Base;
 using SmartMarket.Views.Popups;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Xamarin.Forms;
+using System.Diagnostics;
+using Prism.Services;
 
 namespace SmartMarket.ViewModels
 {
@@ -19,23 +24,23 @@ namespace SmartMarket.ViewModels
     {
         #region Properties
         #endregion
+        private bool _isAdmin = false;
 
-        #region Delegate
-        #endregion
+        public bool IsAdmin
+        {
+            get => _isAdmin;
+            set =>SetProperty(ref _isAdmin , value);
+        }
+
 
         #region Constructor
-        public LoginPageViewModel(INavigationService navigationService, IPageDialogService pageDialogService) 
-            : base(navigationService: navigationService, dialogService: pageDialogService)
+        public LoginPageViewModel(INavigationService navigationService, IPageDialogService pageDialogService, IHttpRequest httpRequest, ISqLiteService sqliteService)
+            : base(navigationService: navigationService, dialogService: pageDialogService, httpRequest: httpRequest, sqliteService: sqliteService)
         {
             LoginCommand = new DelegateCommand(LoginExecute);
         }
-
-        
         #endregion
-        public override void OnNavigatedNewToAsync(INavigationParameters parameters)
-        {
-            base.OnNavigatedNewToAsync(parameters);
-        }
+
         #region LoginCommand 
 
         public ICommand LoginCommand { get; set; }
@@ -43,51 +48,63 @@ namespace SmartMarket.ViewModels
         {
             await CheckBusy(async () =>
             {
-                //await Task.Run(async () =>
-                // {
-                //     var url = ApiUrl.Get();
+                await Task.Run(async () =>
+                 {
+                     await LoadingPopup.Instance.Show(TranslateExtension.Get("Login"));
+                     var url = ApiUrl.UserLogin();
+                     Username = "admin@gm.com";
+                     Password = "admin";
+                     var param = new UserIdentity
+                     {
+                         Email = Username,
+                         Password = Password
+                     };
 
-                //     var param = new UserIdentity { UserName = Username };
-                //     param.Password = param.CryptPassword(Password);
-
-                //     var encodeString = "fotoscan:fotoscan";
-                //     var encodedBasicToken = System.Convert.ToBase64String(System.Text.Encoding.GetEncoding("ISO-8859-1").GetBytes(encodeString));
-
-                //     var checkHeader = HttpRequest.DefaultRequestHeaders.Authorization;
-
-                //     if (checkHeader != null)
-                //     {
-                //         HttpRequest.DefaultRequestHeaders.Remove("Authorization");
-                //     }
-
-                //    // Add Token to the Http Request header
-                //    HttpRequest.DefaultRequestHeaders.Add("Authorization", "Basic " + encodedBasicToken);
-
-                //     var httpContent = param.ObjectToStringContent();
-                //     var response = await HttpRequest.PutTaskAsync<UserModel>(url, httpContent);
-                //     await LoginCallBack(response);
-                // });
+                     var httpContent = param.ObjectToStringContent();
+                     var response = await HttpRequest.PostTaskAsync<ModelRestFul>(url, httpContent);
+                     await LoginCallBack(response);
+                 });
 
             });
         }
 
-        private async Task LoginCallBack(UserModel user)
+        private async Task LoginCallBack(ModelRestFul response)
         {
-            //if (user == null)
-            //{
-            //    // login fail
-            //    await MessagePopup.Instance.Show(TranslateExtension.Get("Username_PasswordIncorrect"));
-            //    HttpRequest.DefaultRequestHeaders.Remove("Authorization");
-            //    return;
-            //}
+            if (response == null)
+            {
+                // login fail
+                await MessagePopup.Instance.Show(TranslateExtension.Get("Username_PasswordIncorrect"));
+                HttpRequest.DefaultRequestHeaders.Remove("Authorization");
+                return;
+            }
+            try
+            {
+                var user = response.Deserialize<UserModel>(response.Result);
+                if (user != null)
+                {
+                    if (user.Email == "admin@gm.com" && user.Password == "admin")
+                    {
+                        IsAdmin = true;
+                    }
+                    var walletAddress = Wallet.GetWallet(user.Keystore, user.Password);
+                    user.WalletAddress = walletAddress.ElementAt(0).Key.ToString();
+                    user.PrivateKey = walletAddress.ElementAt(0).Value.ToString();
+                    App.Settings.IsLogin = true;
+                    SqLiteService.Update(App.Settings);
 
-            //// login successfull - get user info & navigate to upload page
-            //App.Settings.IsLogin = true;
-            //App.Settings.ClientId = user.ClientId;
-            //SqLiteService.Update(App.Settings);
+                    SqLiteService.Insert(user);
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.Write(e.Message);
+            }
+            finally
+            {
+                await LoadingPopup.Instance.Hide();
+            }
+            // login successfull - get user info & navigate to upload page
 
-            //SqLiteService.Insert(user);
-            //UserInfo = user;
 
             //IsShowLoginForm = false;
 
@@ -98,10 +115,9 @@ namespace SmartMarket.ViewModels
 
             //await GetEventListExecute(user.ClientId);
         }
-
         #endregion
 
-      
+
 
     }
 }

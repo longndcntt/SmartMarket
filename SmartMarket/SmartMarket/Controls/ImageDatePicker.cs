@@ -18,10 +18,10 @@ namespace SmartMarket.Controls
             BindableProperty.Create(nameof(LineColor), typeof(Xamarin.Forms.Color), typeof(ImageEntry), Color.White);
 
         public static readonly BindableProperty ImageHeightProperty =
-            BindableProperty.Create(nameof(ImageHeight), typeof(int), typeof(ImageEntry), 40);
+            BindableProperty.Create(nameof(ImageHeight), typeof(int), typeof(ImageEntry), 25);
 
         public static readonly BindableProperty ImageWidthProperty =
-            BindableProperty.Create(nameof(ImageWidth), typeof(int), typeof(ImageEntry), 40);
+            BindableProperty.Create(nameof(ImageWidth), typeof(int), typeof(ImageEntry), 25);
 
         public static readonly BindableProperty ImageAlignmentProperty =
             BindableProperty.Create(nameof(ImageAlignment), typeof(ImageAlignment), typeof(ImageEntry), ImageAlignment.Left);

@@ -8,7 +8,7 @@
              xmlns:xfxcontrol="clr-namespace:Xfx;assembly=Xfx.Controls"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="SmartMarket.Views.LoginAndSignUp.LoginPage"
-             BackgroundImage="backgroud_login">
+             BackgroundImage="backgroud_1">
     <ContentPage.Resources>
         <Style TargetType="Entry">
             <Setter Property="Margin" Value="5,10,5,10"></Setter>

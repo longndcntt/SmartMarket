@@ -93,6 +93,7 @@ namespace SmartMarket.ViewModels.Base
 
             OpenSettingsPageCommand = new DelegateCommand(async () => await OpenSettingsPageExe());
             BackCommand = new DelegateCommand(async () => await BackExecute());
+            SearchCommand = new DelegateCommand<string>(SearchExcute);
             ZoomImageCommand = new DelegateCommand<object>(ZoomImageExe);
         }
 
@@ -422,6 +423,19 @@ namespace SmartMarket.ViewModels.Base
             }
         }
 
+        #endregion
+
+        #region SearchCommand
+        public ICommand SearchCommand { get; set; }
+        public async void SearchExcute(string contentSearch)
+        {
+            var param = new NavigationParameters
+                        {
+                            {ParamKey.ContentSearch.ToString(), contentSearch},
+                         //{nameof(StatusOfLeadModel), StatusOfLeadModel.CreateLead},
+                        };
+            await Navigation.NavigateAsync(PageManager.SearchItemPage, parameters: param);
+        }
         #endregion
     }
 }

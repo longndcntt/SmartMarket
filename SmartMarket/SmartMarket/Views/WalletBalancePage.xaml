@@ -42,7 +42,7 @@
                          VerticalOptions="Center">
                     <Label FontAttributes="Bold"
                        FontSize="{StaticResource SuperLargeLabelFont}"
-                       Text="{localization:Translate WalletBalance}"
+                       Text="{localization:Translate WalletBallance}"
                        TextColor="{StaticResource SDarkerTextColor}"/>
                 </StackLayout>
             </Grid>

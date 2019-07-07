@@ -142,7 +142,7 @@
                             <ColumnDefinition Width="7*"/>
                             <ColumnDefinition Width="3*"/>
                         </Grid.ColumnDefinitions>
-                        <Label Text="{localization:Translate WalletBalance}"
+                        <Label Text="{localization:Translate WalletBallance}"
                                Grid.Row="0" Grid.Column="0"
                                FontAttributes="Bold"
                                VerticalOptions="CenterAndExpand"

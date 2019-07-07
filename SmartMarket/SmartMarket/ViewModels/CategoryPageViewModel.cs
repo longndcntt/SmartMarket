@@ -91,6 +91,13 @@ namespace SmartMarket.ViewModels
             set => SetProperty(ref _selectedCategory, value);
         }
 
+        private ItemModel _selectedItem;
+        public ItemModel SelectedItemTapped
+        {
+            get => _selectedItem;
+            set => SetProperty(ref _selectedItem, value);
+        }
+
         #endregion
 
         #region OnFirstTimeAppear
@@ -153,6 +160,8 @@ namespace SmartMarket.ViewModels
             return true;
         }
         #endregion
+
+        
 
     }
 }

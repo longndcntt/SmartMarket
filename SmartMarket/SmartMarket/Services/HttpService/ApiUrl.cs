@@ -50,7 +50,12 @@ namespace SmartMarket.Services.HttpService
 
         public static string UserRegister()
         {
-            return Link("publish");
+            return Link("signup");
+        }
+
+        public static string UserLogin()
+        {
+            return Link("login");
         }
         #endregion
     }

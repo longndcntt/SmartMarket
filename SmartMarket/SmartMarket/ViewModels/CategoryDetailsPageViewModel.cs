@@ -2,6 +2,7 @@
 using Prism.Mvvm;
 using Prism.Navigation;
 using SmartMarket.Enums;
+using SmartMarket.Interfaces.HttpService;
 using SmartMarket.Interfaces.LocalDatabase;
 using SmartMarket.Models;
 using SmartMarket.Utilities;
@@ -19,8 +20,8 @@ namespace SmartMarket.ViewModels
     public class CategoryDetailsPageViewModel : ViewModelBase
     {
         #region Constructor
-        public CategoryDetailsPageViewModel(INavigationService navigationService, ISqLiteService sqLiteService)
-           : base(navigationService: navigationService, sqliteService: sqLiteService)
+        public CategoryDetailsPageViewModel(INavigationService navigationService, ISqLiteService sqLiteService, IHttpRequest httpRequest)
+           : base(navigationService: navigationService, sqliteService: sqLiteService, httpRequest: httpRequest)
         {
             IsSearchCommand = new DelegateCommand(IsSearchChangeExcute);
             ItemTappedCommand = new DelegateCommand(SelectedItemExcutWithoutPara);
@@ -118,15 +119,17 @@ namespace SmartMarket.ViewModels
             {
                 if (!string.IsNullOrEmpty(itemId))
                 {
-                    var selectedItem = SqLiteService.Get<ItemModel>(x => x.Id == Int32.Parse(itemId));
+                    var iteNumberId = Int32.Parse(itemId);
+                    var selectedItem = SqLiteService.Get<ItemModel>(x => x.Id == iteNumberId);
+                    var selectedCategory = SqLiteService.Get<Category>(x => x.Id == selectedItem.CategoryId);
                     var param = new NavigationParameters
                 {
                     {ParamKey.SelectedItem.ToString(), selectedItem},
-                            {ParamKey.Category.ToString(), SelectedCategory},
+                            {ParamKey.Category.ToString(), selectedCategory},
                     //{nameof(StatusOfLeadModel), StatusOfLeadModel.CreateLead},
                 };
 
-                    await Navigation.NavigateAsync(PageManager.CategoryDetailsPage, parameters: param);
+                    await Navigation.NavigateAsync(PageManager.ItemDetailsPage, parameters: param);
                 }
             });
         }

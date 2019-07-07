@@ -37,9 +37,7 @@
                            VerticalOptions="CenterAndExpand"
                            FontSize="{StaticResource LargeLabelFont}"
                            Margin="5,0"></Label>
-                        <StackLayout.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding LoginSignupCommand}"></TapGestureRecognizer>
-                        </StackLayout.GestureRecognizers>
+                        
                     </StackLayout>
                     <StackLayout Grid.Column="1"
                                  Grid.Row="0"
@@ -47,7 +45,7 @@
                         <Label VerticalOptions="CenterAndExpand"
                            Margin="5,0"
                            FontSize="{StaticResource LargeLabelFont}"
-                           Text="{Binding ClientName}"></Label>
+                           Text="{Binding UserInfo.FullName}"></Label>
                     </StackLayout>
                     <StackLayout Grid.Column="1"
                                  Grid.Row="1"
@@ -57,6 +55,9 @@
                            FontSize="{StaticResource NormalLabelFont}"
                            Text="{localization:Translate GeneralInformation}"></Label>
                     </StackLayout>
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding LoginSignupCommand}"></TapGestureRecognizer>
+                    </Grid.GestureRecognizers>
                 </Grid>
                 <controls:FrameButton.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding CheckInformationCommand}"/>
@@ -149,7 +150,8 @@
             </Frame>
 
             <!--Saler-->
-            <Frame Padding="0">
+            <Frame Padding="0"
+                   IsVisible="{Binding IsAdmin}">
                 <StackLayout Style="{StaticResource ContentSettingPage}" 
                                  Spacing="15">
                     <BoxView Color="DimGray" HeightRequest="1" VerticalOptions="Start" Margin="3"/>
@@ -232,7 +234,7 @@
                                    TextColor="Black"
                                    Margin="5,8"/>
                         <StackLayout.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding FAQCommand}"/>
+                            <TapGestureRecognizer Command="{Binding LogOutCommand}"/>
                         </StackLayout.GestureRecognizers>
                     </StackLayout>
                     <BoxView Color="DimGray" HeightRequest="1" VerticalOptions="Start" Margin="5"/>

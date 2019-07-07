@@ -56,7 +56,7 @@ namespace SmartMarket.Droid.Controls.CustomEntryLabelRenderer
                 case BorderButtonTheme.GreenWhite:
                     return Resource.Drawable.bg_border_button_green_white;
 
-                case BorderButtonTheme.WhiteGreen:
+                case BorderButtonTheme.WhiteBlue:
                     return Resource.Drawable.bg_border_button_white_green;
 
                 case BorderButtonTheme.WhiteRed:

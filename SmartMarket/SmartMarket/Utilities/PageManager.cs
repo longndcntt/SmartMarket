@@ -27,6 +27,8 @@ namespace SmartMarket.Utilities
         public static readonly string WalletBalancePage = "WalletBalancePage";
         public static readonly string AddMoneyPage = "AddMoneyPage";
         public static readonly string MessagePage = "MessagePage";
+
+        public static readonly string SearchItemPage = "SearchItemPage";
         
 
         //public static readonly string MerchantHomePage = "MerchantHomePage";

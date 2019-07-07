@@ -264,4 +264,16 @@
   <data name="UploadItem" xml:space="preserve">
     <value>Đăng sản phẩm</value>
   </data>
+  <data name="DateOfBirth" xml:space="preserve">
+    <value>Ngày sinh</value>
+  </data>
+  <data name="Female" xml:space="preserve">
+    <value>Nữ</value>
+  </data>
+  <data name="Gender" xml:space="preserve">
+    <value>Giới tính</value>
+  </data>
+  <data name="Male" xml:space="preserve">
+    <value>Nam</value>
+  </data>
 </root>

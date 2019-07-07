@@ -5,6 +5,7 @@
              xmlns:abstractions="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions"
              xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              xmlns:controls="clr-namespace:SmartMarket.Controls"
+             xmlns:auto="clr-namespace:dotMorten.Xamarin.Forms;assembly=dotMorten.Xamarin.Forms.AutoSuggestBox"
               xmlns:localization="clr-namespace:SmartMarket.Localization"
              xmlns:buttonBorder="clr-namespace:SmartMarket.Controls.CustomLabelEntry"
                NavigationPage.HasNavigationBar="False"
@@ -34,22 +35,56 @@
                 <Frame Grid.Column="1"
                        HorizontalOptions="FillAndExpand"
                        VerticalOptions="FillAndExpand" Padding="0" Margin="0">
-                <StackLayout  
+                    <StackLayout  
                        HorizontalOptions="FillAndExpand"
                        VerticalOptions="FillAndExpand"
                               BackgroundColor="White"
                               Padding="5"
                               Orientation="Horizontal">
-                    <buttonBorder:ExtendedEntry Text="{Binding ContentSearch}"
+                        <!--<buttonBorder:ExtendedEntry Text="{Binding ContentSearch}"
                                                 Borderless="True"
                                                 Padding="4"
+                                                ReturnCommand="{Binding SearchCommand}"
+                                                ReturnType="Search"
+                                               HorizontalOptions="FillAndExpand"
+                                               VerticalOptions="CenterAndExpand"
+                                               Placeholder="{localization:Translate Search}"/>-->
+
+                        <!--<xlabsControl:AutoCompleteView Text="{Binding ContentSearch}"
+                                                Padding="4"
+                                                       x:Name="autoSuggestSearch"
+                                                       TextChanged="AutoSuggestSearch_TextChanged"
+                                                       SearchCommand="{Binding SearchCommand}"
+                                               HorizontalOptions="FillAndExpand"
+                                               VerticalOptions="CenterAndExpand"
+                                               Placeholder="{localization:Translate Search}">
+                            --><!--<xlabsControl:AutoCompleteView.SuggestionItemDataTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <Label Text="{Binding ItemName}"/>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </xlabsControl:AutoCompleteView.SuggestionItemDataTemplate>--><!--
+                        </xlabsControl:AutoCompleteView>-->
+                        <auto:AutoSuggestBox Text="{Binding ContentSearch}"
+                                                       x:Name="autoSuggestSearch"
+                                             ItemsSource="{Binding MyList}"
+                                             DisplayMemberPath="ItemName"
+                                                       SuggestionChosen="AutoSuggestSearch_SuggestionChosen"
+                                             QuerySubmitted="AutoSuggestSearch_QuerySubmitted"
+                                               HorizontalOptions="FillAndExpand"
+                                               VerticalOptions="CenterAndExpand"
+                                               PlaceholderText="{localization:Translate Search}"/>
+                        <!--<SearchBar Text="{Binding ContentSearch}"
                            HorizontalOptions="FillAndExpand"
                            VerticalOptions="CenterAndExpand"
-                           Placeholder="{localization:Translate Search}"/>
-                    <controls:ImageButton Source="ic_search"
+                           Placeholder="{localization:Translate Search}"/>-->
+                        <controls:ImageButton Source="ic_search"
                                           Style="{StaticResource ImageBase}"
-                                          Margin="5,0"/>
-                </StackLayout>
+                                          Margin="5,0"
+                                              Command="{Binding SearchCommand}"
+                                              CommandParameter="{Binding Source={x:Reference autoSuggestSearch},Path=Text}"/>
+                    </StackLayout>
                 </Frame>
                 <controls:ImageButton Source="ic_shoppingcart"
                                       Grid.Column="2" 
@@ -60,8 +95,8 @@
                                       Margin="0"
                                       Command="{Binding CheckCartCommand}"/>
             </Grid>
-            
-            
+
+
             <StackLayout HeightRequest="100"
                      WidthRequest="100">
                 <abstractions:CarouselViewControl ItemsSource="{Binding ListEvent}"
@@ -199,6 +234,7 @@
                         <controls:HorizontalScrollList.ItemTemplate>
                             <DataTemplate>
                                 <Frame Padding="5"
+                                        ClassId="{Binding Id}"
                            Margin="5"
                            HorizontalOptions="Fill"
                               VerticalOptions="Fill">
@@ -232,6 +268,9 @@
                                    Text="{Binding Price, Converter={StaticResource CovertToCurrency}}"
                                    FontAttributes="Bold"/>
                                     </Grid>
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+                                    </Frame.GestureRecognizers>
                                 </Frame>
                             </DataTemplate>
                         </controls:HorizontalScrollList.ItemTemplate>

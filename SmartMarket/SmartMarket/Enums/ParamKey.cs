@@ -6,5 +6,6 @@
         SelectedItem,
         CoinInWallet,
         TransactionID,
+        ContentSearch,
     }
 }

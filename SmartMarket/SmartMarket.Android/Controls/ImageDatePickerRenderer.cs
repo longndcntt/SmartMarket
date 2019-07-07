@@ -40,6 +40,7 @@ namespace SmartMarket.Droid.Controls
                         editText.SetCompoundDrawablesWithIntrinsicBounds(null, null, GetDrawable(element.Image), null);
                         break;
                 }
+                Control.Background = null;
                 editText.CompoundDrawablePadding = 25;
             }
         }

@@ -19,7 +19,7 @@ namespace SmartMarket.Droid.Renderers
         protected override void OnElementChanged(ElementChangedEventArgs<Picker> e)
         {
             base.OnElementChanged(e);
-
+            
             element = (ImagePicker)this.Element;
             var editText = this.Control;
             if (Control != null && this.Element != null && !string.IsNullOrEmpty(element.Image))

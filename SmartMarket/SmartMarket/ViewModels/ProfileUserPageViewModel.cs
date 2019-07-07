@@ -5,6 +5,7 @@ using Prism.Services;
 using SmartMarket.Interfaces;
 using SmartMarket.Interfaces.HttpService;
 using SmartMarket.Interfaces.LocalDatabase;
+using SmartMarket.Models;
 using SmartMarket.Utilities;
 using SmartMarket.ViewModels.Base;
 using System;
@@ -40,11 +41,16 @@ namespace SmartMarket.ViewModels
         {
             LoginSignupCommand = new DelegateCommand(NavigateToLoginPage);
             NavigateWalletBalancePage = new DelegateCommand(NavigateWalletBalancePageExcute);
+            LogOutCommand = new DelegateCommand(LogOutExcute);
             // IsLogin = App.Settings.IsLogin;
             IsLogin = App.Settings.IsLogin;
-            ClientName = "Người bán hàng 1";
+            if (IsLogin)
+            {
+                UserInfo = SqLiteService.Get<UserModel>(x => x.Id != -1);
+            }
         }
 
+      
         #region LoginSignupCommand
         public ICommand LoginSignupCommand { get; set; }
         private async void NavigateToLoginPage()
@@ -65,6 +71,21 @@ namespace SmartMarket.ViewModels
         private async void NavigateWalletBalancePageExcute()
         {
             await Navigation.NavigateAsync(PageManager.WalletBalancePage);
+        }
+
+        #endregion
+
+        #region LogOutCommand
+        public ICommand LogOutCommand { get; set; }
+
+        private async void LogOutExcute()
+        {
+            await CheckBusy(async () => {
+                SqLiteService.DeleteAll<UserModel>();
+                App.Settings.IsLogin = false;
+                IsLogin = false;
+                SqLiteService.Update(App.Settings);
+            });
         }
 
         #endregion

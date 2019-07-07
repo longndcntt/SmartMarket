@@ -31,6 +31,10 @@ namespace SmartMarket.ViewModels
             {
                 "ATM","Visa/Credit Card","Paypal"
             };
+            if (App.Settings.IsLogin)
+            {
+                UserInfo = SqLiteService.Get<UserModel>(user => user.Id != -1);
+            }
         }
 
         #region Navigate
@@ -123,14 +127,14 @@ namespace SmartMarket.ViewModels
                 var url = ApiUrl.BuyToken();
                 var buyItem = new BuyItemModel()
                 {
-                    Address = "0x262036d0E87D7fA0a201cF2443aA3450dE388b4b",
+                    Address = UserInfo.WalletAddress,
                     Amount = AddAmountCoin,
                 };
                 //string sData = Newtonsoft.Json.JsonConvert.SerializeObject(buyItem);
                 //var httpContent = new StringContent(sData, System.Text.Encoding.UTF8);
                 //httpContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
                 var httpContent = buyItem.ObjectToStringContent();
-                var response = await HttpRequest.PostTaskAsync<ModelRestFul>(url, httpContent);
+                var response = await HttpRequest.PutTaskAsync<ModelRestFul>(url, httpContent);
                 await AddCoinCallBack(response);
             });
         }

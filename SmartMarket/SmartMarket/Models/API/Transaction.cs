@@ -14,7 +14,7 @@ namespace SmartMarket.Models.API
         public BigInteger Nonce { get; set; }
         public BigInteger GasLimit { get; set; }
         public BigInteger GasPrice { get; set; }
-        public BigInteger Amount { get; set; }
+        public BigInteger Value { get; set; }
 
         public Transaction(string to, string data, long nonce, long gas, long gasPrice, long value)
         {
@@ -23,7 +23,7 @@ namespace SmartMarket.Models.API
             this.Nonce = new BigInteger(nonce);
             this.GasLimit = new BigInteger(gas);
             this.GasPrice = new BigInteger(gasPrice);
-            this.Amount = new BigInteger(value);
+            this.Value = new BigInteger(value);
         }
 
     }

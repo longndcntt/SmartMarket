@@ -25,6 +25,10 @@ namespace SmartMarket.ViewModels
       : base(navigationService: navigationService, sqliteService: sqLiteService, httpRequest: httpRequest)
         {
             AddMoneyCommand = new DelegateCommand(AddMoneyExcute);
+            if (App.Settings.IsLogin)
+            {
+                UserInfo = SqLiteService.Get<UserModel>(user => user.Id != -1);
+            }
             AmountCoin = 100;
         }
 
@@ -62,7 +66,7 @@ namespace SmartMarket.ViewModels
 
                 await Task.Run(async () =>
                 {
-                    var url = ApiUrl.GetWallet() + "0x262036d0E87D7fA0a201cF2443aA3450dE388b4b";
+                    var url = ApiUrl.GetWallet() + UserInfo.WalletAddress;
 
                     var response = await HttpRequest.GetTaskAsync<ModelRestFul>(url);
                     await GetWalletCallBack(response);
