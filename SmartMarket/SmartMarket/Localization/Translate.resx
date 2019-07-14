@@ -276,4 +276,22 @@
   <data name="Male" xml:space="preserve">
     <value>Male</value>
   </data>
+  <data name="Count" xml:space="preserve">
+    <value>Count</value>
+  </data>
+  <data name="Detail" xml:space="preserve">
+    <value>Detail</value>
+  </data>
+  <data name="ItemName" xml:space="preserve">
+    <value>Item Name</value>
+  </data>
+  <data name="Manufacturer" xml:space="preserve">
+    <value>Manufacturer</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>Price</value>
+  </data>
+  <data name="Username_PasswordIncorrect" xml:space="preserve">
+    <value>Username or Password is incorrect</value>
+  </data>
 </root>

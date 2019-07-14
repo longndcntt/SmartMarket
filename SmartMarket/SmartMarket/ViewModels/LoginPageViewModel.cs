@@ -29,7 +29,7 @@ namespace SmartMarket.ViewModels
         public bool IsAdmin
         {
             get => _isAdmin;
-            set =>SetProperty(ref _isAdmin , value);
+            set => SetProperty(ref _isAdmin, value);
         }
 
 
@@ -54,6 +54,8 @@ namespace SmartMarket.ViewModels
                      var url = ApiUrl.UserLogin();
                      Username = "admin@gm.com";
                      Password = "admin";
+                     //Username = "test123@gm.com";
+                     //Password = "123456";
                      var param = new UserIdentity
                      {
                          Email = Username,
@@ -74,26 +76,32 @@ namespace SmartMarket.ViewModels
             {
                 // login fail
                 await MessagePopup.Instance.Show(TranslateExtension.Get("Username_PasswordIncorrect"));
-                HttpRequest.DefaultRequestHeaders.Remove("Authorization");
                 return;
             }
             try
             {
                 var user = response.Deserialize<UserModel>(response.Result);
-                if (user != null)
+                if (user == null)
                 {
-                    if (user.Email == "admin@gm.com" && user.Password == "admin")
-                    {
-                        IsAdmin = true;
-                    }
-                    var walletAddress = Wallet.GetWallet(user.Keystore, user.Password);
-                    user.WalletAddress = walletAddress.ElementAt(0).Key.ToString();
-                    user.PrivateKey = walletAddress.ElementAt(0).Value.ToString();
-                    App.Settings.IsLogin = true;
-                    SqLiteService.Update(App.Settings);
-
-                    SqLiteService.Insert(user);
+                    // login fail
+                    await MessagePopup.Instance.Show(TranslateExtension.Get("Username_PasswordIncorrect"));
+                    return;
                 }
+                if (user.Email == "admin@gm.com" && user.Password == "admin")
+                {
+                    IsAdmin = true;
+                }
+                var walletAddress = Wallet.GetWallet(user.Keystore, user.Password);
+                user.WalletAddress = walletAddress.ElementAt(0).Key.ToString();
+                user.PrivateKey = walletAddress.ElementAt(0).Value.ToString();
+                App.Settings.IsLogin = true;
+                SqLiteService.Update(App.Settings);
+
+                SqLiteService.Insert(user);
+                await DeviceExtension.BeginInvokeOnMainThreadAsync(async () =>
+                {
+                    await Navigation.NavigateAsync(PageManager.TabbedMainPage);
+                });
             }
             catch (Exception e)
             {

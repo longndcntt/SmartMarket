@@ -18,6 +18,7 @@ using System.Windows.Input;
 using System.Diagnostics;
 using System.Collections.ObjectModel;
 using SmartMarket.Enums;
+using Prism.Services;
 
 namespace SmartMarket.ViewModels
 {
@@ -56,8 +57,8 @@ namespace SmartMarket.ViewModels
             set => SetProperty(ref _listEvent, value);
         }
         #endregion
-        public MainPageViewModel(INavigationService navigationService, ISqLiteService sqLiteService)
-           : base(navigationService: navigationService, sqliteService: sqLiteService)
+        public MainPageViewModel(INavigationService navigationService, ISqLiteService sqLiteService, IHttpRequest httpRequest, IPageDialogService pageDialogService)
+           : base(navigationService: navigationService, sqliteService: sqLiteService, httpRequest: httpRequest, dialogService: pageDialogService)
         {
             //Check Cart
             var order = SqLiteService.Get<Order>(x => x.Id == 0);
@@ -81,49 +82,9 @@ namespace SmartMarket.ViewModels
             //
 
             CheckCartCommand = new DelegateCommand(NavigateShowCardPage);
-
             Title = TranslateExtension.Get("MainPage");
             ItemTappedCommand = new DelegateCommand(SelectedItemExcutWithoutPara);
-            MyList = new ObservableCollection<ItemModel>()
-            {
-                new ItemModel()
-                {
-                    ItemName = "But Long1",
-                    Price = 20000,
-                    Image= "006-notification",
-                },
-                new ItemModel()
-                {
-                    ItemName = "But Long2",
-                    Price = 20000,
-                    Image= "006-notification"
-                },
-                new ItemModel()
-                {
-                    ItemName = "But Long3",
-                    Price = 20000,
-                    Image= "006-notification"
-                },
-                new ItemModel()
-                {
-                    ItemName = "But Long4",
-                    Price = 20000,
-                    Image= "006-notification"
-                },
-                new ItemModel()
-                {
-                    ItemName = "But Long5",
-                    Price = 20000,
-                    Image= "006-notification"
-                },
-                new ItemModel()
-                {
-                    Id = 4,
-                    ItemName = "But Long6",
-                    Price = 20000,
-                    Image= "006-notification"
-                },
-            };
+
 
             ListEvent = new ObservableCollection<string>()
             {
@@ -132,12 +93,27 @@ namespace SmartMarket.ViewModels
 
         }
 
-        private void LoginExcute()
-        {
-            Navigation.NavigateAsync(PageManager.LoginPage);
-            var listItemOfCartTemp = SqLiteService.GetList<OrderDetails>(x => string.IsNullOrEmpty(x.Id));
+       
 
+        public async override void OnAppear()
+        {
+            var url = ApiUrl.GetAllItem();
+            var a = await HttpRequest.GetTaskAsync<ModelRestFul>(url);
+            if (a != null)
+            {
+                var listTemp = a.Deserialize<IEnumerable<ItemModel>>(a.Result);
+                if (listTemp.Any())
+                {
+                    MyList = new ObservableCollection<ItemModel>(listTemp);
+                    foreach (var item in MyList)
+                    {
+                        item.Image = "006-notification";
+                    }
+                }
+            }
         }
+
+    
 
 
         private async void ItemTappedExcute()

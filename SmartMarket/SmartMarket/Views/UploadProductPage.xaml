@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<base:BasePage xmlns:base="clr-namespace:SmartMarket.Views.Base"
+               xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+               xmlns:radio="clr-namespace:SmartMarket.Controls.InputKit"
+               xmlns:xlabControl="clr-namespace:SmartMarket.Controls.CustomLabelEntry"
+               xmlns:xfxcontrol="clr-namespace:Xfx;assembly=Xfx.Controls"
+               xmlns:controls="clr-namespace:SmartMarket.Controls"
+               prism:ViewModelLocator.AutowireViewModel="True"
+               xmlns:localization ="clr-namespace:SmartMarket.Localization"
+               xmlns:ffImage="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             x:Class="SmartMarket.Views.UploadProductPage">
+    <ScrollView>
+        <StackLayout HorizontalOptions="FillAndExpand"
+                     Padding="10"
+                 VerticalOptions="FillAndExpand">
+            <StackLayout>
+                <!--Image-->
+                <ffImage:CachedImage Source="{Binding Image}" 
+                                     Aspect="AspectFit"
+                                     HorizontalOptions="Center"
+                                     ></ffImage:CachedImage>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <!--Take picture button-->
+                    <Button Grid.Column="0"
+                            HorizontalOptions="EndAndExpand"
+                            Text="Take picture"
+                            Command="{Binding TakePhotoReceiveCommand}"/>
+                    <!--Pick picture button-->
+                    <Button Grid.Column="1"
+                                HorizontalOptions="Start"
+                                Text="Pick picture"
+                                Command="{Binding ChoosePhotoReceiveCommand}"></Button>
+                </Grid>
+                <Grid RowSpacing="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <controls:ImagePicker Grid.Row="0" 
+                                          Title="{localization:Translate Category}" 
+                                          FontSize="{StaticResource NormalLabelFont}"
+                                         VerticalOptions="CenterAndExpand"
+                                         ItemsSource="{Binding CategoryList}"
+                                          SelectedItem="{Binding SelectedCategory}"
+                                          ItemDisplayBinding="{Binding CategoryName}"/>
+
+                    <xfxcontrol:XfxEntry Grid.Row="1" Placeholder="{localization:Translate ItemName}" 
+                                     ActivePlaceholderColor="DimGray"
+                                 FontSize="{StaticResource NormalLabelFont}"
+                                         VerticalOptions="CenterAndExpand"
+                                         Text="{Binding ItemName}"/>
+
+                    <xfxcontrol:XfxEntry Grid.Row="2" Placeholder="{localization:Translate Price}" 
+                                 FontSize="{StaticResource NormalLabelFont}"
+                                         VerticalOptions="CenterAndExpand"
+                                         Text="{Binding Price}"/>
+
+                    <xfxcontrol:XfxEntry Grid.Row="3" Placeholder="{localization:Translate Count}" 
+                                     x:Name="entry"
+                                         Keyboard="Numeric"
+                                 FontSize="{StaticResource NormalLabelFont}"
+                                        VerticalOptions="CenterAndExpand" 
+                                         Text="{Binding Count}"/>
+
+                    <xfxcontrol:XfxEntry Grid.Row="4" Placeholder="{localization:Translate Manufacturer}" 
+                                 FontSize="{StaticResource NormalLabelFont}"
+                                        VerticalOptions="CenterAndExpand" 
+                                         Text="{Binding Manufacturer}"/>
+
+                    <xlabControl:BorderEditor Grid.Row="5" Placeholder="{localization:Translate Detail}" 
+                                 FontSize="{StaticResource NormalLabelFont}"
+                                              Theme="White"
+                                              HeightRequest="100"
+                                        VerticalOptions="CenterAndExpand" 
+                                         Text="{Binding Detail}"/>
+                </Grid>
+            </StackLayout>
+            <xlabControl:BorderButton Text="{localization:Translate UploadItem}" 
+                                      Command="{Binding UploadItemCommand}"
+                                 Margin="10,5,0,10"
+                            HorizontalOptions="FillAndExpand"
+                                VerticalOptions="EndAndExpand"
+                    BackgroundColor="White"
+                                     Theme="WhiteBlue"/>
+        </StackLayout>
+    </ScrollView>
+</base:BasePage>

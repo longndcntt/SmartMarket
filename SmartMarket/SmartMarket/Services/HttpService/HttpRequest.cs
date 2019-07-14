@@ -18,7 +18,7 @@ namespace SmartMarket.Services.HttpService
     {
         #region Properties
 
-        public int TimeoutSeconds = 180;
+        public int TimeoutSeconds = 100;
 
         public TimeSpan Timeout
         {

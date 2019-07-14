@@ -9,7 +9,7 @@ namespace SmartMarket.Models
     [Table("ItemTabel")]
     public class ItemModel
     {
-        [PrimaryKey, AutoIncrement]
+        [PrimaryKey]
         public int Id { get; set; }
 
         [ForeignKey(typeof(Category))]

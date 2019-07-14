@@ -2,22 +2,22 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.ise.smartmarket" android:installLocation="auto">
 	<uses-sdk android:minSdkVersion="21" android:targetSdkVersion="28" />
 	<uses-permission android:name="android.permission.INTERNET" />
-	<application android:label="SmartMarket.Android" android:icon="@mipmap/ic_launcher">
-    <!-- Add these lines -->
-    <receiver
-        android:name="com.google.firebase.iid.FirebaseInstanceIdInternalReceiver"
-        android:exported="false" />
-    <receiver
-        android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver"
-        android:exported="true"
-        android:permission="com.google.android.c2dm.permission.SEND">
-        <intent-filter>
-            <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-            <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-            <category android:name="com.ise.smartmarket" />
-        </intent-filter>
-    </receiver>
-    <!-- end of section to add -->
-  </application>
- 
+	<uses-permission android:name="android.permission.CAMERA" />
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+	<application android:label="SmartMarket.Android" android:icon="@mipmap/ic_launcher" android:hardwareAccelerated="false" android:largeHeap="true">
+		<provider android:name="android.support.v4.content.FileProvider" android:authorities="com.ise.smartmarket.fileprovider" android:exported="false" android:grantUriPermissions="true">
+			<meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/file_paths"></meta-data>
+		</provider>
+		<!-- Add these lines -->
+		<receiver android:name="com.google.firebase.iid.FirebaseInstanceIdInternalReceiver" android:exported="false" />
+		<receiver android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver" android:exported="true" android:permission="com.google.android.c2dm.permission.SEND">
+			<intent-filter>
+				<action android:name="com.google.android.c2dm.intent.RECEIVE" />
+				<action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+				<category android:name="com.ise.smartmarket" />
+			</intent-filter>
+		</receiver>
+		<!-- end of section to add -->
+	</application>
 </manifest>

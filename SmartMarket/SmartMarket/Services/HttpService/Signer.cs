@@ -20,7 +20,7 @@ namespace SmartMarket.Services.HttpService
                 nonce: tx.Nonce,
                 gasLimit: tx.GasLimit,
                 gasPrice: tx.GasPrice,
-                amount: tx.Value
+                amount: tx.Amount
                 );
             return "0x" + signed;
         }

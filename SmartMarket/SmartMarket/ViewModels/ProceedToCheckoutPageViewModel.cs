@@ -196,7 +196,7 @@ namespace SmartMarket.ViewModels
                 if (transaction != null)
                 {
                     var signer = new Signer();
-                    var privatekey = UserInfo.WalletAddress;
+                    var privatekey = UserInfo.PrivateKey;
                     var stringSigned = signer.Sign(privatekey, transaction);
                     //var transactionID = transaction.Transaction;
                     if (!string.IsNullOrEmpty(stringSigned))

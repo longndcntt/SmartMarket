@@ -7,5 +7,8 @@
         CoinInWallet,
         TransactionID,
         ContentSearch,
+
+        UserInfo,
+        IsEdit,
     }
 }

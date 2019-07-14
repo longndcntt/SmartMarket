@@ -16,6 +16,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Diagnostics;
+using SmartMarket.Enums;
 
 namespace SmartMarket.ViewModels
 {
@@ -78,8 +79,37 @@ namespace SmartMarket.ViewModels
             get => _selectedGender;
             set => SetProperty(ref _selectedGender, value);
         }
+
+        private bool _isEdit;
+        public bool IsEdit
+        {
+            get => _isEdit;
+            set => SetProperty(ref _isEdit, value);
+        }
         #endregion
 
+        #region Navigate
+
+        public override void OnNavigatedNewToAsync(INavigationParameters parameters)
+        {
+            base.OnNavigatedNewToAsync(parameters);
+            if (parameters != null)
+            {
+                UserInfo = (UserModel)parameters[ParamKey.UserInfo.ToString()];
+                IsEdit = (bool)parameters[ParamKey.IsEdit.ToString()];
+                if (UserInfo != null)
+                {
+                    Email = UserInfo.Email;
+                    Password = UserInfo.Password;
+                    FullName = UserInfo.FullName;
+                    Address = UserInfo.Address;
+                    PhoneNumber = UserInfo.PhoneNumber;
+                    SelectedGender = UserInfo.Gender ? 1 : 0;
+                    DateOfBirth = UserInfo.DayOfBirth;
+                }
+            }
+        }
+        #endregion
         #region SignUpCommand
         public ICommand SignUpCommand { get; set; }
         private async void SignupExcute()
@@ -108,14 +138,14 @@ namespace SmartMarket.ViewModels
                 {
                     var url = ApiUrl.UserRegister();
 
-                    //Create Keystore
-                    Keystore = Wallet.CreateWallet(Password);
+                //Create Keystore
+                Keystore = Wallet.CreateWallet(Password);
 
-                    //Encrypt Password
-                    //Password = Wallet.CryptPassword(Password);
+                //Encrypt Password
+                //Password = Wallet.CryptPassword(Password);
 
 
-                    var userRegister = new UserModel()
+                var userRegister = new UserModel()
                     {
                         Email = Email,
                         Password = Password,
@@ -133,7 +163,7 @@ namespace SmartMarket.ViewModels
 
                     var httpContent = userRegister.ObjectToStringContent();
                     ModelRestFul test = new ModelRestFul();
-                    var a =test.Serialize<object>(Keystore);
+                    var a = test.Serialize<object>(Keystore);
                     var response = await HttpRequest.PostTaskAsync<ModelRestFul>(url, httpContent);
                     await SigupCallBack(response);
                 });
@@ -202,7 +232,7 @@ namespace SmartMarket.ViewModels
                 {
                     var transactionID = transaction.TransactionID;
                     await LoadingPopup.Instance.Hide();
-               
+
                     await DeviceExtension.BeginInvokeOnMainThreadAsync(async () =>
                     {
                         await Navigation.NavigateAsync(PageManager.TabbedMainPage);

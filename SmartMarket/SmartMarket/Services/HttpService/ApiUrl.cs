@@ -33,9 +33,14 @@ namespace SmartMarket.Services.HttpService
             return Link("tokens/transfer");
         }
 
-        public static string UploadFile()
+        public static string UploadItem()
         {
-            return Link("file/Upload");
+            return Link("product/add");
+        }
+
+        public static string GetAllItem()
+        {
+            return Link("product/get/all");
         }
 
         public static string Schedule()

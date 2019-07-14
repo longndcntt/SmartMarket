@@ -9,9 +9,13 @@
              xmlns:radio="clr-namespace:SmartMarket.Controls.InputKit"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:controls="clr-namespace:SmartMarket.Controls"
+             xmlns:converters="clr-namespace:SmartMarket.Converters"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="SmartMarket.Views.LoginAndSignUp.SignUp">
 
+    <ContentPage.Resources>
+        <converters:IsTrueConverter x:Key="IsTrueConverter"/>
+    </ContentPage.Resources>
     <Grid HorizontalOptions="FillAndExpand"
                  VerticalOptions="FillAndExpand">
         <Grid.RowDefinitions>
@@ -62,6 +66,7 @@
                 <xfxcontrol:XfxEntry Grid.Row="3" Placeholder="{localization:Translate Password}" 
                                      x:Name="entry"
                                  FontSize="{StaticResource NormalLabelFont}"
+                                IsEnabled="{Binding IsEdit,Converter={StaticResource Key=IsTrueConverter}}"
                                         VerticalOptions="CenterAndExpand" 
                                          Text="{Binding Password}"/>
                 
@@ -124,6 +129,15 @@
                             BorderRadius="1"
                            Theme="WhiteGreen"/>-->
         <controls1:BorderButton Text="{localization:Translate SignUp}" Command="{Binding SignUpCommand}"
+                                IsVisible="{Binding IsEdit,Converter={StaticResource Key=IsTrueConverter}}"
+                                 Margin="10,5,0,10"
+                            HorizontalOptions="FillAndExpand"
+                                VerticalOptions="EndAndExpand"
+                                Grid.Row="2"
+                    BackgroundColor="White"
+                                     Theme="WhiteBlue"/>
+        <controls1:BorderButton Text="{localization:Translate Edit}" Command="{Binding SignUpCommand}"
+                                IsVisible="{Binding IsEdit}"
                                  Margin="10,5,0,10"
                             HorizontalOptions="FillAndExpand"
                                 VerticalOptions="EndAndExpand"

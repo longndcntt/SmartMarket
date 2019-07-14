@@ -93,6 +93,7 @@ namespace SmartMarket
             containerRegistry.RegisterForNavigation<AddMoneyPage, AddMoneyPageViewModel>();
             containerRegistry.RegisterForNavigation<MessagePage, MessagePageViewModel>();
             containerRegistry.RegisterForNavigation<SearchItemPage, SearchItemPageViewModel>();
+            containerRegistry.RegisterForNavigation<UploadProductPage, UploadProductPageViewModel>();
         }
     }
 }

@@ -30,7 +30,7 @@ namespace SmartMarket.Droid
             base.OnCreate(bundle);
             Init(bundle);
 
-
+            Plugin.CurrentActivity.CrossCurrentActivity.Current.Init(this, bundle);
             LoadApplication(new App(new AndroidInitializer()));
         }
 

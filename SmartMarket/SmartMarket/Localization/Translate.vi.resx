@@ -276,4 +276,22 @@
   <data name="Male" xml:space="preserve">
     <value>Nam</value>
   </data>
+  <data name="Count" xml:space="preserve">
+    <value>Số lượng</value>
+  </data>
+  <data name="Detail" xml:space="preserve">
+    <value>Chi tiết</value>
+  </data>
+  <data name="ItemName" xml:space="preserve">
+    <value>Tên sản phẩm</value>
+  </data>
+  <data name="Manufacturer" xml:space="preserve">
+    <value>Nhà sản xuất</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>Giá</value>
+  </data>
+  <data name="Username_PasswordIncorrect" xml:space="preserve">
+    <value>Tên đăng nhập hoặc mật khẩu không đúng</value>
+  </data>
 </root>

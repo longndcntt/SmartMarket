@@ -1,13 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<base:BasePage xmlns:base="clr-namespace:SmartMarket.Views.Base"
+               xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
              xmlns:abstractions="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions"
              xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              xmlns:controls="clr-namespace:SmartMarket.Controls"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+               prism:ViewModelLocator.AutowireViewModel="True"
              xmlns:auto="clr-namespace:dotMorten.Xamarin.Forms;assembly=dotMorten.Xamarin.Forms.AutoSuggestBox"
               xmlns:localization="clr-namespace:SmartMarket.Localization"
              xmlns:buttonBorder="clr-namespace:SmartMarket.Controls.CustomLabelEntry"
+               xmlns:behaviors="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
                NavigationPage.HasNavigationBar="False"
              x:Class="SmartMarket.Views.MainPage"
              Title="{Binding Title}">
@@ -58,13 +62,15 @@
                                                HorizontalOptions="FillAndExpand"
                                                VerticalOptions="CenterAndExpand"
                                                Placeholder="{localization:Translate Search}">
-                            --><!--<xlabsControl:AutoCompleteView.SuggestionItemDataTemplate>
+                            -->
+                        <!--<xlabsControl:AutoCompleteView.SuggestionItemDataTemplate>
                                 <DataTemplate>
                                     <ViewCell>
                                         <Label Text="{Binding ItemName}"/>
                                     </ViewCell>
                                 </DataTemplate>
-                            </xlabsControl:AutoCompleteView.SuggestionItemDataTemplate>--><!--
+                            </xlabsControl:AutoCompleteView.SuggestionItemDataTemplate>-->
+                        <!--
                         </xlabsControl:AutoCompleteView>-->
                         <auto:AutoSuggestBox Text="{Binding ContentSearch}"
                                                        x:Name="autoSuggestSearch"
@@ -192,17 +198,17 @@
                                    HorizontalOptions="CenterAndExpand"
                                    Grid.Row="2"
                                    TextColor="Red"
-                                   Text="{Binding Price, Converter={StaticResource CovertToCurrency}}"
+                                   Text="{Binding Price}"
                                    FontAttributes="Bold"/>
                                 </Grid>
                             </Frame>
                         </DataTemplate>
                     </flv:FlowListView.FlowColumnTemplate>
-                    <!--<ListView.Behaviors>
-                <behaviors:EventToCommandBehavior EventName="ItemSelected"
+                    <ListView.Behaviors>
+                        <behaviors:EventToCommandBehavior EventName="ItemSelected"
                                                                   Command="{Binding ItemTappedCommand}">
-                </behaviors:EventToCommandBehavior>
-            </ListView.Behaviors>-->
+                        </behaviors:EventToCommandBehavior>
+                    </ListView.Behaviors>
                 </flv:FlowListView>
             </StackLayout>
             <Frame Padding="5">
@@ -265,7 +271,7 @@
                                    HorizontalOptions="CenterAndExpand"
                                    Grid.Row="2"
                                    TextColor="Red"
-                                   Text="{Binding Price, Converter={StaticResource CovertToCurrency}}"
+                                   Text="{Binding Price}"
                                    FontAttributes="Bold"/>
                                     </Grid>
                                     <Frame.GestureRecognizers>
@@ -279,4 +285,4 @@
             </Frame>
         </StackLayout>
     </ScrollView>
-</ContentPage>
+</base:BasePage>

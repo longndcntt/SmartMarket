@@ -2,6 +2,7 @@
 using SmartMarket.Models;
 using SmartMarket.ViewModels;
 using SmartMarket.ViewModels.Base;
+using SmartMarket.Views.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ using Xamarin.Forms;
 
 namespace SmartMarket.Views
 {
-    public partial class MainPage : ContentPage
+    public partial class MainPage : BasePage
     {
         public MainPage()
         {

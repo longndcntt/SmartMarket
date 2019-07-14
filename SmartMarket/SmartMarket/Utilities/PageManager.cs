@@ -13,6 +13,7 @@ namespace SmartMarket.Utilities
         public static readonly string HomePage = "HomePage";
         public static readonly string LoginSignUpTabbedPage = "LoginSignUpTabbedPage";
         public static readonly string LoginPage = "LoginPage";
+        public static readonly string SignUpPage = "SignUp";
 
         public static readonly string TabbedMainPage = "TabbedMainPage";
 
@@ -29,6 +30,9 @@ namespace SmartMarket.Utilities
         public static readonly string MessagePage = "MessagePage";
 
         public static readonly string SearchItemPage = "SearchItemPage";
+
+        public static readonly string UploadProductPage = "UploadProductPage";
+
         
 
         //public static readonly string MerchantHomePage = "MerchantHomePage";

@@ -9,7 +9,7 @@ namespace SmartMarket.Models
     public class ModelRestFul
     {
         public bool Error { get; set; }
-        public string ErrMessageErroror { get; set; }
+        public string MessageError { get; set; }
         public int ErrorCode { get; set; }
         public object Result { get; set; }
 
