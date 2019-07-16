@@ -3,8 +3,11 @@ using Prism.Mvvm;
 using Prism.Navigation;
 using Prism.Services;
 using SmartMarket.Enums;
+using SmartMarket.Interfaces.HttpService;
 using SmartMarket.Interfaces.LocalDatabase;
 using SmartMarket.Models;
+using SmartMarket.Models.API;
+using SmartMarket.Services.HttpService;
 using SmartMarket.Utilities;
 using SmartMarket.ViewModels.Base;
 using SmartMarket.Views.Popups;
@@ -12,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace SmartMarket.ViewModels
@@ -21,12 +25,16 @@ namespace SmartMarket.ViewModels
         #region constructor
 
         #endregion
-        public ItemDetailsPageViewModel(INavigationService navigationService, IPageDialogService pageDialogService, ISqLiteService sqLiteService)
-            : base(navigationService: navigationService, dialogService: pageDialogService, sqliteService: sqLiteService)
+        public ItemDetailsPageViewModel(INavigationService navigationService, IPageDialogService pageDialogService, ISqLiteService sqLiteService, IHttpRequest httpRequest)
+            : base(navigationService: navigationService, dialogService: pageDialogService, sqliteService: sqLiteService, httpRequest: httpRequest)
         {
             ShowMoreItemDetailCommand = new DelegateCommand(ShowMoreItemDetailExcute);
             NavigateToCartCommand = new DelegateCommand(NavigateToCartExcute);
             AddToCartCommand = new DelegateCommand(AddToCartExcute);
+            SubmitReviewCommand = new DelegateCommand(SubmitReviewExcute);
+
+            if (App.Settings.IsLogin)
+                UserInfo = SqLiteService.Get<UserModel>(x => x.Id != -1);
         }
 
 
@@ -40,6 +48,27 @@ namespace SmartMarket.ViewModels
                 SetProperty(ref _count, value);
             }
         }
+
+        private int _ratingTotal = 5;
+        public int RatingTotal
+        {
+            get => _ratingTotal;
+            set
+            {
+                SetProperty(ref _ratingTotal, value);
+            }
+        }
+
+        private string _contentOfReview;
+        public string ContentOfReview
+        {
+            get => _contentOfReview;
+            set
+            {
+                SetProperty(ref _contentOfReview, value);
+            }
+        }
+
         private int _position = 0;
         public int Position
         {
@@ -48,6 +77,13 @@ namespace SmartMarket.ViewModels
             {
                 SetProperty(ref _position, value);
             }
+        }
+
+        private int _itemModelId;
+        public int ItemModelId
+        {
+            get => _itemModelId;
+            set => SetProperty(ref _itemModelId, value);
         }
 
         private Category _selectedCategory;
@@ -90,89 +126,124 @@ namespace SmartMarket.ViewModels
         #endregion
 
         #region Navigate
-        public override void OnNavigatedNewToAsync(INavigationParameters parameters)
+        public async override void OnNavigatedNewToAsync(INavigationParameters parameters)
         {
             if (parameters != null)
             {
-                if (parameters.ContainsKey(ParamKey.Category.ToString()))
+                int itemID = -1;
+                if (parameters.ContainsKey(ParamKey.SelectedItemId.ToString()))
                 {
-                    SelectedCategory = (Category)parameters[ParamKey.Category.ToString()];
+                    // SelectedCategory = (Category)parameters[ParamKey.Category.ToString()];
+                    ItemModelId = (int)parameters[ParamKey.SelectedItemId.ToString()];
+                }
+                if (parameters.ContainsKey(ParamKey.SelectedItem.ToString()))
+                {
                     ItemSelected = (ItemModel)parameters[ParamKey.SelectedItem.ToString()];
+                    ItemModelId = ItemSelected.Id;
                 }
-                if (ItemSelected != null)
+                if (ItemModelId != -1)
                 {
-                    ItemSelectedDetails = new ItemDetails()
-                    {
-                        Count = 5,
-                        Manufacturer = "Japan",
-                        ProductId = ItemSelected.Id,
-                        Detail = "Favorite Channel List, Parental Control Function, Auto Tuning, Closed Caption, Auto, 16:9 Pillar Box, 16:9 Pan G Scan, 4:3 Letter Box, 4:3 Pan G Scan, 4:3 Full, 16:9 Wide Screen." +
-                        " Favorite Channel List, Parental Control Function, Auto Tuning, Closed Caption, Auto, 16:9 Pillar Box, 16:9 Pan G Scan, 4:3 Letter Box, 4:3 Pan G Scan, 4:3 Full, 16:9 Wide Screen." +
-                        " Favorite Channel List, Parental Control Function, Auto Tuning, Closed Caption, Auto, 16:9 Pillar Box, 16:9 Pan G Scan, 4:3 Letter Box, 4:3 Pan G Scan, 4:3 Full, 16:9 Wide Screen",
-                    };
-
-                    ItemSelectedImage = new ObservableCollection<ImageItemDetail>()
-                    {
-                        new ImageItemDetail()
-                        {
-                            ProductID = ItemSelected.Id,
-                            Image = "sony_product"
-                        },
-                        new ImageItemDetail()
-                        {
-                            ProductID = ItemSelected.Id,
-                            Image = "sony_product"
-                        },
-                        new ImageItemDetail()
-                        {
-                            ProductID = ItemSelected.Id,
-                            Image = "sony_product"
-                        }
-                    };
-
-                    ReviewProductList = new ObservableCollection<ReviewProduct>()
-                    {
-                        new ReviewProduct()
-                        {
-                            ProductId = ItemSelected.Id,
-                            Rate = 3,
-                            ReviewedDateTime = DateTime.Now.ToString("yyyy-MM-dd"),
-                            Content = "Favorite Channel List, Parental Control Function, Auto Tuning, Closed Caption, Auto, 16:9 Pillar Box, 16:9 Pan G Scan, 4:3 Letter Box, 4:3 Pan G Scan, 4:3 Full, 16:9 Wide Screen." +
-                        " Favorite Channel List, Parental Control Function, Auto Tuning, Closed Caption, Auto, 16:9 Pillar Box, 16:9 Pan G Scan, 4:3 Letter Box, 4:3 Pan G Scan, 4:3 Full, 16:9 Wide Screen.",
-                        },
-                        new ReviewProduct()
-                        {
-                            ProductId = ItemSelected.Id,
-                            Rate = 5,
-                            ReviewedDateTime = DateTime.Now.ToString("yyyy-MM-dd"),
-                            Content = "Favorite Channel List, Parental Control Function, Auto Tuning, Closed Caption, Auto, 16:9 Pillar Box, 16:9 Pan G Scan, 4:3 Letter Box, 4:3 Pan G Scan, 4:3 Full, 16:9 Wide Screen." +
-                        " Favorite Channel List, Parental Control Function, Auto Tuning, Closed Caption, Auto, 16:9 Pillar Box, 16:9 Pan G Scan, 4:3 Letter Box, 4:3 Pan G Scan, 4:3 Full, 16:9 Wide Screen.",
-                        },
-                        new ReviewProduct()
-                        {
-                            ProductId = ItemSelected.Id,
-                            Rate = 4,
-                            ReviewedDateTime = DateTime.Now.ToString("yyyy-MM-dd"),
-                            Content = "Favorite Channel List, Parental Control Function, Auto Tuning, Closed Caption, Auto, 16:9 Pillar Box, 16:9 Pan G Scan, 4:3 Letter Box, 4:3 Pan G Scan, 4:3 Full, 16:9 Wide Screen." +
-                        " Favorite Channel List, Parental Control Function, Auto Tuning, Closed Caption, Auto, 16:9 Pillar Box, 16:9 Pan G Scan, 4:3 Letter Box, 4:3 Pan G Scan, 4:3 Full, 16:9 Wide Screen.",
-                        }
-                    };
-                    //var itemSelectedDetailsTemp = SqLiteService.GetList<ItemDetails>(item => item.ProductId == ItemSelected.Id).ToList();
-                    //if (itemSelectedDetailsTemp.Count == 0)
+                    var url = ApiUrl.GetItemDetails() + ItemModelId;
+                    await LoadingPopup.Instance.Show();
+                    var response = await HttpRequest.GetTaskAsync<ModelRestFul>(url);
+                    await GetItemCallBack(response);
+                    //ItemSelectedDetails = new ItemDetails()
                     //{
-                    //    ItemSelectedDetails = new ItemDetails()
+                    //    Count = 5,
+                    //    Manufacturer = "Japan",
+                    //    ProductId = ItemSelected.Id,
+                    //    Detail = "Favorite Channel List, Parental Control Function, Auto Tuning, Closed Caption, Auto, 16:9 Pillar Box, 16:9 Pan G Scan, 4:3 Letter Box, 4:3 Pan G Scan, 4:3 Full, 16:9 Wide Screen." +
+                    //    " Favorite Channel List, Parental Control Function, Auto Tuning, Closed Caption, Auto, 16:9 Pillar Box, 16:9 Pan G Scan, 4:3 Letter Box, 4:3 Pan G Scan, 4:3 Full, 16:9 Wide Screen." +
+                    //    " Favorite Channel List, Parental Control Function, Auto Tuning, Closed Caption, Auto, 16:9 Pillar Box, 16:9 Pan G Scan, 4:3 Letter Box, 4:3 Pan G Scan, 4:3 Full, 16:9 Wide Screen",
+                    //};
+
+                    //ItemSelectedImage = new ObservableCollection<ImageItemDetail>()
+                    //{
+                    //    new ImageItemDetail()
                     //    {
-                    //        Count =5,
-                    //        Manufacturer = "Japan",
-                    //        ProductId = ItemSelected.Id,
-                    //        Detail = "Favorite Channel List, Parental Control Function, Auto Tuning, Closed Caption, Auto, 16:9 Pillar Box, 16:9 Pan G Scan, 4:3 Letter Box, 4:3 Pan G Scan, 4:3 Full, 16:9 Wide Screen",
-                    //    };
-                    //}
-                    //else
-                    //{
-                    //    ItemSelectedDetails = SqLiteService.Get<ItemDetails>(item => item.ProductId == ItemSelected.Id);
-                    //}
+                    //        ProductID = ItemSelected.Id,
+                    //        Image = "sony_product"
+                    //    },
+                    //    new ImageItemDetail()
+                    //    {
+                    //        ProductID = ItemSelected.Id,
+                    //        Image = "sony_product"
+                    //    },
+                    //    new ImageItemDetail()
+                    //    {
+                    //        ProductID = ItemSelected.Id,
+                    //        Image = "sony_product"
+                    //    }
+
                 }
+
+                //ReviewProductList = new ObservableCollection<ReviewProduct>()
+                //    {
+                //        new ReviewProduct()
+                //        {
+                //            ProductId = itemID,
+                //            Rate = 3,
+                //            ReviewedDateTime = DateTime.Now.ToString("yyyy-MM-dd"),
+                //            Content = "Favorite Channel List, Parental Control Function, Auto Tuning, Closed Caption, Auto, 16:9 Pillar Box, 16:9 Pan G Scan, 4:3 Letter Box, 4:3 Pan G Scan, 4:3 Full, 16:9 Wide Screen." +
+                //        " Favorite Channel List, Parental Control Function, Auto Tuning, Closed Caption, Auto, 16:9 Pillar Box, 16:9 Pan G Scan, 4:3 Letter Box, 4:3 Pan G Scan, 4:3 Full, 16:9 Wide Screen.",
+                //        },
+                //        new ReviewProduct()
+                //        {
+                //            ProductId = itemID,
+                //            Rate = 5,
+                //            ReviewedDateTime = DateTime.Now.ToString("yyyy-MM-dd"),
+                //            Content = "Favorite Channel List, Parental Control Function, Auto Tuning, Closed Caption, Auto, 16:9 Pillar Box, 16:9 Pan G Scan, 4:3 Letter Box, 4:3 Pan G Scan, 4:3 Full, 16:9 Wide Screen." +
+                //        " Favorite Channel List, Parental Control Function, Auto Tuning, Closed Caption, Auto, 16:9 Pillar Box, 16:9 Pan G Scan, 4:3 Letter Box, 4:3 Pan G Scan, 4:3 Full, 16:9 Wide Screen.",
+                //        },
+                //        new ReviewProduct()
+                //        {
+                //            ProductId = itemID,
+                //            Rate = 4,
+                //            ReviewedDateTime = DateTime.Now.ToString("yyyy-MM-dd"),
+                //            Content = "Favorite Channel List, Parental Control Function, Auto Tuning, Closed Caption, Auto, 16:9 Pillar Box, 16:9 Pan G Scan, 4:3 Letter Box, 4:3 Pan G Scan, 4:3 Full, 16:9 Wide Screen." +
+                //        " Favorite Channel List, Parental Control Function, Auto Tuning, Closed Caption, Auto, 16:9 Pillar Box, 16:9 Pan G Scan, 4:3 Letter Box, 4:3 Pan G Scan, 4:3 Full, 16:9 Wide Screen.",
+                //        }
+                //    };
+                //var itemSelectedDetailsTemp = SqLiteService.GetList<ItemDetails>(item => item.ProductId == ItemSelected.Id).ToList();
+                //if (itemSelectedDetailsTemp.Count == 0)
+                //{
+                //    ItemSelectedDetails = new ItemDetails()
+                //    {
+                //        Count =5,
+                //        Manufacturer = "Japan",
+                //        ProductId = ItemSelected.Id,
+                //        Detail = "Favorite Channel List, Parental Control Function, Auto Tuning, Closed Caption, Auto, 16:9 Pillar Box, 16:9 Pan G Scan, 4:3 Letter Box, 4:3 Pan G Scan, 4:3 Full, 16:9 Wide Screen",
+                //    };
+                //}
+                //else
+                //{
+                //    ItemSelectedDetails = SqLiteService.Get<ItemDetails>(item => item.ProductId == ItemSelected.Id);
+                //}
+            }
+        }
+
+        private async Task GetItemCallBack(ModelRestFul response)
+        {
+            if (response.ErrorCode != 200)
+            {
+                await MessagePopup.Instance.Show("Fail");
+                return;
+            }
+            ItemSelectedDetails = response.Deserialize<ItemDetails>(response.Result);
+            await LoadingPopup.Instance.Hide();
+            await LoadReview();
+        }
+
+        //Get review of product
+        private async Task LoadReview()
+        {
+            var url = ApiUrl.GetReview(ItemModelId.ToString());
+            var reviewTemp = await HttpRequest.GetTaskAsync<ModelRestFul>(url);
+            var a = reviewTemp.Deserialize<IEnumerable<ReviewProduct>>(reviewTemp.Result).ToList();
+            if (a.Count!=-1)
+            {
+                ReviewProductList = new ObservableCollection<ReviewProduct>(a);
+                RatingTotal = (int)(ReviewProductList.Sum(x => x.Rate) / ReviewProductList.Count());
             }
         }
         #endregion
@@ -218,7 +289,7 @@ namespace SmartMarket.ViewModels
                             SqLiteService.Update(item);
                             isExist = true;
                             break;
-                        } 
+                        }
                     }
                     ItemOfOrder = new ObservableCollection<OrderDetails>(listItemOfCartTemp);
                 }
@@ -271,6 +342,102 @@ namespace SmartMarket.ViewModels
                 }
             }
             await Navigation.NavigateAsync(PageManager.ShowCardPage);
+        }
+        #endregion
+
+        public int Value { get; set; }
+
+        #region SubmitReviewCommand
+        public ICommand SubmitReviewCommand { get; set; }
+
+        private async void SubmitReviewExcute()
+        {
+            await CheckBusy(async () =>
+            {
+                try
+                {
+                    await LoadingPopup.Instance.Show();
+                    var url = ApiUrl.SubmitReview();
+                    if (UserInfo == null)
+                    {
+                        await DeviceExtension.BeginInvokeOnMainThreadAsync(async () =>
+                        {
+                            await Navigation.NavigateAsync(PageManager.LoginSignUpTabbedPage);
+                            return;
+                        });
+                    }
+                    var review = new ReviewProduct()
+                    {
+                        WalletAddress = UserInfo.WalletAddress,
+                        ProductId = ItemModelId,
+                        Rate = Value,
+                        Content = ContentOfReview,
+                    };
+                    var httpContent = review.ObjectToStringContent();
+                    var response = await HttpRequest.PostTaskAsync<ModelRestFul>(url, httpContent);
+                    await PostReviewCallBack(response);
+                }
+                catch (Exception)
+                {
+
+                }
+                finally
+                {
+                    await LoadingPopup.Instance.Hide();
+                }
+            });
+        }
+
+        private async Task PostReviewCallBack(ModelRestFul response)
+        {
+            if (response.ErrorCode != 200)
+            {
+                await MessagePopup.Instance.Show("Fail");
+                return;
+            }
+            var transaction = response.Deserialize<SmartMarket.Models.API.Transaction>(response.Result);
+            if (transaction != null)
+            {
+                var signer = new Signer();
+                var privatekey = UserInfo.PrivateKey;
+                var stringSigned = signer.Sign(privatekey, transaction);
+                //var transactionID = transaction.Transaction;
+                if (!string.IsNullOrEmpty(stringSigned))
+                {
+                    await UploadToBlockchain(stringSigned);
+                }
+            }
+        }
+
+        private async Task UploadToBlockchain(string stringSigned)
+        {
+            var url = ApiUrl.UploadToBlockChain();
+            var signed = new SignedTransaction(stringSigned);
+            var httpContent = signed.ObjectToStringContent();
+            var response = await HttpRequest.PostTaskAsync<ModelRestFul>(url, httpContent);
+            await UploadToBlockchainCallBack(response);
+        }
+
+        private async Task UploadToBlockchainCallBack(ModelRestFul response)
+        {
+            if (response == null)
+            {
+                await MessagePopup.Instance.Show("Fail");
+                return;
+                // get event list fail
+                //await MessagePopup.Instance.Show(TranslateExtension.Get("GetListEventsFailed"));
+            }
+            // get event list successfull
+            var transaction = response.Deserialize<TransactionIDModel>(response.Result);
+            if (transaction != null)
+            {
+                await LoadReview();
+                await DeviceExtension.BeginInvokeOnMainThreadAsync(async () =>
+                {
+                    await MessagePopup.Instance.Show("Upload success");
+                });
+            }
+            await LoadingPopup.Instance.Hide();
         }
         #endregion
 

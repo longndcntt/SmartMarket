@@ -57,12 +57,6 @@ namespace SmartMarket.ViewModels
 
             LogOutCommand = new DelegateCommand(LogOutExcute);
             // IsLogin = App.Settings.IsLogin;
-            IsLogin = App.Settings.IsLogin;
-            if (IsLogin)
-            {
-                UserInfo = SqLiteService.Get<UserModel>(x => x.Id != -1);
-                IsAdmin = UserInfo.Email == "admin@gm.com" ? true : false;
-            }
         }
 
       
@@ -75,6 +69,19 @@ namespace SmartMarket.ViewModels
             if (!IsLogin)
             {
                 await Navigation.NavigateAsync(PageManager.LoginSignUpTabbedPage);
+            }
+        }
+        #endregion
+
+        #region OnAppear
+        public override void OnAppear()
+        {
+            base.OnAppear();
+            IsLogin = App.Settings.IsLogin;
+            if (IsLogin)
+            {
+                UserInfo = SqLiteService.Get<UserModel>(x => x.Id != -1);
+                IsAdmin = UserInfo.Email == "admin@gm.com" ? true : false;
             }
         }
         #endregion

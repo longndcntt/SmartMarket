@@ -43,6 +43,11 @@ namespace SmartMarket.Services.HttpService
             return Link("product/get/all");
         }
 
+        public static string GetItemDetails()
+        {
+            return Link("product/detail/");
+        }
+
         public static string Schedule()
         {
             return Link("tokens/schudele");
@@ -62,6 +67,18 @@ namespace SmartMarket.Services.HttpService
         {
             return Link("login");
         }
+
+        public static string SubmitReview()
+        {
+            return Link("product/preview");
+        }
+
+        public static string GetReview(string ItemModelId)
+        {
+            return Link($"product/{ItemModelId}/preview");
+        }
+
+       
         #endregion
     }
 }

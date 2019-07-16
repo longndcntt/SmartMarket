@@ -12,6 +12,7 @@
               xmlns:localization="clr-namespace:SmartMarket.Localization"
              xmlns:buttonBorder="clr-namespace:SmartMarket.Controls.CustomLabelEntry"
                xmlns:behaviors="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
+               xmlns:ffimage="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
                NavigationPage.HasNavigationBar="False"
              x:Class="SmartMarket.Views.MainPage"
              Title="{Binding Title}">
@@ -161,6 +162,7 @@
             </flv:FlowListView>-->
 
             <StackLayout>
+                
                 <flv:FlowListView  FlowColumnCount="2" SeparatorVisibility="Default" HasUnevenRows="True"
                           FlowLastTappedItem="{Binding SelectedItemTapped, Mode=OneWayToSource}"
                            FlowItemTappedCommand="{Binding ItemTappedCommand}"
@@ -171,16 +173,17 @@
                            Margin="5"
                            HorizontalOptions="Fill"
                               VerticalOptions="Fill">
-                                <Grid HorizontalOptions="CenterAndExpand"
+                                <!--<Grid HorizontalOptions="CenterAndExpand"
                               VerticalOptions="CenterAndExpand"
                               RowSpacing="0">
                                     <Grid.RowDefinitions>
                                         <RowDefinition></RowDefinition>
                                         <RowDefinition Height="auto"></RowDefinition>
                                         <RowDefinition Height="auto"></RowDefinition>
-                                    </Grid.RowDefinitions>
+                                    </Grid.RowDefinitions>-->
+                                <StackLayout>
                                     <StackLayout  Grid.Row="0">
-                                        <Image Source="sony_product"
+                                        <ffimage:CachedImage Source="{Binding Image}"
                                    HorizontalOptions="CenterAndExpand"
                                    VerticalOptions="CenterAndExpand"
                                    WidthRequest="140"
@@ -200,7 +203,8 @@
                                    TextColor="Red"
                                    Text="{Binding Price}"
                                    FontAttributes="Bold"/>
-                                </Grid>
+                                </StackLayout>
+                                <!--</Grid>-->
                             </Frame>
                         </DataTemplate>
                     </flv:FlowListView.FlowColumnTemplate>
@@ -210,6 +214,9 @@
                         </behaviors:EventToCommandBehavior>
                     </ListView.Behaviors>
                 </flv:FlowListView>
+                <ActivityIndicator Color="SkyBlue"
+				IsVisible="{Binding IsBusyLoading}"
+				IsRunning="{Binding IsBusyLoading}" />
             </StackLayout>
             <Frame Padding="5">
                 <StackLayout>
@@ -236,44 +243,39 @@
                              HorizontalOptions="FillAndExpand"
                              VerticalOptions="Center"></BoxView>
                     </StackLayout>
-                    <controls:HorizontalScrollList ItemsSource="{Binding MyList}" Margin="0,5,0,0">
+                    
+                    <controls:HorizontalScrollList ItemsSource="{Binding MyList}"
+                                                   Margin="0,5,0,0">
                         <controls:HorizontalScrollList.ItemTemplate>
                             <DataTemplate>
                                 <Frame Padding="5"
                                         ClassId="{Binding Id}"
-                           Margin="5"
-                           HorizontalOptions="Fill"
-                              VerticalOptions="Fill">
-                                    <Grid HorizontalOptions="CenterAndExpand"
-                              VerticalOptions="CenterAndExpand"
-                              RowSpacing="0">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition></RowDefinition>
-                                            <RowDefinition Height="auto"></RowDefinition>
-                                            <RowDefinition Height="auto"></RowDefinition>
-                                        </Grid.RowDefinitions>
+                                       Margin="5"
+                                       HorizontalOptions="Fill"
+                                          VerticalOptions="Fill">   
+                                    <StackLayout>
                                         <StackLayout  Grid.Row="0">
-                                            <Image Source="sony_product"
-                                   HorizontalOptions="CenterAndExpand"
-                                   VerticalOptions="CenterAndExpand"
-                                   WidthRequest="140"
-                                   HeightRequest="140"
-                                   Aspect="AspectFit"
-                                   FlowDirection="MatchParent"/>
+                                            <ffimage:CachedImage Source="{Binding Image}"
+                                                                   HorizontalOptions="CenterAndExpand"
+                                                                   VerticalOptions="CenterAndExpand"
+                                                                   WidthRequest="140"
+                                                                   HeightRequest="140"
+                                                                   Aspect="AspectFit"
+                                                                   FlowDirection="MatchParent"/>
                                         </StackLayout>
                                         <Label FontSize="18"
-                                  Grid.Row="1"
-                                   HorizontalOptions="CenterAndExpand"
-                                   Margin="0"
-                                   Text="{Binding ItemName}"
-                                   FontAttributes="Bold"/>
+                                              Grid.Row="1"
+                                               HorizontalOptions="CenterAndExpand"
+                                               Margin="0"
+                                               Text="{Binding ItemName}"
+                                               FontAttributes="Bold"/>
                                         <Label FontSize="16"
-                                   HorizontalOptions="CenterAndExpand"
-                                   Grid.Row="2"
-                                   TextColor="Red"
-                                   Text="{Binding Price}"
-                                   FontAttributes="Bold"/>
-                                    </Grid>
+                                               HorizontalOptions="CenterAndExpand"
+                                               Grid.Row="2"
+                                               TextColor="Red"
+                                               Text="{Binding Price}"
+                                               FontAttributes="Bold"/>
+                                    </StackLayout>
                                     <Frame.GestureRecognizers>
                                         <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
                                     </Frame.GestureRecognizers>
@@ -281,6 +283,76 @@
                             </DataTemplate>
                         </controls:HorizontalScrollList.ItemTemplate>
                     </controls:HorizontalScrollList>
+                    <ActivityIndicator IsVisible="{Binding IsBusyLoading}"
+				IsRunning="{Binding IsBusyLoading}" />
+                </StackLayout>
+            </Frame>
+
+            <Frame Padding="5">
+                <StackLayout>
+                    <Label Text="{localization:Translate AllProduct}"
+                           HorizontalOptions="CenterAndExpand"
+                           VerticalOptions="StartAndExpand"
+                           TextColor="{StaticResource SkyBlue}"
+                           Margin="0,5"
+                           FontSize="{StaticResource SuperLargeLabelFont}"/>
+                    <ActivityIndicator IsVisible="{Binding IsBusyLoading}"
+				IsRunning="{Binding IsBusyLoading}" />
+                    <ListView ItemsSource="{Binding MyList}"
+                  SelectedItem="{Binding SelectedItemTapped}"
+                                   ItemAppearing="FlowListView_ItemAppearing"
+                  VerticalOptions="FillAndExpand"
+                  HorizontalOptions="FillAndExpand"
+                  Margin="10,5"
+                  HasUnevenRows="True"
+                  x:Name="lstCategory">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <controls:CustomViewCell SelectedBackgroundColor="White">
+                                    <Grid Padding="8">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Image Source="{Binding Image}"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"
+                                   HeightRequest="80"
+                                   WidthRequest="80"
+                                     Style="{StaticResource ImageBase}"
+                                   Grid.Column="0"
+                                   Grid.Row="0" Grid.RowSpan="2"/>
+                                        <Label Text="{Binding ItemName}"
+                                   Margin="10,0"
+                                   FontSize="{StaticResource NormalLabelFont}"
+                                   VerticalOptions="CenterAndExpand"
+                                   Grid.Row="0"
+                                   Grid.Column="1"/>
+                                        <Label FontSize="{StaticResource NormalLabelFont}"
+                                        HorizontalOptions="StartAndExpand"
+                                           VerticalOptions="CenterAndExpand"
+                                           Margin="10,0"
+                                        Grid.Row="1"
+                                       Grid.Column="1"
+                                        TextColor="{StaticResource Blue}"
+                                        Text="{Binding Price, Converter={StaticResource CovertToCurrency}}"
+                                        FontAttributes="Bold"/>
+                                    </Grid>
+                                </controls:CustomViewCell>
+
+                            </DataTemplate>
+
+                        </ListView.ItemTemplate>
+                        <ListView.Behaviors>
+                            <behaviors:EventToCommandBehavior EventName="ItemTapped"
+                                                              Command="{Binding ItemTappedCommand}">
+                            </behaviors:EventToCommandBehavior>
+                        </ListView.Behaviors>
+                    </ListView>
                 </StackLayout>
             </Frame>
         </StackLayout>

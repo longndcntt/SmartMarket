@@ -12,6 +12,7 @@
                xmlns:abstractions="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions"
                xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
                xmlns:local="clr-namespace:SmartMarket.Behaviors"
+               xmlns:lv="clr-namespace:LaavorRatingSwap;assembly=RatingAndSwap"
                prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="SmartMarket.Views.ItemDetailsPage">
 
@@ -102,9 +103,8 @@
                 <StackLayout Grid.Row="0"
                              HorizontalOptions="FillAndExpand"
                              VerticalOptions="StartAndExpand"
-                             HeightRequest="300"
-                             WidthRequest="300">
-                    <abstractions:CarouselViewControl ItemsSource="{Binding ItemSelectedImage}"
+                            >
+                    <!--<abstractions:CarouselViewControl ItemsSource="{Binding ItemSelectedImage}"
                                           VerticalOptions="FillAndExpand" 
                                               HorizontalOptions="FillAndExpand"
                                               Orientation="Horizontal"
@@ -121,7 +121,12 @@
                                 </Grid>
                             </DataTemplate>
                         </abstractions:CarouselViewControl.ItemTemplate>
-                    </abstractions:CarouselViewControl>
+                    </abstractions:CarouselViewControl>-->
+                    <forms:CachedImage Source="{Binding ItemSelected.Image}"
+                                                                   Aspect="AspectFit"
+                                        HeightRequest="250"
+                             WidthRequest="250"
+                                                                   FlowDirection="LeftToRight"/>
                 </StackLayout>
                 <StackLayout Grid.Row="1"
                        Padding="10">
@@ -186,7 +191,7 @@
                                                    Command="{Binding NavigateToCartCommand}"/>
                     <StackLayout Orientation="Horizontal"
                                  Margin="10,2">
-                        <base:RatingStars Rating="3"
+                        <base:RatingStars Rating="{Binding RatingTotal}"
                                           x:Name="ratingTotal"/>
                         <Label Text="{Binding Source={x:Reference ratingTotal},Path=Rating}"
                                TextColor="{StaticResource Red}"/>
@@ -212,7 +217,7 @@
                                                        Grid.Column="0" Grid.Row="0"
                                                    FontSize="{StaticResource LargeLabelFont}"
                                                    Text="{Binding Source={x:Reference ratingStars}, Path=Rating, Converter={StaticResource ratingConverter}}"/>
-                                            <Label Text="Name of user"
+                                            <Label Text="{Binding User.FullName}"
                                                        Grid.Column="1" Grid.Row="0"
                                                        FontSize="{StaticResource NormalLabelFont}"
                                                        TextColor="{StaticResource SGray}"/>
@@ -245,6 +250,7 @@
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
                             </Grid.RowDefinitions>
                             <Label Text="Write your feedback"
                                    Grid.Row="0"
@@ -252,18 +258,27 @@
                             <Editor HeightRequest="100"
                                     HorizontalOptions="FillAndExpand"
                                     Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
-                                    
+                                    Text="{Binding ContentOfReview}"
                                     x:Name="editorFeedback"
                                     BackgroundColor="LightGray"
                                     TextColor="White"/>
                             <Label Text="{Binding Source={x:Reference editorFeedback},Path=Text.Length,StringFormat=' {0}/200'}"
                                    HorizontalOptions="End"
                                    Grid.Row="0" Grid.Column="1"/>
+                            <lv:RatingImage ImageSelect="rating_star_on" ImageDeselect="rating_star_off" ItemsNumber="5"
+                                            OnSelect="RatingImage_OnSelect"
+                                            SpaceBetween="3"
+                                            ImageHeight="30"
+                                            ImageWidth="30"
+                                            AutomationId="1"
+                                            HorizontalOptions="CenterAndExpand"
+                                            Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                                            InitialValue="{Binding Value}"/>
                             <buttonBorder:BorderButton Text="Submit"
-                                                       Grid.Row="2" Grid.Column="1"
+                                                       Command="{Binding SubmitReviewCommand}"
+                                                       Grid.Row="3" Grid.Column="1"
                                                        HorizontalOptions="EndAndExpand"
                                                        Theme="WhiteRed"/>
-
                         </Grid>
                     </Frame>
                 </StackLayout>

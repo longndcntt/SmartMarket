@@ -1,8 +1,9 @@
-﻿using Xamarin.Forms;
+﻿using SmartMarket.Views.Base;
+using Xamarin.Forms;
 
 namespace SmartMarket.Views
 {
-    public partial class ProfileUserPage : ContentPage
+    public partial class ProfileUserPage : BasePage
     {
         public ProfileUserPage()
         {

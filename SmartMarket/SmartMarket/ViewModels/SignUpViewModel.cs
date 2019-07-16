@@ -117,10 +117,10 @@ namespace SmartMarket.ViewModels
             await CheckBusy(async () =>
             {
 
-                Email = "test123@gm.com";
+                Email = "test1@gm.com";
                 Password = "123456";
                 FullName = "LongND";
-                Address = "abc";
+                Address = "KTX khu A";
                 PhoneNumber = "123456789";
                 await LoadingPopup.Instance.Show(TranslateExtension.Get("SignUp"));
                 if (string.IsNullOrEmpty(Email))

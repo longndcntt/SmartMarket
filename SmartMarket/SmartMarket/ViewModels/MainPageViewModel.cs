@@ -19,6 +19,7 @@ using System.Diagnostics;
 using System.Collections.ObjectModel;
 using SmartMarket.Enums;
 using Prism.Services;
+using Xamarin.Forms;
 
 namespace SmartMarket.ViewModels
 {
@@ -84,7 +85,46 @@ namespace SmartMarket.ViewModels
             CheckCartCommand = new DelegateCommand(NavigateShowCardPage);
             Title = TranslateExtension.Get("MainPage");
             ItemTappedCommand = new DelegateCommand(SelectedItemExcutWithoutPara);
-
+            //MyList = new ObservableCollection<ItemModel>()
+            //{
+            //    new ItemModel()
+            //    {
+            //        ItemName = "But Long1",
+            //        Price = 20000,
+            //        Image= "https://a.imge.to/2019/07/15/F9MQt.th.png",
+            //    },
+            //    new ItemModel()
+            //    {
+            //        ItemName = "But Long2",
+            //        Price = 20000,
+            //        Image= "https://a.imge.to/2019/07/15/F9MQt.th.png"
+            //    },
+            //    new ItemModel()
+            //    {
+            //        ItemName = "But Long3",
+            //        Price = 20000,
+            //        Image= "https://a.imge.to/2019/07/15/F9MQt.th.png"
+            //    },
+            //    new ItemModel()
+            //    {
+            //        ItemName = "But Long4",
+            //        Price = 20000,
+            //        Image= "https://a.imge.to/2019/07/15/F9MQt.th.png"
+            //    },
+            //    new ItemModel()
+            //    {
+            //        ItemName = "But Long5",
+            //        Price = 20000,
+            //        Image= "https://a.imge.to/2019/07/15/F9MQt.th.png"
+            //    },
+            //    new ItemModel()
+            //    {
+            //        Id = 4,
+            //        ItemName = "But Long6",
+            //        Price = 20000,
+            //        Image= "https://a.imge.to/2019/07/15/F9MQt.th.png"
+            //    },
+            //};
 
             ListEvent = new ObservableCollection<string>()
             {
@@ -92,29 +132,42 @@ namespace SmartMarket.ViewModels
             };
 
         }
+   
 
-       
-
-        public async override void OnAppear()
+        public async override void OnFirstTimeAppear()
         {
-            var url = ApiUrl.GetAllItem();
-            var a = await HttpRequest.GetTaskAsync<ModelRestFul>(url);
-            if (a != null)
+            MyList = new ObservableCollection<ItemModel>();
+            await LoadData();
+        }
+
+        public async Task LoadData()
+        {
+            if (IsBusyLoading)
+                return;
+            try
             {
-                var listTemp = a.Deserialize<IEnumerable<ItemModel>>(a.Result);
-                if (listTemp.Any())
+                IsBusyLoading = true;
+                await Task.Delay(2000);
+                var url = ApiUrl.GetAllItem();
+                var a = await HttpRequest.GetTaskAsync<ModelRestFul>(url);
+                if (a != null)
                 {
-                    MyList = new ObservableCollection<ItemModel>(listTemp);
-                    foreach (var item in MyList)
+                    var listTemp = a.Deserialize<IEnumerable<ItemModel>>(a.Result);
+                    foreach (var item in listTemp)
                     {
-                        item.Image = "006-notification";
+                        MyList.Add(item);
                     }
                 }
             }
+            catch (Exception e)
+            {
+                Debug.Write(e.Message);
+            }
+            finally
+            {
+                IsBusyLoading = false;
+            }
         }
-
-    
-
 
         private async void ItemTappedExcute()
         {
@@ -131,14 +184,14 @@ namespace SmartMarket.ViewModels
                 if (!string.IsNullOrEmpty(itemId))
                 {
                     var iteNumberId = Int32.Parse(itemId);
-                    var selectedItem = SqLiteService.Get<ItemModel>(x => x.Id == iteNumberId);
-                    var selectedCategory = SqLiteService.Get<Category>(x => x.Id == selectedItem.CategoryId);
+                    //var selectedItem = SqLiteService.Get<ItemModel>(x => x.Id == iteNumberId);
+                    //var selectedCategory = SqLiteService.Get<Category>(x => x.Id == selectedItem.CategoryId);
                     var param = new NavigationParameters
-                {
-                    {ParamKey.SelectedItem.ToString(), selectedItem},
-                            {ParamKey.Category.ToString(), selectedCategory},
-                    //{nameof(StatusOfLeadModel), StatusOfLeadModel.CreateLead},
-                };
+                    {
+                        {ParamKey.SelectedItemId.ToString(), iteNumberId},
+                           // {ParamKey.Category.ToString(), selectedCategory},
+                        //{nameof(StatusOfLeadModel), StatusOfLeadModel.CreateLead},
+                    };
 
                     await Navigation.NavigateAsync(PageManager.ItemDetailsPage, parameters: param);
                 }
@@ -151,15 +204,15 @@ namespace SmartMarket.ViewModels
             {
                 if (SelectedItemTapped.Id != -1)
                 {
-                    var selectedItem = SqLiteService.Get<ItemModel>(x => x.Id == SelectedItemTapped.Id);
-                    //await MessagePopup.Instance.Show(SelectedItemTapped.Id.ToString());
-                    var selectedCategory = SqLiteService.Get<Category>(x => x.Id == selectedItem.CategoryId);
+                    //var selectedItem = SqLiteService.Get<ItemModel>(x => x.Id == SelectedItemTapped.Id);
+                    ////await MessagePopup.Instance.Show(SelectedItemTapped.Id.ToString());
+                    //var selectedCategory = SqLiteService.Get<Category>(x => x.Id == selectedItem.CategoryId);
                     var param = new NavigationParameters
                         {
-                            {ParamKey.SelectedItem.ToString(), selectedItem},
-                            {ParamKey.Category.ToString(), selectedCategory},
-                         //{nameof(StatusOfLeadModel), StatusOfLeadModel.CreateLead},
-                        };
+                            {ParamKey.SelectedItem.ToString(), SelectedItemTapped},
+                           // {ParamKey.Category.ToString(), selectedCategory},
+                        //{nameof(StatusOfLeadModel), StatusOfLeadModel.CreateLead},
+                    };
 
                     await Navigation.NavigateAsync(PageManager.ItemDetailsPage, parameters: param);
                 }

@@ -52,10 +52,10 @@ namespace SmartMarket.ViewModels
                  {
                      await LoadingPopup.Instance.Show(TranslateExtension.Get("Login"));
                      var url = ApiUrl.UserLogin();
-                     Username = "admin@gm.com";
-                     Password = "admin";
-                     //Username = "test123@gm.com";
-                     //Password = "123456";
+                     //Username = "admin@gm.com";
+                     //Password = "admin";
+                     Username = "test1@gm.com";
+                     Password = "123456";
                      var param = new UserIdentity
                      {
                          Email = Username,

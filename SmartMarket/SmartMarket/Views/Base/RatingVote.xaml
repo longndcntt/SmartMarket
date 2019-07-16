@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:SmartMarket.Converters"
+             xmlns:local="clr-namespace:SmartMarket.Behaviors"
+             x:Class="SmartMarket.Views.Base.RatingVote">
+  <ContentView.Content>
+      <StackLayout>
+            <StackLayout Orientation="Horizontal" HeightRequest="70">
+                <Grid>
+                    <Grid.Behaviors>
+                        <local:StarBehavior x:Name="starOne" GroupName="myStar"/>
+                    </Grid.Behaviors>
+                    <Image x:Name="starBlankOne"
+                Source="rating_star_off" />
+
+                    <Image x:Name="starSelectedOne"
+                Source="rating_star_on"
+                IsVisible="{Binding Source={x:Reference starOne},
+                                    Path=IsStarred}"/>
+                </Grid>
+                <Grid >
+                    <Grid.Behaviors>
+                        <local:StarBehavior x:Name="starTwo" GroupName="myStar"/>
+                    </Grid.Behaviors>
+                    <Image x:Name="starBlankTwo"
+                Source="rating_star_off" />
+
+                    <Image x:Name="starSelectedTwo"
+                Source="rating_star_on"
+                IsVisible="{Binding Source={x:Reference starTwo},
+                                    Path=IsStarred}"/>
+                </Grid>
+                <Grid >
+                    <Grid.Behaviors>
+                        <local:StarBehavior x:Name="starThree" GroupName="myStar"/>
+                    </Grid.Behaviors>
+                    <Image x:Name="starBlankThree"
+                Source="rating_star_off" />
+
+                    <Image x:Name="starSelectedThree"
+                Source="rating_star_on"
+                IsVisible="{Binding Source={x:Reference starThree},
+                                    Path=IsStarred}"/>
+                </Grid>
+                <Grid >
+                    <Grid.Behaviors>
+                        <local:StarBehavior x:Name="starFour" GroupName="myStar"/>
+                    </Grid.Behaviors>
+                    <Image x:Name="starBlankFour"
+                Source="rating_star_off" />
+
+                    <Image x:Name="starSelectedFour"
+                Source="rating_star_on"
+                IsVisible="{Binding Source={x:Reference starFour},
+                                    Path=IsStarred}"/>
+                </Grid>
+                <Grid >
+                    <Grid.Behaviors>
+                        <local:StarBehavior x:Name="starFive" GroupName="myStar"/>
+                    </Grid.Behaviors>
+                    <Image x:Name="starBlankFive"
+                Source="rating_star_off" />
+
+                    <Image x:Name="starSelectedFive"
+                Source="rating_star_on"
+                IsVisible="{Binding Source={x:Reference starFive},
+                                    Path=IsStarred}"/>
+                </Grid>
+            </StackLayout>
+            <StackLayout>
+                <StackLayout.Resources>
+                    <ResourceDictionary>
+                        <converters:RatingConverter x:Key="ratingConverter" />
+                        <Style TargetType="Label">
+                            <Setter Property="TextColor" Value="#4CAF50" />
+                        </Style>
+                    </ResourceDictionary>
+                </StackLayout.Resources>
+                <Label Text="{Binding Source={x:Reference starFive},
+                                    Path=Rating}"/>
+            </StackLayout>
+        </StackLayout>
+  </ContentView.Content>
+</ContentView>

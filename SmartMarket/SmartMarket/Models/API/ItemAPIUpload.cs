@@ -14,6 +14,7 @@ namespace SmartMarket.Models.API
         public string Manufacturer { get; set; }
         public string Detail { get; set; }
         public string WalletAddress { get; set; }
+        public List<string> Images { get; set; }
 
     }
 }

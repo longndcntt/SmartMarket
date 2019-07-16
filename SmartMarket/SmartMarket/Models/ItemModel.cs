@@ -19,5 +19,7 @@ namespace SmartMarket.Models
         public double Price { get; set; }
         public string Image { get; set; }
         public byte[] ImageByte { get; set; }
+
+        public bool isLast { get; set; }
     }
 }

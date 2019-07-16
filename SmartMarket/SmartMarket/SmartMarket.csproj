@@ -31,6 +31,7 @@
     <PackageReference Include="Plugin.Multilingual" Version="1.0.2" />
     <PackageReference Include="Plugin.Permissions" Version="3.0.0.12" />
     <PackageReference Include="Prism.Unity.Forms" Version="7.1.0.431" />
+    <PackageReference Include="RatingAndSwap" Version="4.6.0" />
     <PackageReference Include="Rg.Plugins.Popup" Version="1.1.5.188" />
     <PackageReference Include="sqlite-net-pcl" Version="1.5.231" />
     <PackageReference Include="SQLiteNetExtensions" Version="2.1.0" />
@@ -56,6 +57,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Base\RatingStars.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Base\RatingVote.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\CategoryDetailsPage.xaml">

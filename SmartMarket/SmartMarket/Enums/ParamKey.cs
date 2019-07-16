@@ -4,6 +4,7 @@
     {
         Category,
         SelectedItem,
+        SelectedItemId,
         CoinInWallet,
         TransactionID,
         ContentSearch,

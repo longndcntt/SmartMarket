@@ -7,6 +7,7 @@ using Prism.Mvvm;
 using Prism.Navigation;
 using Prism.Services;
 using SmartMarket.Enums;
+using SmartMarket.Files;
 using SmartMarket.Interfaces.HttpService;
 using SmartMarket.Interfaces.LocalDatabase;
 using SmartMarket.Models;
@@ -116,6 +117,8 @@ namespace SmartMarket.ViewModels
             Image = ImageSource.FromStream(() => new MemoryStream(ImageStream));
         }
 
+        public string BaseImage { get; set; }
+
         public ICommand ChoosePhotoReceiveCommand { get; }
 
         private async Task ChoosePhotoReceiveExecute()
@@ -125,8 +128,9 @@ namespace SmartMarket.ViewModels
 
         }
         #endregion
-        public UploadProductPageViewModel(INavigationService navigationService, ISqLiteService sqLiteService, IHttpRequest httpRequest, IPageDialogService dialogService)
-        : base(navigationService: navigationService, sqliteService: sqLiteService, httpRequest: httpRequest, dialogService: dialogService)
+        public UploadProductPageViewModel(INavigationService navigationService, ISqLiteService sqLiteService,
+            IHttpRequest httpRequest, IPageDialogService dialogService, IFileService fileService)
+        : base(navigationService: navigationService, sqliteService: sqLiteService, httpRequest: httpRequest, dialogService: dialogService, fileService: fileService)
         {
             TakePhotoReceiveCommand = new DelegateCommand(async () => await TakePhotoReceiveExecute());
             ChoosePhotoReceiveCommand = new DelegateCommand(async () => await ChoosePhotoReceiveExecute());
@@ -185,6 +189,8 @@ namespace SmartMarket.ViewModels
                     file.GetStream().CopyTo(memoryStream);
 
                     byte[] image = memoryStream.ToArray();
+                    var resizeImage = await FileService.ResizeImage(image, file.Path, 4);
+                    BaseImage = Convert.ToBase64String(resizeImage);
                     await ChangeImage(file.Path, image);
 
                     //dispose mediafile
@@ -257,6 +263,8 @@ namespace SmartMarket.ViewModels
                     file.GetStream().CopyTo(memoryStream);
 
                     byte[] image = memoryStream.ToArray();
+                    var resizeImage = await FileService.ResizeImage(image, file.Path, 4);
+                    BaseImage = Convert.ToBase64String(resizeImage);
                     await ChangeImage(file.Path, image);
 
                     //dispose mediafile
@@ -304,10 +312,11 @@ namespace SmartMarket.ViewModels
                     ItemName = ItemName,
                     Price = Int32.Parse(Price),
                     Count = Int32.Parse(Count),
-                    Image = string.Empty,
+                    Image = BaseImage,
                     Manufacturer = Manufacturer,
                     Detail = Detail,
                     WalletAddress = UserInfo.WalletAddress,
+                    Images = new System.Collections.Generic.List<string>(),
                 };
                 var httpContent = itemModel.ObjectToStringContent();
                 var response = await HttpRequest.PostTaskAsync<ModelRestFul>(url, httpContent);

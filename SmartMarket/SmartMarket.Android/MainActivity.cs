@@ -9,6 +9,7 @@ using Prism;
 using Prism.Ioc;
 using SmartMarket.Droid.Services.SQLiteService;
 using SmartMarket.Droid.Utilities;
+using SmartMarket.Files;
 using SmartMarket.Interfaces;
 using SmartMarket.Interfaces.LocalDatabase;
 
@@ -90,6 +91,7 @@ namespace SmartMarket.Droid
         {
             // Register any platform specific implementations
             containerRegistry.RegisterInstance<IAppInfo>(new AppInfo());
+            containerRegistry.RegisterInstance<IFileService>(new FileService());
             containerRegistry.RegisterInstance<IDatabaseConnection>(new DatabaseConnection());
         }
     }

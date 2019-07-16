@@ -20,6 +20,7 @@ using SmartMarket.ViewModels.Base;
 using SmartMarket.Views.Popups;
 using System.Linq;
 using Plugin.FirebasePushNotification.Abstractions;
+using SmartMarket.Files;
 
 namespace SmartMarket.ViewModels.Base
 {
@@ -33,6 +34,7 @@ namespace SmartMarket.ViewModels.Base
         public IHttpRequest HttpRequest { get; private set; }
         public ISqLiteService SqLiteService { get; private set; }
         public IAppInfo AppInfo { get; private set; }
+        public IFileService FileService;
 
         #endregion
 
@@ -77,17 +79,25 @@ namespace SmartMarket.ViewModels.Base
             get => _isNullCart;
             set => _isNullCart = value;
         }
+
+        private bool _isBusyLoading;
+        public bool IsBusyLoading
+        {
+            get => _isBusyLoading;
+            set =>SetProperty(ref _isBusyLoading , value);
+        }
         #endregion
 
         #region Constructor
 
         public ViewModelBase(INavigationService navigationService = null, IPageDialogService dialogService = null,
-            IHttpRequest httpRequest = null, ISqLiteService sqliteService = null, IAppInfo appInfo = null)
+            IHttpRequest httpRequest = null, ISqLiteService sqliteService = null, IAppInfo appInfo = null, IFileService fileService = null)
         {
             //PageTitle = TranslateExtension.Get("FairflexxFotoScan");
             if (navigationService != null) Navigation = navigationService;
             if (dialogService != null) DialogService = dialogService;
             if (httpRequest != null) HttpRequest = httpRequest;
+            if (fileService != null) FileService = fileService;
             if (sqliteService != null) SqLiteService = sqliteService;
             if (appInfo != null) AppInfo = appInfo;
 
