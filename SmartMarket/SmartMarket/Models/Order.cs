@@ -14,9 +14,10 @@ namespace SmartMarket.Models
 
         [ForeignKey(typeof(UserModel))]
         public int UserId { get; set; }
-
+        public string WalletAddress { get; set; }
         public double Total { get; set; } = 0;
         public string CreatedDateTime { get; set; }
         public string ShippingAddress { get; set; }
+        public List<OrderDetails> ListItem { get; set; }
     }
 }

@@ -46,6 +46,7 @@ namespace SmartMarket.Services.SQLiteService
             var listTable = new List<Type>
             {
                 typeof(Order),
+                typeof(NotificationModel),
                 typeof(OrderDetails),
                 typeof(UserModel),
                 typeof(ReviewProduct),

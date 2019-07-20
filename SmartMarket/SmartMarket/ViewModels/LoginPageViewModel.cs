@@ -54,8 +54,10 @@ namespace SmartMarket.ViewModels
                      var url = ApiUrl.UserLogin();
                      //Username = "admin@gm.com";
                      //Password = "admin";
-                     Username = "test1@gm.com";
-                     Password = "123456";
+                     //Username = "test1@gm.com";
+                     //Password = "123456";
+                     //Username = "PhucNH@gm.com";
+                     //Password = "123456";
                      var param = new UserIdentity
                      {
                          Email = Username,

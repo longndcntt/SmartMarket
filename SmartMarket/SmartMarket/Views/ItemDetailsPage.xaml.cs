@@ -18,5 +18,9 @@ namespace SmartMarket.Views
             var vm = (ItemDetailsPageViewModel)BindingContext;
             vm.Value = ratingimage.Value;
         }
+
+        public void CarouselViewControl()
+        {
+        }
     }
 }

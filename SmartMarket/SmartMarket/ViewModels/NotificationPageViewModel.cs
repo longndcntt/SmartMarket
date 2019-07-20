@@ -3,31 +3,40 @@ using Prism.Mvvm;
 using Prism.Navigation;
 using SmartMarket.Interfaces.HttpService;
 using SmartMarket.Interfaces.LocalDatabase;
+using SmartMarket.Models;
 using SmartMarket.ViewModels.Base;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace SmartMarket.ViewModels
 {
     public class NotificationPageViewModel : ViewModelBase
     {
-
+        #region Properties
+        private ObservableCollection<NotificationModel> _notificationList;
+        public ObservableCollection<NotificationModel> NotificationList
+        {
+            get => _notificationList;
+            set => SetProperty(ref _notificationList, value);
+        }
+        #endregion
         public NotificationPageViewModel(INavigationService navigationService, ISqLiteService sqLiteService, IHttpRequest httpRequest)
 : base(navigationService: navigationService, sqliteService: sqLiteService, httpRequest: httpRequest)
         {
-            Time1 = App.Settings.Time1;
-            Time2 = App.Settings.Time2;
+
         }
 
-        #region Properties
-        private string _time1;
-
-        public string Time1 { get => _time1; set => SetProperty(ref _time1, value); }
-
-        private string _time2;
-
-        public string Time2 { get => _time2; set => SetProperty(ref _time2, value); }
-        #endregion
+        public override void OnAppear()
+        {
+            base.OnAppear();
+            var a = SqLiteService.GetList<NotificationModel>(x => x.Message != null || x.Message != "");
+            if (a != null)
+            {
+                var b = a.OrderByDescending(x=>x.DatTimeStamp);
+                NotificationList = new ObservableCollection<NotificationModel>(b);
+            }
+        }
     }
 }

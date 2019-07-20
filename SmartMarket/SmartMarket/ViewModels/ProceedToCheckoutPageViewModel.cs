@@ -50,7 +50,7 @@ namespace SmartMarket.ViewModels
 
             if (App.Settings.IsLogin)
             {
-                UserInfo = SqLiteService.Get<UserModel>(x => x.Id != 0);
+                UserInfo = SqLiteService.Get<UserModel>(x => x.Id != -1);
             }
         }
         #endregion
@@ -62,14 +62,10 @@ namespace SmartMarket.ViewModels
             await CheckBusy(async () =>
             {
                 await LoadingPopup.Instance.Show(TranslateExtension.Get("Loading3dot"));
+                var url = ApiUrl.GetWallet() + UserInfo.WalletAddress;
 
-                await Task.Run(async () =>
-                {
-                    var url = ApiUrl.GetWallet() + "0x262036d0E87D7fA0a201cF2443aA3450dE388b4b";
-
-                    var response = await HttpRequest.GetTaskAsync<ModelRestFul>(url);
-                    await GetWalletCallBack(response);
-                });
+                var response = await HttpRequest.GetTaskAsync<ModelRestFul>(url);
+                await GetWalletCallBack(response);
 
             });
         }
@@ -166,20 +162,23 @@ namespace SmartMarket.ViewModels
 
             await Task.Run(async () =>
             {
-                var url = ApiUrl.Schedule();
-                var buyItem = new BuyItem()
+                foreach (var item in ItemOfOrder)
                 {
-                    AddressFrom = UserInfo.WalletAddress,
-                    AddressTo = "0xd5488AD7D33c7d82414c50365C1FaF2081648D9d",
-                    Amount = new double[] { SubTotal / 2, SubTotal / 2 },
-                    Time = new int[] { 20, 50 },
-                };
-                //string sData = Newtonsoft.Json.JsonConvert.SerializeObject(buyItem);
-                //var httpContent = new StringContent(sData, System.Text.Encoding.UTF8);
-                //httpContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-                var httpContent = buyItem.ObjectToStringContent();
-                var response = await HttpRequest.PostTaskAsync<ModelRestFul>(url, httpContent);
-                await AddCoinCallBack(response);
+                    var url = ApiUrl.ExchangeProduct();
+                    var buyItem = new BuyItem()
+                    {
+                        WalletAddress = UserInfo.WalletAddress,
+                        Price = item.Price,
+                        ProductId = item.ProductId,
+                    };
+                    //string sData = Newtonsoft.Json.JsonConvert.SerializeObject(buyItem);
+                    //var httpContent = new StringContent(sData, System.Text.Encoding.UTF8);
+                    //httpContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+                    var httpContent = buyItem.ObjectToStringContent();
+                    var response = await HttpRequest.PostTaskAsync<ModelRestFul>(url, httpContent);
+                    await AddCoinCallBack(response);
+                }
+
             });
         }
 
@@ -230,6 +229,7 @@ namespace SmartMarket.ViewModels
                 var transaction = response.Deserialize<TransactionIDModel>(response.Result);
                 if (transaction != null)
                 {
+                    
                     var transactionID = transaction.TransactionID;
                     await LoadingPopup.Instance.Hide();
                     var param = new NavigationParameters

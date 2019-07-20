@@ -17,16 +17,23 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Diagnostics;
 using SmartMarket.Enums;
+using Plugin.Media;
+using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
+using System.IO;
+using Xamarin.Forms;
+using SmartMarket.Files;
 
 namespace SmartMarket.ViewModels
 {
     public class SignUpViewModel : ViewModelBase
     {
         #region constructors
-        public SignUpViewModel(INavigationService navigationService, ISqLiteService sqLiteService, IHttpRequest httpRequest)
-       : base(navigationService: navigationService, sqliteService: sqLiteService, httpRequest: httpRequest)
+        public SignUpViewModel(INavigationService navigationService, ISqLiteService sqLiteService, IHttpRequest httpRequest, IFileService fileService)
+       : base(navigationService: navigationService, sqliteService: sqLiteService, httpRequest: httpRequest, fileService: fileService)
         {
             SignUpCommand = new DelegateCommand(SignupExcute);
+            ChoosePhotoCommand = new DelegateCommand(async () => await ChoosePhotoReceiveExecute());
         }
         #endregion
 
@@ -44,6 +51,15 @@ namespace SmartMarket.ViewModels
             get => _keystore;
             set => SetProperty(ref _keystore, value);
         }
+
+        private byte[] _imageStream;
+
+        public byte[] ImageStream
+        {
+            get => _imageStream;
+            set => SetProperty(ref _imageStream, value);
+        }
+
 
         private string _fullName;
         public string FullName
@@ -86,6 +102,20 @@ namespace SmartMarket.ViewModels
             get => _isEdit;
             set => SetProperty(ref _isEdit, value);
         }
+
+        private ImageSource _portraitImageSource;
+        public ImageSource PortraitImageSource
+        {
+            get => _portraitImageSource;
+            set => SetProperty(ref _portraitImageSource, value);
+        }
+
+        private string _portraitImageBase;
+        public string PortraitImageBase
+        { 
+            get => _portraitImageBase;
+            set => SetProperty(ref _portraitImageBase, value);
+        }
         #endregion
 
         #region Navigate
@@ -110,6 +140,7 @@ namespace SmartMarket.ViewModels
             }
         }
         #endregion
+
         #region SignUpCommand
         public ICommand SignUpCommand { get; set; }
         private async void SignupExcute()
@@ -117,11 +148,11 @@ namespace SmartMarket.ViewModels
             await CheckBusy(async () =>
             {
 
-                Email = "test1@gm.com";
-                Password = "123456";
-                FullName = "LongND";
-                Address = "KTX khu A";
-                PhoneNumber = "123456789";
+                //Email = "PhucNH@gm.com";
+                //Password = "123456";
+                //FullName = "PhucNH";
+                //Address = "KTX khu B";
+                //PhoneNumber = "123456789";
                 await LoadingPopup.Instance.Show(TranslateExtension.Get("SignUp"));
                 if (string.IsNullOrEmpty(Email))
                 {
@@ -157,8 +188,8 @@ namespace SmartMarket.ViewModels
                         NumberID = "012345678",
                         PhoneNumber = PhoneNumber,
 
-                        PortraitImage = string.Empty,
-                        IdentityImage = string.Empty,
+                        Image = PortraitImageBase,
+                        //IdentityImage = string.Empty,
                     };
 
                     var httpContent = userRegister.ObjectToStringContent();
@@ -243,6 +274,86 @@ namespace SmartMarket.ViewModels
             await LoadingPopup.Instance.Hide();
         }
 
+        #endregion
+
+        #region Choose Photo
+
+        private bool _choosePhoto = true;
+        private bool _takePhoto = true;
+
+        public ICommand ChoosePhotoCommand { get; }
+
+        public async Task ChoosePhotoExecute()
+        {
+            if (!_takePhoto || !_choosePhoto)
+                return;
+
+            _choosePhoto = false;
+
+            if (!CrossMedia.Current.IsPickPhotoSupported)
+            {
+                await MessagePopup.Instance.Show(message: "No Pick Image Support", closeButtonText: "OK");
+            }
+            else
+            {
+                var storageStatus = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Storage);
+
+                if (storageStatus != PermissionStatus.Granted)
+                {
+                    var results =
+                        await
+                            CrossPermissions.Current.RequestPermissionsAsync(Permission.Storage);
+                    storageStatus = results[Permission.Storage];
+                }
+
+                if (storageStatus == PermissionStatus.Granted)
+                {
+                    var file = await CrossMedia.Current.PickPhotoAsync();
+
+                    //Small delay
+                    await Task.Delay(TimeSpan.FromMilliseconds(150));
+
+                    if (file == null)
+                    {
+                        _choosePhoto = true;
+                        return;
+                    }
+
+                    var memoryStream = new MemoryStream();
+                    file.GetStream().CopyTo(memoryStream);
+
+                    byte[] image = memoryStream.ToArray();
+                    var resizeImage = await FileService.ResizeImage(image, file.Path, 4);
+                    PortraitImageBase = Convert.ToBase64String(resizeImage);
+                    await ChangeImage(file.Path, image);
+
+                    //dispose mediafile
+                    file.Dispose();
+                }
+                else
+                {
+                    await MessagePopup.Instance.Show(message: "Permission", closeButtonText: "OK");
+                    //On iOS you may want to send your user to the settings screen.
+                    CrossPermissions.Current.OpenAppSettings();
+                }
+            }
+
+            _choosePhoto = true;
+            await CrossMedia.Current.Initialize();
+        }
+
+        private string _imagePath;
+        public async Task ChangeImage(string filePath, byte[] bytes)
+        {
+            _imagePath = filePath;
+            ImageStream = bytes;
+        }
+
+        private async Task ChoosePhotoReceiveExecute()
+        {
+            await ChoosePhotoExecute();
+            PortraitImageSource = ImageSource.FromStream(() => new MemoryStream(ImageStream));
+        }
         #endregion
     }
 }

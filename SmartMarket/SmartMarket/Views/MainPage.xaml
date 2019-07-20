@@ -192,17 +192,25 @@
                                    FlowDirection="MatchParent"/>
                                     </StackLayout>
                                     <Label FontSize="18"
-                                  Grid.Row="1"
-                                   HorizontalOptions="CenterAndExpand"
-                                   Margin="0"
-                                   Text="{Binding ItemName}"
-                                   FontAttributes="Bold"/>
-                                    <Label FontSize="16"
-                                   HorizontalOptions="CenterAndExpand"
-                                   Grid.Row="2"
-                                   TextColor="Red"
-                                   Text="{Binding Price}"
-                                   FontAttributes="Bold"/>
+                                          Grid.Row="1"
+                                           HorizontalOptions="CenterAndExpand"
+                                           Margin="0"
+                                           Text="{Binding ItemName}"
+                                           FontAttributes="Bold"/>
+                                    <StackLayout HorizontalOptions="CenterAndExpand"
+                                                    Grid.Row="2"
+                                                     VerticalOptions="Center"
+                                                     Orientation="Horizontal">
+                                        <Label Text="{Binding Price}"
+                                                   VerticalOptions="Center"
+                                                  FontAttributes="Bold"
+                                                   FontSize="{StaticResource NormalLabelFont}"
+                                                   TextColor="{StaticResource Red}"/>
+                                        <Image Source="ic_coin"
+                                                   VerticalOptions="Center"
+                                                   WidthRequest="25"
+                                                   HeightRequest="25"/>
+                                    </StackLayout>
                                 </StackLayout>
                                 <!--</Grid>-->
                             </Frame>
@@ -269,12 +277,20 @@
                                                Margin="0"
                                                Text="{Binding ItemName}"
                                                FontAttributes="Bold"/>
-                                        <Label FontSize="16"
-                                               HorizontalOptions="CenterAndExpand"
-                                               Grid.Row="2"
-                                               TextColor="Red"
-                                               Text="{Binding Price}"
-                                               FontAttributes="Bold"/>
+                                        <StackLayout HorizontalOptions="CenterAndExpand"
+                                                    Grid.Row="2"
+                                                     VerticalOptions="Center"
+                                                     Orientation="Horizontal">
+                                            <Label Text="{Binding Price}"
+                                                   VerticalOptions="Center"
+                                                  FontAttributes="Bold"
+                                                   FontSize="{StaticResource NormalLabelFont}"
+                                                   TextColor="{StaticResource Red}"/>
+                                            <Image Source="ic_coin"
+                                                   VerticalOptions="Center"
+                                                   WidthRequest="25"
+                                                   HeightRequest="25"/>
+                                        </StackLayout>
                                     </StackLayout>
                                     <Frame.GestureRecognizers>
                                         <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>

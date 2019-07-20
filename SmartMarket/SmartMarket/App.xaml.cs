@@ -1,7 +1,9 @@
-﻿using Prism;
+﻿using Plugin.FirebasePushNotification;
+using Prism;
 using Prism.Ioc;
 using SmartMarket.Interfaces.HttpService;
 using SmartMarket.Interfaces.LocalDatabase;
+using SmartMarket.Localization;
 using SmartMarket.Models;
 using SmartMarket.Services.HttpService;
 using SmartMarket.Services.SQLiteService;
@@ -9,6 +11,8 @@ using SmartMarket.Utilities;
 using SmartMarket.ViewModels;
 using SmartMarket.Views;
 using SmartMarket.Views.LoginAndSignUp;
+using System;
+using System.Diagnostics;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -70,6 +74,93 @@ namespace SmartMarket
 
         #endregion
 
+        protected override void OnStart()
+        {
+            base.OnStart();
+            CrossFirebasePushNotification.Current.Subscribe("general");
+            CrossFirebasePushNotification.Current.OnTokenRefresh += (s, p) =>
+            {
+                System.Diagnostics.Debug.WriteLine($"TOKEN REC: {p.Token}");
+            };
+            System.Diagnostics.Debug.WriteLine($"TOKEN: {CrossFirebasePushNotification.Current.Token}");
+
+            CrossFirebasePushNotification.Current.OnNotificationReceived += (s, p) =>
+            {
+                try
+                {
+                    System.Diagnostics.Debug.WriteLine("Received");
+                    var noti = new NotificationModel();
+                    if (p.Data.ContainsKey("body"))
+                    {
+                        Device.BeginInvokeOnMainThread(() =>
+                        {
+                            p.Data["title"] = TranslateExtension.Get(p.Data["TitleKey"].ToString());
+                            noti.Title = p.Data["title"].ToString();
+                            if (p.Data.ContainsKey("Coin"))
+                            {
+                                p.Data["body"] = string.Format(TranslateExtension.Get(p.Data["MessageKey"].ToString()), p.Data["Coin"].ToString());
+                                noti.Message = p.Data["body"].ToString();
+                            }
+                            else
+                            {
+                                p.Data["body"] = TranslateExtension.Get(p.Data["MessageKey"].ToString());
+                                noti.Message = p.Data["body"].ToString();
+                            }
+                            //noti.Title = p.Data["title"].ToString();
+                            noti.DateTimeReceived = p.Data["DateTimeSend"].ToString();
+                            _sqLiteService.Insert(noti);
+                        });
+
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+
+            };
+
+            CrossFirebasePushNotification.Current.OnNotificationOpened += (s, p) =>
+            {
+                //System.Diagnostics.Debug.WriteLine(p.Identifier);
+
+                System.Diagnostics.Debug.WriteLine("Opened");
+                foreach (var data in p.Data)
+                {
+                    System.Diagnostics.Debug.WriteLine($"{data.Key} : {data.Value}");
+                }
+                if (p.Data.ContainsKey("aps.alert.title"))
+                {
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        System.Diagnostics.Debug.WriteLine($"{p.Data["aps.alert.title"]}");
+                    });
+
+                }
+            };
+
+            CrossFirebasePushNotification.Current.OnNotificationAction += (s, p) =>
+            {
+                System.Diagnostics.Debug.WriteLine("Action");
+
+                if (!string.IsNullOrEmpty(p.Identifier))
+                {
+                    System.Diagnostics.Debug.WriteLine($"ActionId: {p.Identifier}");
+                    foreach (var data in p.Data)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"{data.Key} : {data.Value}");
+                    }
+
+                }
+
+            };
+
+            CrossFirebasePushNotification.Current.OnNotificationDeleted += (s, p) =>
+            {
+                System.Diagnostics.Debug.WriteLine("Dismissed");
+            };
+        }
+
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterForNavigation<NavigationPage>();
@@ -94,6 +185,7 @@ namespace SmartMarket
             containerRegistry.RegisterForNavigation<MessagePage, MessagePageViewModel>();
             containerRegistry.RegisterForNavigation<SearchItemPage, SearchItemPageViewModel>();
             containerRegistry.RegisterForNavigation<UploadProductPage, UploadProductPageViewModel>();
+            containerRegistry.RegisterForNavigation<PurchaseedProduct, PurchaseedProductViewModel>();
         }
     }
 }

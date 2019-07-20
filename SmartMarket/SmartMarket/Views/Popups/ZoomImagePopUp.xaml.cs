@@ -18,6 +18,12 @@ namespace SmartMarket.Views.Popups
             ViewImagePopUp.Source = imgSource;
         }
 
+        public ZoomImagePopUp(string imageURL)
+        {
+            InitializeComponent();
+            ViewImagePopUp.Source = imageURL;
+        }
+
         public ZoomImagePopUp(byte[] byteImg)
         {
             InitializeComponent();

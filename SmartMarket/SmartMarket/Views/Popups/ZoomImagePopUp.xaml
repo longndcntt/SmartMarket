@@ -16,6 +16,12 @@
                                             CacheType="None"
                                             Aspect="AspectFit"/>
             </controls:PinchAndPanContainer.Content>
+            <controls:PinchAndPanContainer.GestureRecognizers>
+                <TapGestureRecognizer Tapped="TapBackToDetailPage" 
+                                  NumberOfTapsRequired="2"/>
+                <SwipeGestureRecognizer Direction="Down" 
+                                    Swiped="SwipeBackToDetailPage"/>
+            </controls:PinchAndPanContainer.GestureRecognizers>
         </controls:PinchAndPanContainer>
         <Grid.GestureRecognizers>
             <TapGestureRecognizer Tapped="TapBackToDetailPage" 

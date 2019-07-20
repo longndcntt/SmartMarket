@@ -43,6 +43,21 @@ namespace SmartMarket.Services.HttpService
             return Link("product/get/all");
         }
 
+        public static string ExchangeProduct()
+        {
+            return Link("exchange");
+        }
+
+        public static string GetPurchasedItems(string walletAdress)
+        {
+            return Link($"exchange/buy/{walletAdress}");
+        }
+
+        public static string GetItemSelected(string itemId)
+        {
+            return Link($"product/display/{itemId}");
+        }
+        
         public static string GetItemDetails()
         {
             return Link("product/detail/");

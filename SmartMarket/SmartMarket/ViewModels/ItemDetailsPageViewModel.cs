@@ -2,6 +2,7 @@
 using Prism.Mvvm;
 using Prism.Navigation;
 using Prism.Services;
+using Rg.Plugins.Popup.Services;
 using SmartMarket.Enums;
 using SmartMarket.Interfaces.HttpService;
 using SmartMarket.Interfaces.LocalDatabase;
@@ -14,6 +15,7 @@ using SmartMarket.Views.Popups;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -76,6 +78,16 @@ namespace SmartMarket.ViewModels
             set
             {
                 SetProperty(ref _position, value);
+            }
+        }
+
+        private bool _isExistReview;
+        public bool IsExistReview
+        {
+            get => _isExistReview;
+            set
+            {
+                SetProperty(ref _isExistReview, value);
             }
         }
 
@@ -240,11 +252,30 @@ namespace SmartMarket.ViewModels
             var url = ApiUrl.GetReview(ItemModelId.ToString());
             var reviewTemp = await HttpRequest.GetTaskAsync<ModelRestFul>(url);
             var a = reviewTemp.Deserialize<IEnumerable<ReviewProduct>>(reviewTemp.Result).ToList();
-            if (a.Count!=-1)
+            if (a.Count != -1)
             {
                 ReviewProductList = new ObservableCollection<ReviewProduct>(a);
-                RatingTotal = (int)(ReviewProductList.Sum(x => x.Rate) / ReviewProductList.Count());
+                if (ReviewProductList.Count <= 0)
+                {
+                    IsExistReview = false;
+                    RatingTotal = 0;
+                }
+                else
+                {
+                    RatingTotal = (int)(ReviewProductList.Sum(x => x.Rate) / ReviewProductList.Count());
+                    IsExistReview = true;
+                }
             }
+        }
+        #endregion
+
+        #region LoadItemSelected
+        private async Task LoadItemSelected(int itemId)
+        {
+            var url = ApiUrl.GetItemSelected(itemId.ToString());
+            var tempItem = await HttpRequest.GetTaskAsync<ModelRestFul>(url);
+            var a = tempItem.Deserialize<ItemModel>(tempItem.Result);
+            ItemSelected = a;
         }
         #endregion
 
@@ -263,6 +294,10 @@ namespace SmartMarket.ViewModels
         public ICommand AddToCartCommand { get; set; }
         private async void AddToCartExcute()
         {
+            if (ItemSelected == null)
+            {
+                await LoadItemSelected(ItemModelId);
+            }
             var oderDetails = new OrderDetails()
             {
                 Id = DateTime.Now.ToString(),
@@ -306,6 +341,10 @@ namespace SmartMarket.ViewModels
         public ICommand NavigateToCartCommand { get; set; }
         private async void NavigateToCartExcute()
         {
+            if (ItemSelected == null)
+            {
+                await LoadItemSelected(ItemModelId);
+            }
             var oderDetails = new OrderDetails()
             {
                 Id = DateTime.Now.ToString(),
@@ -439,6 +478,26 @@ namespace SmartMarket.ViewModels
             }
             await LoadingPopup.Instance.Hide();
         }
+        #endregion
+
+        #region Zoom
+
+        protected override async void ZoomImageExe(object obj)
+        {
+            await CheckBusy(async () =>
+            {
+                if (obj == null)
+                {
+#if DEBUG
+                    Debug.WriteLine("NULL");
+#endif
+                    return;
+                }
+
+                await PopupNavigation.Instance.PushAsync(new ZoomImagePopUp(ItemSelectedDetails.Images[Position]));
+            });
+        }
+
         #endregion
 
     }

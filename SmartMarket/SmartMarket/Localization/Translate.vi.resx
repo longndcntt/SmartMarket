@@ -294,4 +294,22 @@
   <data name="Username_PasswordIncorrect" xml:space="preserve">
     <value>Tên đăng nhập hoặc mật khẩu không đúng</value>
   </data>
+  <data name="PuchasedItems" xml:space="preserve">
+    <value>Sản phẩm đã mua</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Lỗi</value>
+  </data>
+  <data name="ErrorPayment" xml:space="preserve">
+    <value>Tài khoản không đủ, giao dịch bị từ chối</value>
+  </data>
+  <data name="Payment" xml:space="preserve">
+    <value>Thanh toán</value>
+  </data>
+  <data name="Payment3dot" xml:space="preserve">
+    <value>Đang thanh toán...</value>
+  </data>
+  <data name="UpcomingPayment" xml:space="preserve">
+    <value>Sắp đến kì hạn thanh toán, vui lòng nạp thêm {0} xu vào ví.</value>
+  </data>
 </root>

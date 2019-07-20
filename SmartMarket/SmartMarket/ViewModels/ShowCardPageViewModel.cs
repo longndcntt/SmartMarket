@@ -115,6 +115,11 @@ namespace SmartMarket.ViewModels
         public ICommand NavigateToCheckoutCommand { get; set; }
         private async void NavigateToCheckoutExcute()
         {
+            if (!App.Settings.IsLogin)
+            {
+                await Navigation.NavigateAsync(PageManager.LoginSignUpTabbedPage);
+                return;
+            }
             await Navigation.NavigateAsync(PageManager.ProceedToCheckoutPage);
         }
 

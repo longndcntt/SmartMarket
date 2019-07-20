@@ -52,6 +52,13 @@ namespace SmartMarket.ViewModels.Base
             set { SetProperty(ref _title, value); }
         }
 
+        private bool _isExistImage;
+        public bool IsExistImage
+        {
+            get { return _isExistImage; }
+            set { SetProperty(ref _isExistImage, value); }
+        }
+
         private UserModel _userInfo;
         public UserModel UserInfo
         {

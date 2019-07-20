@@ -17,6 +17,8 @@ using SmartMarket.Utilities;
 using SmartMarket.ViewModels.Base;
 using SmartMarket.Views.Popups;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
@@ -37,12 +39,28 @@ namespace SmartMarket.ViewModels
             set => SetProperty(ref _image, value);
         }
 
+        private ObservableCollection<ListImage> _listImage;
+
+        public ObservableCollection<ListImage> ListImage
+        {
+            get => _listImage;
+            set => SetProperty(ref _listImage, value);
+        }
+
         private byte[] _imageStream;
 
         public byte[] ImageStream
         {
             get => _imageStream;
             set => SetProperty(ref _imageStream, value);
+        }
+
+        private List<byte[]> _listimageStream;
+
+        public List<byte[]> ListImageStream
+        {
+            get => _listimageStream;
+            set => SetProperty(ref _listimageStream, value);
         }
 
         private string _itemName;
@@ -109,6 +127,20 @@ namespace SmartMarket.ViewModels
             ImageStream = bytes;
         }
 
+        public ICommand TakeSomePhotosReceiveCommand { get; }
+        private async Task TakeSomePhotosReceiveExecute()
+        {
+            await TakeSomePhotosExecute();
+            for (int i = 0; i < ListImageStream.Count; i++)
+            {
+                var image = new ListImage()
+                {
+                    ImageList = ImageSource.FromStream(() => new MemoryStream(ListImageStream[i])),
+            };
+                ListImage.Add(image);
+            }
+        }
+
         public ICommand TakePhotoReceiveCommand { get; }
 
         private async Task TakePhotoReceiveExecute()
@@ -134,12 +166,13 @@ namespace SmartMarket.ViewModels
         {
             TakePhotoReceiveCommand = new DelegateCommand(async () => await TakePhotoReceiveExecute());
             ChoosePhotoReceiveCommand = new DelegateCommand(async () => await ChoosePhotoReceiveExecute());
+            TakeSomePhotosReceiveCommand = new DelegateCommand(async () => await TakeSomePhotosReceiveExecute());
             UploadItemCommand = new DelegateCommand(UploadItemExcute);
-            ItemName = "Test1";
-            Price = "60";
+            ItemName = "Test 2";
+            Price = "40";
             Count = "5";
-            Manufacturer = "Manufacturer 1";
-            Detail = "Detail 1";
+            Manufacturer = "Manufacturer 2";
+            Detail = "Detail 2";
 
         }
 
@@ -316,7 +349,7 @@ namespace SmartMarket.ViewModels
                     Manufacturer = Manufacturer,
                     Detail = Detail,
                     WalletAddress = UserInfo.WalletAddress,
-                    Images = new System.Collections.Generic.List<string>(),
+                    Images = ListBase,
                 };
                 var httpContent = itemModel.ObjectToStringContent();
                 var response = await HttpRequest.PostTaskAsync<ModelRestFul>(url, httpContent);
@@ -365,7 +398,7 @@ namespace SmartMarket.ViewModels
             {
                 await LoadingPopup.Instance.Hide();
             }
-            
+
         }
 
         private async Task UploadToBlockchainCallBack(ModelRestFul response)
@@ -399,5 +432,92 @@ namespace SmartMarket.ViewModels
             await LoadingPopup.Instance.Hide();
         }
         #endregion
+
+        #region Take Some Photos
+
+        private List<string> ListBase;
+        public async Task TakeSomePhotosExecute()
+        {
+            if (!_takePhoto || !_choosePhoto)
+                return;
+
+            _takePhoto = false;
+
+            if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
+            {
+                await MessagePopup.Instance.Show(message: "No Camera", closeButtonText: "OK");
+            }
+            else
+            {
+                var cameraStatus = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Camera);
+                var storageStatus = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Storage);
+
+                if (cameraStatus != PermissionStatus.Granted || storageStatus != PermissionStatus.Granted)
+                {
+                    var results =
+                        await
+                            CrossPermissions.Current.RequestPermissionsAsync(new[] { Permission.Camera, Permission.Storage });
+                    cameraStatus = results[Permission.Camera];
+                    storageStatus = results[Permission.Storage];
+                }
+
+                if (cameraStatus == PermissionStatus.Granted && storageStatus == PermissionStatus.Granted)
+                {
+                    ListBase = new List<string>();
+                    ListImageStream = new List<byte[]>();
+                    ListImage = new ObservableCollection<ListImage>();
+                    //Small delay
+                    await Task.Delay(TimeSpan.FromMilliseconds(200));
+                    bool isCamera = true;
+                    int i = 0;
+                    while (isCamera && i < 3)
+                    {
+                        var file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions
+                        {
+                            SaveToAlbum = true,
+                            Directory = "Image1",
+                            Name = DateTime.Now.ToString("MM/dd/yyyy"),
+                        });
+
+                        if (file != null)
+                        {
+                            var memoryStream = new MemoryStream();
+                            file.GetStream().CopyTo(memoryStream);
+
+                            byte[] image = memoryStream.ToArray();
+                            var resizeImage = await FileService.ResizeImage(image, file.Path, 4);
+                            BaseImage = Convert.ToBase64String(resizeImage);
+                            ListBase.Add(BaseImage);
+                            ListImageStream.Add(image);
+                            //await ChangeImage(file.Path, image);
+                            //dispose mediafile
+                            file.Dispose();
+                            //_takePhoto = true;
+                            //return;
+                            i++;
+                        }
+                        else
+                        {
+                            isCamera = false;
+                        }
+                    }
+                }
+                else
+                {
+                    //On iOS you may want to send your user to the settings screen.
+                    CrossPermissions.Current.OpenAppSettings();
+                }
+            }
+
+            _takePhoto = true;
+            await CrossMedia.Current.Initialize();
+        }
+
+        #endregion
+    }
+
+    public class ListImage
+    {
+        public ImageSource ImageList { get; set; }
     }
 }

@@ -6,6 +6,7 @@
              xmlns:localization="clr-namespace:SmartMarket.Localization"
              xmlns:controls="clr-namespace:SmartMarket.Controls"
              xmlns:converters="clr-namespace:SmartMarket.Converters"
+               xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
                NavigationPage.HasNavigationBar="False"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="SmartMarket.Views.ProfileUserPage">
@@ -28,9 +29,16 @@
                     </Grid.ColumnDefinitions>
                     <Image WidthRequest="50"
                            HeightRequest="50"
+                           IsVisible="{Binding IsExistImage,Converter={StaticResource Key=IsTrueConverter}}"
                            Source="ic_user"
                            Grid.RowSpan="2" Grid.Row="0"
                            Grid.Column="0"/>
+                    <forms:CachedImage Source="{Binding UserInfo.Image}"
+                                       WidthRequest="50"
+                           HeightRequest="50"
+                                       IsVisible="{Binding IsExistImage}"
+                                       Grid.RowSpan="2" Grid.Row="0"
+                                       Grid.Column="0"/>
                     <StackLayout Grid.Column="1"
                                  Grid.Row="0"
                                  IsVisible="{Binding IsLogin, Converter={StaticResource IsTrueConverter}}">
@@ -96,7 +104,7 @@
                                    TextColor="Black"
                                    Margin="5,8"/>
                         <StackLayout.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding FAQCommand}"/>
+                            <TapGestureRecognizer Command="{Binding PurchasedProdcutCommand}"/>
                         </StackLayout.GestureRecognizers>
                     </StackLayout>
 

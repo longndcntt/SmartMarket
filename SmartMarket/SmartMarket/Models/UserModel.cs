@@ -20,7 +20,7 @@ namespace SmartMarket.Models
         public bool Gender { get; set; }
         public string NumberID { get; set; }
         public string PhoneNumber { get; set; }
-        public string PortraitImage { get; set; }
+        public string Image { get; set; }
         public string IdentityImage { get; set; }
         public double Coin { get; set; }
         public string WalletAddress { get; set; }

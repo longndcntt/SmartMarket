@@ -18,8 +18,7 @@
     </ContentPage.Resources>
     <ScrollView>
         <StackLayout HorizontalOptions="FillAndExpand"
-                     VerticalOptions="FillAndExpand"
-                     Padding="10,20">
+                     VerticalOptions="FillAndExpand">
             <Grid BackgroundColor="SkyBlue"
                   HeightRequest="50"
                   RowSpacing="0"
@@ -48,35 +47,39 @@
                        TextColor="{StaticResource SDarkerTextColor}"/>
                 </StackLayout>
             </Grid>
-            <Frame Padding="10"
+            <StackLayout Padding="5"
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="FillAndExpand">
+                <Frame Padding="10"
                    HorizontalOptions="FillAndExpand"
                    HeightRequest="60">
-                <StackLayout Orientation="Horizontal"
+                    <StackLayout Orientation="Horizontal"
                              HorizontalOptions="FillAndExpand"
                              VerticalOptions="Center"
                              Padding="10">
-                    <Label Text="{localization:Translate Total}"
+                        <Label Text="{localization:Translate Total}"
                            VerticalOptions="CenterAndExpand"
                            FontSize="{StaticResource SuperLargeLabelFont}"
                            HorizontalOptions="StartAndExpand"
                            TextColor="{StaticResource SGray}"/>
-                    <Label Text="{Binding Total,Converter={StaticResource Key=CovertToCurrency}}"
+                        <Label Text="{Binding Total,Converter={StaticResource Key=CovertToCurrency}}"
                            VerticalOptions="CenterAndExpand"
                            FontSize="{StaticResource SuperLargeLabelFont}"
                            HorizontalOptions="EndAndExpand"
                            TextColor="{StaticResource SGreen}"/>
-                </StackLayout>
-            </Frame>
-            <StackLayout x:Name="listItem"
+                    </StackLayout>
+                </Frame>
+                <StackLayout x:Name="listItem"
                          HorizontalOptions="FillAndExpand"
                          VerticalOptions="FillAndExpand"
                          Spacing="0"/>
-            <buttonBorder:BorderButton Text="{localization:Translate ProceedToCheckout}"
+                <buttonBorder:BorderButton Text="{localization:Translate ProceedToCheckout}"
                                                    HorizontalOptions="FillAndExpand"
                                                    Theme="Red"
                                                    TextColor="White"
                                                    FontSize="{StaticResource NormalLabelFont}"
                                                    Command="{Binding NavigateToCheckoutCommand}"/>
+            </StackLayout>
         </StackLayout>
     </ScrollView>
 </base:BasePage>

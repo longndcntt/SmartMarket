@@ -10,7 +10,8 @@
                prism:ViewModelLocator.AutowireViewModel="True"
                xmlns:localization ="clr-namespace:SmartMarket.Localization"
                xmlns:ffImage="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
-             x:Class="SmartMarket.Views.UploadProductPage">
+               xmlns:abstractions="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions"
+               x:Class="SmartMarket.Views.UploadProductPage">
     <ScrollView>
         <StackLayout HorizontalOptions="FillAndExpand"
                      Padding="10"
@@ -25,6 +26,7 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition></ColumnDefinition>
                         <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <!--Take picture button-->
                     <Button Grid.Column="0"
@@ -36,7 +38,12 @@
                                 HorizontalOptions="Start"
                                 Text="Pick picture"
                                 Command="{Binding ChoosePhotoReceiveCommand}"></Button>
+                    <Button Grid.Column="2"
+                            HorizontalOptions="EndAndExpand"
+                            Text="Take picture"
+                            Command="{Binding TakeSomePhotosReceiveCommand}"/>
                 </Grid>
+
                 <Grid RowSpacing="0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />

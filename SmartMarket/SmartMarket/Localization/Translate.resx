@@ -294,4 +294,22 @@
   <data name="Username_PasswordIncorrect" xml:space="preserve">
     <value>Username or Password is incorrect</value>
   </data>
+  <data name="PuchasedItems" xml:space="preserve">
+    <value>Purchased Item</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="ErrorPayment" xml:space="preserve">
+    <value>Your wallet is not enough coin, transaction was denied.</value>
+  </data>
+  <data name="Payment" xml:space="preserve">
+    <value>Payment</value>
+  </data>
+  <data name="Payment3dot" xml:space="preserve">
+    <value>Paying...</value>
+  </data>
+  <data name="UpcomingPayment" xml:space="preserve">
+    <value>Upcoming payment, please add {0} coin to your wallet</value>
+  </data>
 </root>

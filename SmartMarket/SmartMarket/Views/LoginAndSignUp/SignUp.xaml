@@ -10,77 +10,85 @@
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:controls="clr-namespace:SmartMarket.Controls"
              xmlns:converters="clr-namespace:SmartMarket.Converters"
+             xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="SmartMarket.Views.LoginAndSignUp.SignUp">
 
     <ContentPage.Resources>
         <converters:IsTrueConverter x:Key="IsTrueConverter"/>
     </ContentPage.Resources>
-    <Grid HorizontalOptions="FillAndExpand"
+    <ScrollView>
+        <Grid HorizontalOptions="FillAndExpand"
                  VerticalOptions="FillAndExpand">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="auto"></RowDefinition>
-        </Grid.RowDefinitions>
-        <Image Source="ic_app"
-               HeightRequest="50"
-               WidthRequest="50"
-               Grid.Row="0"
-               VerticalOptions="Center"
-               HorizontalOptions="CenterAndExpand">
-        </Image>
-        <Frame Padding="5,0,5,0" BackgroundColor="Transparent"
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Frame Padding="5,0,5,0" BackgroundColor="Transparent"
            Margin="10"
-               Grid.Row="1"
+               Grid.Row="0"
            HorizontalOptions="FillAndExpand"
            VerticalOptions="CenterAndExpand">
-            <Grid RowSpacing="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"></RowDefinition>
-                    <RowDefinition Height="auto"></RowDefinition>
-                    <RowDefinition Height="auto"></RowDefinition>
-                    <RowDefinition Height="auto"></RowDefinition>
-                    <RowDefinition Height="auto"></RowDefinition>
-                    <RowDefinition Height="auto"></RowDefinition>
-                </Grid.RowDefinitions>
-                <xfxcontrol:XfxEntry Grid.Row="0" Placeholder="{localization:Translate FullName}" 
+                <Grid RowSpacing="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <StackLayout Grid.Row="0" Padding="0">
+                        <forms:CachedImage  Source="{Binding PortraitImageSource}"
+                                            ErrorPlaceholder="ic_user"
+                                            LoadingPlaceholder="ic_user"
+                                            DownsampleHeight="300"
+                                            DownsampleWidth="300"
+                                            Aspect="AspectFit"/>
+                        <Button Command="{Binding ChoosePhotoCommand}"
+                            HorizontalOptions="CenterAndExpand"
+                            VerticalOptions="CenterAndExpand"
+                            Margin="2"
+                            Text="Choose Photo"/>
+                    </StackLayout>
+                    <xfxcontrol:XfxEntry Grid.Row="1" Placeholder="{localization:Translate FullName}" 
                                  FontSize="{StaticResource NormalLabelFont}"
                                          VerticalOptions="CenterAndExpand"
                                          Text="{Binding FullName}"/>
 
-                <xfxcontrol:XfxEntry Grid.Row="1" Placeholder="{localization:Translate PhoneNumber}" 
+                    <xfxcontrol:XfxEntry Grid.Row="2" Placeholder="{localization:Translate PhoneNumber}" 
                                      ActivePlaceholderColor="DimGray"
                                  FontSize="{StaticResource NormalLabelFont}"
                                          VerticalOptions="CenterAndExpand"
                                          Text="{Binding PhoneNumber}"/>
 
-                <xfxcontrol:XfxEntry Grid.Row="2" Placeholder="Email" 
+                    <xfxcontrol:XfxEntry Grid.Row="3" Placeholder="Email" 
                                  FontSize="{StaticResource NormalLabelFont}"
                                          VerticalOptions="CenterAndExpand"
                                          Text="{Binding Email}"/>
 
-                <xfxcontrol:XfxEntry Grid.Row="3" Placeholder="{localization:Translate Password}" 
+                    <xfxcontrol:XfxEntry Grid.Row="4" Placeholder="{localization:Translate Password}" 
                                      x:Name="entry"
                                  FontSize="{StaticResource NormalLabelFont}"
                                 IsEnabled="{Binding IsEdit,Converter={StaticResource Key=IsTrueConverter}}"
                                         VerticalOptions="CenterAndExpand" 
                                          Text="{Binding Password}"/>
-                
-                <StackLayout Orientation="Horizontal"
+
+                    <StackLayout Orientation="Horizontal"
                              HorizontalOptions="FillAndExpand"
                              VerticalOptions="StartAndExpand"
                                          HeightRequest="{Binding Source={x:Reference entry}, Path=Height}"
                              Spacing="10"
-                             Grid.Row="4">
-                    <xlabControl:ExtendedLabel Text="{localization:Translate DateOfBirth}"
+                             Grid.Row="5">
+                        <xlabControl:ExtendedLabel Text="{localization:Translate DateOfBirth}"
                                                WidthRequest="150"
                                                VerticalOptions="CenterAndExpand"
                                                FontSize="{StaticResource NormalLabelFont}"/>
-                    <controls:ImageDatePicker VerticalOptions="CenterAndExpand"
+                        <controls:ImageDatePicker VerticalOptions="CenterAndExpand"
                                                Image="icon_calendar"
                                                ImageAlignment="Right"
                                  FontSize="{StaticResource NormalLabelFont}"
@@ -89,38 +97,38 @@
                                                      MaximumDate="{x:Static sys:DateTime.Now}"
                                                      HorizontalOptions="FillAndExpand"
                                  Date="{Binding DateOfBirth, Mode=OneWayToSource}"/>
-                </StackLayout>
-               
-                <StackLayout Orientation="Horizontal"
+                    </StackLayout>
+
+                    <StackLayout Orientation="Horizontal"
                              HorizontalOptions="StartAndExpand"
                              VerticalOptions="CenterAndExpand"
                                          HeightRequest="{Binding Source={x:Reference entry}, Path=Height}"
                              Spacing="10"
-                             Grid.Row="5">
-                    <xlabControl:ExtendedLabel Text="{localization:Translate Gender}"
+                             Grid.Row="6">
+                        <xlabControl:ExtendedLabel Text="{localization:Translate Gender}"
                                                VerticalOptions="CenterAndExpand"
                                                WidthRequest="150"
                                                FontSize="{StaticResource NormalLabelFont}"/>
-                    <radio:SelectionView SelectionType="RadioButton"
+                        <radio:SelectionView SelectionType="RadioButton"
                                          VerticalOptions="CenterAndExpand"
                                          ItemDisplayBinding="{Binding .}"
                                          SelectedIndex="{Binding SelectedGender}"
                                          FontSizeView="{StaticResource NormalLabelFont}"
                                          ColumnNumber="3"
                                          RowSpacing="10">
-                        <radio:SelectionView.ItemsSource>
-                            <x:Array Type="{x:Type x:String}">
-                                <x:String>Nam</x:String>
-                                <x:String>Nữ</x:String>
-                                <!--<x:String>Khác</x:String>-->
-                            </x:Array>
-                        </radio:SelectionView.ItemsSource>
-                    </radio:SelectionView>
-                </StackLayout>
-            </Grid>
-        </Frame>
+                            <radio:SelectionView.ItemsSource>
+                                <x:Array Type="{x:Type x:String}">
+                                    <x:String>Nam</x:String>
+                                    <x:String>Nữ</x:String>
+                                    <!--<x:String>Khác</x:String>-->
+                                </x:Array>
+                            </radio:SelectionView.ItemsSource>
+                        </radio:SelectionView>
+                    </StackLayout>
+                </Grid>
+            </Frame>
 
-        <!--<controls1:BorderButton Text="{localization:Translate SignUp}" Command="{Binding SignUpCommand}"
+            <!--<controls1:BorderButton Text="{localization:Translate SignUp}" Command="{Binding SignUpCommand}"
                             Margin="10,5,0,10"
                             HorizontalOptions="FillAndExpand"
                                 VerticalOptions="EndAndExpand"
@@ -128,21 +136,22 @@
                             FontSize="20"
                             BorderRadius="1"
                            Theme="WhiteGreen"/>-->
-        <controls1:BorderButton Text="{localization:Translate SignUp}" Command="{Binding SignUpCommand}"
+            <controls1:BorderButton Text="{localization:Translate SignUp}" Command="{Binding SignUpCommand}"
                                 IsVisible="{Binding IsEdit,Converter={StaticResource Key=IsTrueConverter}}"
                                  Margin="10,5,0,10"
                             HorizontalOptions="FillAndExpand"
                                 VerticalOptions="EndAndExpand"
-                                Grid.Row="2"
+                                Grid.Row="1"
                     BackgroundColor="White"
                                      Theme="WhiteBlue"/>
-        <controls1:BorderButton Text="{localization:Translate Edit}" Command="{Binding SignUpCommand}"
+            <controls1:BorderButton Text="{localization:Translate Edit}" Command="{Binding SignUpCommand}"
                                 IsVisible="{Binding IsEdit}"
                                  Margin="10,5,0,10"
                             HorizontalOptions="FillAndExpand"
                                 VerticalOptions="EndAndExpand"
-                                Grid.Row="2"
+                                Grid.Row="1"
                     BackgroundColor="White"
                                      Theme="WhiteBlue"/>
-    </Grid>
+        </Grid>
+    </ScrollView>
 </ContentPage>

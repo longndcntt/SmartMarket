@@ -3,9 +3,9 @@ using Xamarin.Forms;
 
 namespace SmartMarket.Views
 {
-    public partial class NotificationPage : BasePage
+    public partial class PurchaseedProduct : BasePage
     {
-        public NotificationPage()
+        public PurchaseedProduct()
         {
             InitializeComponent();
         }

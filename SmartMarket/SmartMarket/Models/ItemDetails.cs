@@ -2,6 +2,7 @@
 using SQLiteNetExtensions.Attributes;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace SmartMarket.Models
@@ -18,5 +19,6 @@ namespace SmartMarket.Models
         public int Count { get; set; }
         public string Manufacturer { get; set; }
         public string Detail { get; set; }
+        public ObservableCollection<string> Images { get; set; }
     }
 }

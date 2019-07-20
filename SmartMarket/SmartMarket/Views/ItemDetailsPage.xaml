@@ -102,31 +102,37 @@
                 </Grid.RowDefinitions>
                 <StackLayout Grid.Row="0"
                              HorizontalOptions="FillAndExpand"
-                             VerticalOptions="StartAndExpand"
-                            >
-                    <!--<abstractions:CarouselViewControl ItemsSource="{Binding ItemSelectedImage}"
+                             VerticalOptions="StartAndExpand">
+                    <abstractions:CarouselViewControl ItemsSource="{Binding ItemSelectedDetails.Images}"
                                           VerticalOptions="FillAndExpand" 
                                               HorizontalOptions="FillAndExpand"
                                               Orientation="Horizontal"
-                                              ShowIndicators="True"
+                                               HeightRequest="250"
+                             WidthRequest="250"
+                                                      x:Name="carouselViewControl"
+                                                      ShowIndicators="True"
                                               IsSwipeEnabled="True"
                                               CurrentPageIndicatorTintColor="Yellow"
                                           Position="{Binding Position}">
                         <abstractions:CarouselViewControl.ItemTemplate>
                             <DataTemplate>
                                 <Grid HorizontalOptions="FillAndExpand">
-                                    <forms:CachedImage Source="{Binding Image}"
-                                               CacheType="None"
-                                                   Aspect="AspectFit"/>
+                                    <forms:CachedImage Source="{Binding .}"
+                                                       LoadingPlaceholder="loading.png"
+                                               CacheType="None"/>
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Path=BindingContext.ZoomImageCommand, Source={x:Reference Name=carouselViewControl}}"
+                                                      CommandParameter="{Binding}"/>
+                                    </Grid.GestureRecognizers>
                                 </Grid>
                             </DataTemplate>
                         </abstractions:CarouselViewControl.ItemTemplate>
-                    </abstractions:CarouselViewControl>-->
-                    <forms:CachedImage Source="{Binding ItemSelected.Image}"
+                    </abstractions:CarouselViewControl>
+                    <!--<forms:CachedImage Source="{Binding ItemSelected.Image}"
                                                                    Aspect="AspectFit"
                                         HeightRequest="250"
                              WidthRequest="250"
-                                                                   FlowDirection="LeftToRight"/>
+                                                                   FlowDirection="LeftToRight"/>-->
                 </StackLayout>
                 <StackLayout Grid.Row="1"
                        Padding="10">
@@ -148,13 +154,27 @@
                        Text="{Binding ItemSelectedDetails.Manufacturer}"
                        TextColor="{StaticResource Purple}"/>
                         </StackLayout>
-                        <Label FontSize="{StaticResource SuperLargeLabelFont}"
+                        <StackLayout HorizontalOptions="EndAndExpand"
+                                     Grid.Row="0" Grid.Column="1"
+                                     VerticalOptions="CenterAndExpand"
+                                     Orientation="Horizontal">
+                            <Label Text="{Binding ItemSelected.Price}"
+                                   VerticalOptions="Center"
+                                   FontAttributes="Bold"
+                                   FontSize="{StaticResource SuperLargeLabelFont}"
+                                   TextColor="{StaticResource SGreen}"/>
+                            <Image Source="ic_coin"
+                                   VerticalOptions="Center"
+                                   WidthRequest="25"
+                                   HeightRequest="25"/>
+                        </StackLayout>
+                        <!--<Label FontSize="{StaticResource SuperLargeLabelFont}"
                                              Grid.Row="0" Grid.Column="1"
                                            Text="{Binding ItemSelected.Price,Converter={StaticResource CovertToCurrency}}"
                                             TextColor="{StaticResource SGreen}"
                                             VerticalOptions="CenterAndExpand"
-                                            HorizontalOptions="EndAndExpand">
-                        </Label>
+                                            HorizontalOptions="EndAndExpand">-->
+                        <!--</Label>-->
                         <buttonBorder:ExtendedLabel  FontSize="{StaticResource NormalLabelFont}"
                                              Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
                                            Text="{Binding ItemSelectedDetails.Detail}"
@@ -190,6 +210,7 @@
                                                    FontSize="{StaticResource NormalLabelFont}"
                                                    Command="{Binding NavigateToCartCommand}"/>
                     <StackLayout Orientation="Horizontal"
+                                 IsVisible="{Binding IsExistReview}"
                                  Margin="10,2">
                         <base:RatingStars Rating="{Binding RatingTotal}"
                                           x:Name="ratingTotal"/>
@@ -197,6 +218,7 @@
                                TextColor="{StaticResource Red}"/>
                     </StackLayout>
                     <ListView ItemsSource="{Binding ReviewProductList}"
+                                 IsVisible="{Binding IsExistReview}"
                                   HasUnevenRows="True"
                               Margin="0,5">
                         <ListView.ItemTemplate>

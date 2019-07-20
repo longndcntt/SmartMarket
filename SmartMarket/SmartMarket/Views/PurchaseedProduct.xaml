@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<base:BasePage xmlns:base="clr-namespace:SmartMarket.Views.Base"
+                xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             prism:ViewModelLocator.AutowireViewModel="True"
+               xmlns:localization ="clr-namespace:SmartMarket.Localization"
+               xmlns:controls="clr-namespace:SmartMarket.Controls"
+               xmlns:behaviors="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
+               xmlns:buttonBorder="clr-namespace:SmartMarket.Controls.CustomLabelEntry"
+               x:Class="SmartMarket.Views.PurchaseedProduct">
+    <StackLayout VerticalOptions="FillAndExpand"
+                 HorizontalOptions="FillAndExpand">
+            <!--Header View-->
+        <Grid BackgroundColor="SkyBlue"
+                  HeightRequest="50"
+                  RowSpacing="0"
+                  Padding="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="50"/>
+            </Grid.ColumnDefinitions>
+            <controls:ImageButton x:Name="backImage"
+                                      Grid.Column="0"
+                                      HorizontalOptions="CenterAndExpand"
+                                      VerticalOptions="CenterAndExpand"
+                                      Source="ic_left_arrow"
+                                      Style="{StaticResource ImageBase}"
+                                      Command="{Binding BackCommand}"/>
+            <!--HeaderContent-->
+            <StackLayout Grid.Column="1" Grid.ColumnSpan="2"
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="Center">
+                <Label FontAttributes="Bold"
+                       FontSize="{StaticResource SuperLargeLabelFont}"
+                       Text="{localization:Translate PuchasedItems}"
+                       TextColor="{StaticResource SDarkerTextColor}"/>
+            </StackLayout>
+        </Grid>
+        <!--Content-->
+        <Frame Padding="5">
+            <StackLayout>
+                <Label Text="{localization:Translate AllProduct}"
+                           HorizontalOptions="CenterAndExpand"
+                           VerticalOptions="StartAndExpand"
+                           TextColor="{StaticResource SkyBlue}"
+                           Margin="0,5"
+                           FontSize="{StaticResource SuperLargeLabelFont}"/>
+                <ListView ItemsSource="{Binding PuchasedItemList}"
+                  SelectedItem="{Binding SelectedItemTapped}"
+                  VerticalOptions="FillAndExpand"
+                  HorizontalOptions="FillAndExpand"
+                  Margin="10,5"
+                  HasUnevenRows="True"
+                  x:Name="lstCategory">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <controls:CustomViewCell SelectedBackgroundColor="White">
+                                <Grid Padding="8">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Source="{Binding Image}"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"
+                                   HeightRequest="80"
+                                   WidthRequest="80"
+                                     Style="{StaticResource ImageBase}"
+                                   Grid.Column="0"
+                                   Grid.Row="0" Grid.RowSpan="2"/>
+                                    <Label Text="{Binding ItemName}"
+                                   Margin="10,0"
+                                   FontSize="{StaticResource NormalLabelFont}"
+                                   VerticalOptions="CenterAndExpand"
+                                   Grid.Row="0"
+                                   Grid.Column="1"/>
+                                    <Label FontSize="{StaticResource NormalLabelFont}"
+                                        HorizontalOptions="StartAndExpand"
+                                           VerticalOptions="CenterAndExpand"
+                                           Margin="10,0"
+                                        Grid.Row="1"
+                                       Grid.Column="1"
+                                        TextColor="{StaticResource Blue}"
+                                        Text="{Binding Price, Converter={StaticResource CovertToCurrency}}"
+                                        FontAttributes="Bold"/>
+                                </Grid>
+                            </controls:CustomViewCell>
+
+                        </DataTemplate>
+
+                    </ListView.ItemTemplate>
+                    <ListView.Behaviors>
+                        <behaviors:EventToCommandBehavior EventName="ItemTapped"
+                                                              Command="{Binding ItemTappedCommand}">
+                        </behaviors:EventToCommandBehavior>
+                    </ListView.Behaviors>
+                </ListView>
+            </StackLayout>
+        </Frame>
+    </StackLayout>
+</base:BasePage>
