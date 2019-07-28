@@ -15,8 +15,22 @@ namespace SmartMarket.Models
         public string WalletAddress { get; set; }
         public string Message { get; set; }
         public string Image { get; set; } = "ic_buyItem";
-        public string DatTimeStamp { get; set; }
-        public string DateTimeReceived
+        public string Time { get; set; }
+        public double DateTimeSend
         { get; set; }
+
+        public string TimeBinding
+        {
+            get => UnixTimeStampToDateTime(DateTimeSend).ToString("dd/MM/yyyy hh:mm:ss");
+            set => DateTimeSend.ToString();
+
+        }
+        public static DateTime UnixTimeStampToDateTime(double unixTimeStamp)
+        {
+            // Unix timestamp is seconds past epoch
+            System.DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
+            dtDateTime = dtDateTime.AddSeconds(unixTimeStamp).ToLocalTime();
+            return dtDateTime;
+        }
     }
 }

@@ -6,6 +6,7 @@
              xmlns:controls1="clr-namespace:SmartMarket.Controls.CustomLabelEntry"
              xmlns:localization="clr-namespace:SmartMarket.Localization"
              xmlns:xfxcontrol="clr-namespace:Xfx;assembly=Xfx.Controls"
+             NavigationPage.HasNavigationBar="False"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="SmartMarket.Views.LoginAndSignUp.LoginPage"
              BackgroundImage="backgroud_1">
@@ -44,6 +45,7 @@
                     <Image Grid.Column="0" Grid.Row="1" Source="ic_lock.png"
                            VerticalOptions="CenterAndExpand"/>
                     <xfxcontrol:XfxEntry Grid.Column="1" Grid.Row="1" Placeholder="{localization:Translate Password}" 
+                                         IsPassword="True"
                                         VerticalOptions="CenterAndExpand" 
                                          Text="{Binding Password}"/>
                 </Grid>

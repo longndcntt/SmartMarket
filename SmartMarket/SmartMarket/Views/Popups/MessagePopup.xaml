@@ -54,17 +54,18 @@
 
                     <Grid Grid.Row="2"
                           x:Name="LayoutButton"
-                          BackgroundColor="{StaticResource Blue}"
+                          BackgroundColor="Blue"
                           Padding="5"
                           HeightRequest="50">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <controls:BorderButton x:Name="ButtonMessageClose"
+                        <Button x:Name="ButtonMessageClose"
                                       Grid.Column="1"
                                       Text="{localization:TranslateExtension OK}"
-                                               BorderRadius="2"
+                                               BorderRadius="5"
+                                BackgroundColor="White"
                                       VerticalOptions="CenterAndExpand"
                                       HorizontalOptions="EndAndExpand"
                                       Clicked="ClosedPopupEvent"

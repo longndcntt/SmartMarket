@@ -61,11 +61,9 @@ namespace SmartMarket.ViewModels
         public async override void OnAppear()
         {
             base.OnAppear();
-            App.Settings.Time1 = DateTime.Now.AddSeconds(30).ToString(Define.DateTimeFormat);
-            App.Settings.Time2 = DateTime.Now.AddSeconds(60).ToString(Define.DateTimeFormat);
             SqLiteService.Update(App.Settings);
             await Task.Delay(3000);
-            await Navigation.NavigateAsync(PageManager.TabbedMainPage);
+            await Navigation.GoBackToRootAsync();
         }
         #endregion
         #region OnNavigate
@@ -89,7 +87,10 @@ namespace SmartMarket.ViewModels
         public ICommand NavigatieMainpageCommand { get; set; }
         private async void NavigatieMainpageExcute()
         {
-            await Navigation.NavigateAsync(PageManager.TabbedMainPage);
+            await DeviceExtension.BeginInvokeOnMainThreadAsync(async () =>
+            {
+                await Navigation.GoBackToRootAsync();
+            });
         }
         #endregion
     }

@@ -59,7 +59,7 @@ namespace SmartMarket.ViewModels
             set
             {
                 SetProperty(ref _addAmountMoney, value);
-                AddAmountCoin = AddAmountMoney / 1000;
+                AddAmountCoin = AddAmountMoney / 10;
             }
         }
 
@@ -144,7 +144,7 @@ namespace SmartMarket.ViewModels
 
             if (response == null)
             {
-                await MessagePopup.Instance.Show("Fail");
+                await MessagePopup.Instance.Show(TranslateExtension.Get("Fail"));
             }
             else
             {

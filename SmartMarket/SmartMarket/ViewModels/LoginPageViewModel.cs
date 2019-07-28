@@ -50,7 +50,7 @@ namespace SmartMarket.ViewModels
             {
                 await Task.Run(async () =>
                  {
-                     await LoadingPopup.Instance.Show(TranslateExtension.Get("Login"));
+                     await LoadingPopup.Instance.Show(TranslateExtension.Get("LogIn"));
                      var url = ApiUrl.UserLogin();
                      //Username = "admin@gm.com";
                      //Password = "admin";
@@ -89,11 +89,9 @@ namespace SmartMarket.ViewModels
                     await MessagePopup.Instance.Show(TranslateExtension.Get("Username_PasswordIncorrect"));
                     return;
                 }
-                if (user.Email == "admin@gm.com" && user.Password == "admin")
-                {
-                    IsAdmin = true;
-                }
-                var walletAddress = Wallet.GetWallet(user.Keystore, user.Password);
+
+                IsAdmin = user.IsStore;
+                var walletAddress = Wallet.GetWallet(user.Keystore, Password);
                 user.WalletAddress = walletAddress.ElementAt(0).Key.ToString();
                 user.PrivateKey = walletAddress.ElementAt(0).Value.ToString();
                 App.Settings.IsLogin = true;
@@ -102,7 +100,8 @@ namespace SmartMarket.ViewModels
                 SqLiteService.Insert(user);
                 await DeviceExtension.BeginInvokeOnMainThreadAsync(async () =>
                 {
-                    await Navigation.NavigateAsync(PageManager.TabbedMainPage);
+                    await Navigation.GoBackToRootAsync();
+
                 });
             }
             catch (Exception e)

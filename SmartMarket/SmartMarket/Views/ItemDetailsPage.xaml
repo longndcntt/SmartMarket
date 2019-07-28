@@ -158,7 +158,7 @@
                                      Grid.Row="0" Grid.Column="1"
                                      VerticalOptions="CenterAndExpand"
                                      Orientation="Horizontal">
-                            <Label Text="{Binding ItemSelected.Price}"
+                            <Label Text="{Binding ItemSelected.StringPrice}"
                                    VerticalOptions="Center"
                                    FontAttributes="Bold"
                                    FontSize="{StaticResource SuperLargeLabelFont}"
@@ -283,11 +283,11 @@
                                     Text="{Binding ContentOfReview}"
                                     x:Name="editorFeedback"
                                     BackgroundColor="LightGray"
-                                    TextColor="White"/>
+                                    TextColor="Black"/>
                             <Label Text="{Binding Source={x:Reference editorFeedback},Path=Text.Length,StringFormat=' {0}/200'}"
                                    HorizontalOptions="End"
                                    Grid.Row="0" Grid.Column="1"/>
-                            <lv:RatingImage ImageSelect="rating_star_on" ImageDeselect="rating_star_off" ItemsNumber="5"
+                            <lv:RatingImage ImageSelect="ic_start_on" ImageDeselect="ic_star_off" ItemsNumber="5"
                                             OnSelect="RatingImage_OnSelect"
                                             SpaceBetween="3"
                                             ImageHeight="30"

@@ -13,7 +13,7 @@ namespace SmartMarket.Services.SQLiteService
     {
         #region Properties
 
-        protected const string DatabaseName = "SmartMarket.db";
+        protected const string DatabaseName = "SmartMarket.db3";
 
         private SQLiteConnection _database;
 
@@ -45,15 +45,13 @@ namespace SmartMarket.Services.SQLiteService
             // Create database
             var listTable = new List<Type>
             {
+                typeof(ItemModel),
                 typeof(Order),
                 typeof(NotificationModel),
                 typeof(OrderDetails),
                 typeof(UserModel),
                 typeof(ReviewProduct),
-                typeof(ItemModel),
                 typeof(Category),
-                typeof(ItemDetails),
-                typeof(ImageItemDetail),
                 typeof(AppSettings),
             };
 

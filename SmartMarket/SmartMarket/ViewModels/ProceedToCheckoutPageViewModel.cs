@@ -27,6 +27,7 @@ namespace SmartMarket.ViewModels
         public ProceedToCheckoutPageViewModel(INavigationService navigationService, IPageDialogService pageDialogService, ISqLiteService sqLiteService, IHttpRequest httpRequest)
             : base(navigationService: navigationService, dialogService: pageDialogService, sqliteService: sqLiteService, httpRequest: httpRequest)
         {
+            NavigateToWalletCommand = new DelegateCommand(NavigateToWalletExcute);
             if (!IsNullCart)
             {
                 var listItemOfCartTemp = SqLiteService.GetList<OrderDetails>(x => x.Id != "");
@@ -53,6 +54,8 @@ namespace SmartMarket.ViewModels
                 UserInfo = SqLiteService.Get<UserModel>(x => x.Id != -1);
             }
         }
+
+
         #endregion
 
         #region OnAppearing
@@ -74,7 +77,7 @@ namespace SmartMarket.ViewModels
         {
             if (response == null)
             {
-                await MessagePopup.Instance.Show("Fail");
+                await MessagePopup.Instance.Show(TranslateExtension.Get("Fail"));
             }
             else
             {
@@ -127,11 +130,11 @@ namespace SmartMarket.ViewModels
                     switch (SelectedShipping)
                     {
                         case 1:
-                            shipping = 10000;
+                            shipping = Total;
                             SubTotal = Total + shipping;
                             break;
                         case 2:
-                            shipping = 20000;
+                            shipping = Total;
                             SubTotal = Total + shipping;
                             break;
                         default:
@@ -178,7 +181,15 @@ namespace SmartMarket.ViewModels
                     var response = await HttpRequest.PostTaskAsync<ModelRestFul>(url, httpContent);
                     await AddCoinCallBack(response);
                 }
-
+                await LoadingPopup.Instance.Hide();
+                await DeviceExtension.BeginInvokeOnMainThreadAsync(async () =>
+                    {
+                        var param = new NavigationParameters()
+                {
+                    {ParamKey.CoinInWallet.ToString(), SubTotal},
+                };
+                        await Navigation.NavigateAsync(PageManager.MessagePage,param);
+                    });
             });
         }
 
@@ -187,7 +198,7 @@ namespace SmartMarket.ViewModels
 
             if (response == null)
             {
-                await MessagePopup.Instance.Show("Fail");
+                await MessagePopup.Instance.Show(TranslateExtension.Get("Fail"));
             }
             else
             {
@@ -219,7 +230,7 @@ namespace SmartMarket.ViewModels
         {
             if (response == null)
             {
-                await MessagePopup.Instance.Show("Fail");
+                await MessagePopup.Instance.Show(TranslateExtension.Get("Fail"));
                 // get event list fail
                 //await MessagePopup.Instance.Show(TranslateExtension.Get("GetListEventsFailed"));
             }
@@ -227,26 +238,35 @@ namespace SmartMarket.ViewModels
             {
                 // get event list successfull
                 var transaction = response.Deserialize<TransactionIDModel>(response.Result);
-                if (transaction != null)
-                {
-                    
-                    var transactionID = transaction.TransactionID;
-                    await LoadingPopup.Instance.Hide();
-                    var param = new NavigationParameters
-                {
-                    {ParamKey.CoinInWallet.ToString(), SubTotal},
-                    {ParamKey.TransactionID.ToString(), transactionID},
-                    //{nameof(StatusOfLeadModel), StatusOfLeadModel.CreateLead},
-                };
-                    await DeviceExtension.BeginInvokeOnMainThreadAsync(async () =>
-                    {
-                        await Navigation.NavigateAsync(PageManager.MessagePage, param);
-                    });
+                //if (transaction != null)
+                //{
 
-                }
+                //    var transactionID = transaction.TransactionID;
+                //    await LoadingPopup.Instance.Hide();
+                //    var param = new NavigationParameters
+                //{
+                //    {ParamKey.CoinInWallet.ToString(), SubTotal},
+                //    {ParamKey.TransactionID.ToString(), transactionID},
+                //    {nameof(StatusOfLeadModel), StatusOfLeadModel.CreateLead},
+                //};
+                //    await DeviceExtension.BeginInvokeOnMainThreadAsync(async () =>
+                //    {
+                //        await Navigation.NavigateAsync(PageManager.MessagePage, param);
+                //    });
+
+                //}
             }
-            await LoadingPopup.Instance.Hide();
         }
+
+        #region AddCoin
+
+        public ICommand NavigateToWalletCommand { get; set; }
+        private async void NavigateToWalletExcute()
+        {
+            await Navigation.NavigateAsync(PageManager.WalletBalancePage);
+        }
+
+        #endregion
 
 
         private async void NavigateToMessageExcute()

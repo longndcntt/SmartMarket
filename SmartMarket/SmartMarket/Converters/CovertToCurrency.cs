@@ -15,7 +15,6 @@ namespace SmartMarket.Coverter
 
             CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");   // try with "en-US"
             string a = double.Parse(value.ToString()).ToString("#,###", cul.NumberFormat);
-            a += " đ";
             return a;
         }
 

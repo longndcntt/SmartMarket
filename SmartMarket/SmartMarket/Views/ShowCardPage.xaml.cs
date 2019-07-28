@@ -80,15 +80,29 @@ namespace SmartMarket.Views
                 CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");   // try with "en-US"
                 string a = double.Parse(item.Price.ToString()).ToString("#,###", cul.NumberFormat);
                 a += "đ";
+                var stackPrice = new StackLayout()
+                {
+                    HorizontalOptions = LayoutOptions.FillAndExpand,
+                    VerticalOptions = LayoutOptions.CenterAndExpand,
+                    Orientation = StackOrientation.Horizontal,
+                };
                 var labelPrice = new Label()
                 {
-                    Text = a,
+                    Text = item.Price.ToString(),
                     FontSize = (double)App.Current.Resources["LargeLabelFont"],
                     TextColor = (Color)App.Current.Resources["Blue"],
                     VerticalOptions = LayoutOptions.CenterAndExpand,
                     HorizontalOptions = LayoutOptions.Start,
                 };
-
+                var imagePrice = new Image()
+                {
+                    Source = "ic_coin",
+                    VerticalOptions = LayoutOptions.CenterAndExpand,
+                    HeightRequest = 25,
+                    WidthRequest = 25,
+                };
+                stackPrice.Children.Add(labelPrice);
+                stackPrice.Children.Add(imagePrice);
                 //Quantity
                 var labelQuantity = new Label()
                 {
@@ -186,7 +200,7 @@ namespace SmartMarket.Views
 
                 stack.Children.Add(labelName);
                 stack.Children.Add(labelManu);
-                stack.Children.Add(labelPrice);
+                stack.Children.Add(stackPrice);
                 stack.Children.Add(stackQuantity);
                 stack.Children.Add(stackControl);
                 grid.Children.Add(image, 0, 0);

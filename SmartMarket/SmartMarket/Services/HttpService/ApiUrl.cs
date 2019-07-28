@@ -43,6 +43,11 @@ namespace SmartMarket.Services.HttpService
             return Link("product/get/all");
         }
 
+        public static string GetSearchItem(string content)
+        {
+            return Link($"product/search/{content}");
+        }
+
         public static string ExchangeProduct()
         {
             return Link("exchange");
@@ -51,6 +56,21 @@ namespace SmartMarket.Services.HttpService
         public static string GetPurchasedItems(string walletAdress)
         {
             return Link($"exchange/buy/{walletAdress}");
+        }
+
+        public static string GetRandomItems()
+        {
+            return Link($"product/get/random");
+        }
+
+        public static string GetNewItems()
+        {
+            return Link($"product/get/new");
+        }
+
+        public static string GetItemByCategory(string id)
+        {
+            return Link($"product/get/category/" + id);
         }
 
         public static string GetItemSelected(string itemId)

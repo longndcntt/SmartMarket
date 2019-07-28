@@ -7,6 +7,7 @@
                xmlns:converters="clr-namespace:SmartMarket.Converters"
                xmlns:behaviors="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
                xmlns:controls="clr-namespace:SmartMarket.Controls"
+               NavigationPage.HasNavigationBar="False"
                xmlns:auto="clr-namespace:dotMorten.Xamarin.Forms;assembly=dotMorten.Xamarin.Forms.AutoSuggestBox"
                prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="SmartMarket.Views.SearchItemPage">
@@ -69,7 +70,7 @@
         </Grid>
         
         <StackLayout IsVisible="{Binding IsExistedItem,Converter={StaticResource IsTrueConverter}}">
-            <Label Text="Sorry! Your product do not exist"></Label>
+            <Label Text="Xin lỗi! Sản phẩm bạn tìm không tồn tại"></Label>
         </StackLayout>
         <ListView ItemsSource="{Binding SearchItemList}"
                   SelectedItem="{Binding SelectedItemTapped}"

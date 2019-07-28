@@ -68,7 +68,7 @@ namespace SmartMarket
             Settings = new AppSettings();
             Settings = _sqLiteService.GetSettings();
             Settings.HttpUrl1 = "http://35.194.122.245:3000/";
-            await NavigationService.NavigateAsync($"{PageManager.TabbedMainPage}");
+            await NavigationService.NavigateAsync($"NavigationPage/{PageManager.TabbedMainPage}");
 
         }
 
@@ -98,7 +98,16 @@ namespace SmartMarket
                             noti.Title = p.Data["title"].ToString();
                             if (p.Data.ContainsKey("Coin"))
                             {
-                                p.Data["body"] = string.Format(TranslateExtension.Get(p.Data["MessageKey"].ToString()), p.Data["Coin"].ToString());
+                                if (p.Data.ContainsKey("ProductName"))
+                                {
+                                    p.Data["body"] = string.Format(TranslateExtension.Get(p.Data["MessageKey"].ToString()),
+                                    p.Data["Coin"].ToString(), p.Data["ProductName"].ToString());
+                                }
+                                else
+                                {
+                                    p.Data["body"] = string.Format(TranslateExtension.Get(p.Data["MessageKey"].ToString()),
+                                    p.Data["Coin"].ToString());
+                                }
                                 noti.Message = p.Data["body"].ToString();
                             }
                             else
@@ -107,7 +116,11 @@ namespace SmartMarket
                                 noti.Message = p.Data["body"].ToString();
                             }
                             //noti.Title = p.Data["title"].ToString();
-                            noti.DateTimeReceived = p.Data["DateTimeSend"].ToString();
+                            if (p.Data.ContainsKey("DateTimeSend"))
+                            {
+                                noti.DateTimeSend = double.Parse(p.Data["DateTimeSend"].ToString());
+                            }
+                            noti.Time = p.Data["Time"].ToString();
                             _sqLiteService.Insert(noti);
                         });
 
@@ -186,6 +199,7 @@ namespace SmartMarket
             containerRegistry.RegisterForNavigation<SearchItemPage, SearchItemPageViewModel>();
             containerRegistry.RegisterForNavigation<UploadProductPage, UploadProductPageViewModel>();
             containerRegistry.RegisterForNavigation<PurchaseedProduct, PurchaseedProductViewModel>();
+            containerRegistry.RegisterForNavigation<ViewedProductPage, ViewedProductPageViewModel>();
         }
     }
 }

@@ -44,14 +44,14 @@ namespace SmartMarket.Views
             vm?.SearchExcute(autoSuggestSearch.Text);
         }
 
-        private void FlowListView_ItemAppearing(object sender, ItemVisibilityEventArgs e)
-        {
-            var vm = (MainPageViewModel)BindingContext;
-            var item = (ItemModel)e.Item;
-            if (e.Item == vm?.MyList.Last())
-            {
-                vm?.LoadData();
-            }
-        }
+        //private void FlowListView_ItemAppearing(object sender, ItemVisibilityEventArgs e)
+        //{
+        //    var vm = (MainPageViewModel)BindingContext;
+        //    var item = (ItemModel)e.Item;
+        //    if (e.Item == vm?.MyList.Last())
+        //    {
+        //        vm?.LoadData();
+        //    }
+        //}
     }
 }

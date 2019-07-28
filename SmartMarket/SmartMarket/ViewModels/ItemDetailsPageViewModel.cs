@@ -6,6 +6,7 @@ using Rg.Plugins.Popup.Services;
 using SmartMarket.Enums;
 using SmartMarket.Interfaces.HttpService;
 using SmartMarket.Interfaces.LocalDatabase;
+using SmartMarket.Localization;
 using SmartMarket.Models;
 using SmartMarket.Models.API;
 using SmartMarket.Services.HttpService;
@@ -186,8 +187,13 @@ namespace SmartMarket.ViewModels
                     //        ProductID = ItemSelected.Id,
                     //        Image = "sony_product"
                     //    }
-
+                    if (ItemSelected == null)
+                    {
+                        await LoadItemSelected(ItemModelId);
+                    }
+                    SqLiteService.Insert<ItemModel>(ItemSelected);
                 }
+
 
                 //ReviewProductList = new ObservableCollection<ReviewProduct>()
                 //    {
@@ -234,11 +240,17 @@ namespace SmartMarket.ViewModels
             }
         }
 
+        public override void OnNavigatedFrom(INavigationParameters parameters)
+        {
+            base.OnNavigatedFrom(parameters);
+
+        }
+        #endregion
         private async Task GetItemCallBack(ModelRestFul response)
         {
             if (response.ErrorCode != 200)
             {
-                await MessagePopup.Instance.Show("Fail");
+                await MessagePopup.Instance.Show(TranslateExtension.Get("Fail"));
                 return;
             }
             ItemSelectedDetails = response.Deserialize<ItemDetails>(response.Result);
@@ -267,7 +279,7 @@ namespace SmartMarket.ViewModels
                 }
             }
         }
-        #endregion
+
 
         #region LoadItemSelected
         private async Task LoadItemSelected(int itemId)
@@ -431,7 +443,7 @@ namespace SmartMarket.ViewModels
         {
             if (response.ErrorCode != 200)
             {
-                await MessagePopup.Instance.Show("Fail");
+                await MessagePopup.Instance.Show(TranslateExtension.Get("Fail"));
                 return;
             }
             var transaction = response.Deserialize<SmartMarket.Models.API.Transaction>(response.Result);
@@ -461,19 +473,19 @@ namespace SmartMarket.ViewModels
         {
             if (response == null)
             {
-                await MessagePopup.Instance.Show("Fail");
+                await MessagePopup.Instance.Show(TranslateExtension.Get("Fail"));
                 return;
                 // get event list fail
                 //await MessagePopup.Instance.Show(TranslateExtension.Get("GetListEventsFailed"));
             }
             // get event list successfull
             var transaction = response.Deserialize<TransactionIDModel>(response.Result);
-            if (transaction != null)
+            if (!string.IsNullOrEmpty(transaction.TransactionID))
             {
                 await LoadReview();
                 await DeviceExtension.BeginInvokeOnMainThreadAsync(async () =>
                 {
-                    await MessagePopup.Instance.Show("Upload success");
+                await MessagePopup.Instance.Show(TranslateExtension.Get("UploadSuccess"));
                 });
             }
             await LoadingPopup.Instance.Hide();

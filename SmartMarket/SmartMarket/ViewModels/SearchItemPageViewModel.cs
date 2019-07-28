@@ -5,12 +5,16 @@ using SmartMarket.Enums;
 using SmartMarket.Interfaces.HttpService;
 using SmartMarket.Interfaces.LocalDatabase;
 using SmartMarket.Models;
+using SmartMarket.Services.HttpService;
 using SmartMarket.Utilities;
 using SmartMarket.ViewModels.Base;
+using SmartMarket.Views.Popups;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace SmartMarket.ViewModels
@@ -26,7 +30,7 @@ namespace SmartMarket.ViewModels
         #endregion
 
         #region Navigate
-        public override void OnNavigatedNewToAsync(INavigationParameters parameters)
+        public async override void OnNavigatedNewToAsync(INavigationParameters parameters)
         {
             base.OnNavigatedNewToAsync(parameters);
             if (parameters != null)
@@ -36,12 +40,11 @@ namespace SmartMarket.ViewModels
                     SearchContent = (string)parameters[ParamKey.ContentSearch.ToString()];
                     if (!string.IsNullOrEmpty(SearchContent))
                     {
-                        var listTemp = SqLiteService.GetList<ItemModel>(x => x.ItemName.ToLower().Contains(SearchContent)).ToList();
-
-
-                        if (listTemp.Count > 0)
+                        SearchContent = SearchContent.Replace(" ","+");
+                        var tempItem = await LoadData(ApiUrl.GetSearchItem(SearchContent));
+                        if (tempItem != null)
                         {
-                            SearchItemList = new ObservableCollection<ItemModel>(listTemp);
+                            SearchItemList = new ObservableCollection<ItemModel>(tempItem);
                             IsExistedItem = true;
                         }
                         else
@@ -81,6 +84,33 @@ namespace SmartMarket.ViewModels
         {
             get => _selectedItem;
             set => SetProperty(ref _selectedItem, value);
+        }
+        #endregion
+
+        #region LoadData
+        public async Task<IEnumerable<ItemModel>> LoadData(string url)
+        {
+            try
+            {
+                await LoadingPopup.Instance.Show();
+                IsBusyLoading = true;
+                await Task.Delay(2000);
+                var a = await HttpRequest.GetTaskAsync<ModelRestFul>(url);
+                if (a != null)
+                {
+                    var listTemp = a.Deserialize<IEnumerable<ItemModel>>(a.Result).ToList();
+                    return listTemp;
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.Write(e.Message);
+            }
+            finally
+            {
+                await LoadingPopup.Instance.Hide();
+            }
+            return null;
         }
         #endregion
 

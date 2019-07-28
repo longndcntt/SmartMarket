@@ -184,7 +184,7 @@ namespace SmartMarket.ViewModels
                         FullName = FullName,
                         DayOfBirth = DateOfBirth,
                         Gender = SelectedGender == 0 ? true : false,
-                        Address = "abc",
+                        Address = Address,
                         NumberID = "012345678",
                         PhoneNumber = PhoneNumber,
 
@@ -206,7 +206,7 @@ namespace SmartMarket.ViewModels
         {
             if (response == null)
             {
-                await MessagePopup.Instance.Show("Fail");
+                await MessagePopup.Instance.Show(TranslateExtension.Get("Fail"));
             }
             else
             {
@@ -251,7 +251,7 @@ namespace SmartMarket.ViewModels
         {
             if (response == null)
             {
-                await MessagePopup.Instance.Show("Fail");
+                await MessagePopup.Instance.Show(TranslateExtension.Get("Fail"));
                 // get event list fail
                 //await MessagePopup.Instance.Show(TranslateExtension.Get("GetListEventsFailed"));
             }
@@ -266,7 +266,7 @@ namespace SmartMarket.ViewModels
 
                     await DeviceExtension.BeginInvokeOnMainThreadAsync(async () =>
                     {
-                        await Navigation.NavigateAsync(PageManager.TabbedMainPage);
+                        await Navigation.NavigateAsync(PageManager.LoginSignUpTabbedPage);
                     });
 
                 }

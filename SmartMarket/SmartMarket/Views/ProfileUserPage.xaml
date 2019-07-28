@@ -89,7 +89,7 @@
                                    TextColor="Black"
                                    Margin="5,8"/>
                         <StackLayout.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding FAQCommand}"/>
+                            <TapGestureRecognizer Command="{Binding ViewedProdcutCommand}"/>
                         </StackLayout.GestureRecognizers>
                     </StackLayout>
                     <!--ProductPurchase-->

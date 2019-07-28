@@ -80,12 +80,12 @@ namespace SmartMarket.Views.Base
             //Rating is out of 10 
             if (Rating > currentStarMaxRating)
             {
-                return "rating_star_on.png";
+                return "ic_start_on.png";
             }
            
             else
             {
-                return "rating_star_off.png";
+                return "ic_star_off.png";
             }
         }
 

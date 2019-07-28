@@ -63,7 +63,7 @@
                                             <Label Text="{Binding Message}"/>
                                             <Label Margin="0,3,0,2"
                                                    VerticalOptions="EndAndExpand"
-                                                   Text="{Binding DateTimeReceived}"/>
+                                                   Text="{Binding TimeBinding}"/>
                                         </StackLayout>
                                     </Grid>
                                 </controls:FrameButton>

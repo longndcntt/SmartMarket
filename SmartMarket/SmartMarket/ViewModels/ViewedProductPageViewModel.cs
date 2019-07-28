@@ -15,32 +15,30 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using Xamarin.Forms;
 
 namespace SmartMarket.ViewModels
 {
-    public class PurchaseedProductViewModel : ViewModelBase
-    {
+	public class ViewedProductPageViewModel : ViewModelBase
+	{
+       
 
         #region Properties
-        private ObservableCollection<ExchangeModel> _puchasedItemList;
-        public ObservableCollection<ExchangeModel> PuchasedItemList
+        private ObservableCollection<ItemModel> _viewedItemList;
+        public ObservableCollection<ItemModel> ViewedItemList
         {
-            get => _puchasedItemList;
-            set => SetProperty(ref _puchasedItemList, value);
+            get => _viewedItemList;
+            set => SetProperty(ref _viewedItemList, value);
         }
-
-        private ExchangeModel _selectedItem;
-        public ExchangeModel SelectedItemTapped
+        private ItemModel _selectedItem;
+        public ItemModel SelectedItemTapped
         {
             get => _selectedItem;
             set => SetProperty(ref _selectedItem, value);
         }
         #endregion
         #region Constructor
-        public PurchaseedProductViewModel(INavigationService navigationService, IPageDialogService pageDialogService, ISqLiteService sqLiteService, IHttpRequest httpRequest)
+        public ViewedProductPageViewModel(INavigationService navigationService, IPageDialogService pageDialogService, ISqLiteService sqLiteService, IHttpRequest httpRequest)
             : base(navigationService: navigationService, dialogService: pageDialogService, sqliteService: sqLiteService, httpRequest: httpRequest)
         {
             ItemTappedCommand = new DelegateCommand(SelectedItemExcutWithoutPara);
@@ -55,35 +53,16 @@ namespace SmartMarket.ViewModels
             if (!string.IsNullOrEmpty(UserInfo.WalletAddress))
             {
                 await LoadingPopup.Instance.Show(TranslateExtension.Get("Loading3dot"));
-                var url = ApiUrl.GetPurchasedItems(UserInfo.WalletAddress);
-
-                var response = await HttpRequest.GetTaskAsync<ModelRestFul>(url);
-                await GetWalletCallBack(response);
-            }
-        }
-
-        private async Task GetWalletCallBack(ModelRestFul response)
-        {
-            if (response == null)
-            {
-                await MessagePopup.Instance.Show(TranslateExtension.Get("Fail"));
-            }
-            else
-            {
-                Serializer serializer = new Serializer();
-                var a = response.Result.ToString();
-                var b = serializer.Deserialize<ObservableCollection<ExchangeModel>>(a);
+                var b = SqLiteService.GetList<ItemModel>(x => x.ItemName != null || x.ItemName != "");
                 if (b != null)
                 {
-                    PuchasedItemList = new ObservableCollection<ExchangeModel>(b);
-                    foreach (var item in PuchasedItemList)
-                    {
-                        item.StatusExchange = (item.remain > 0) ? (item.isDone) ? Color.Orange : Color.Red : Color.LightGreen;
-                    }
+                    ViewedItemList = new ObservableCollection<ItemModel>(b);
                 }
+                await LoadingPopup.Instance.Hide();
+
             }
-            await LoadingPopup.Instance.Hide();
         }
+
         #endregion
 
         #region ItemSelected
@@ -94,11 +73,12 @@ namespace SmartMarket.ViewModels
             {
                 if (SelectedItemTapped != null)
                 {
-                   // var selectedItem = SqLiteService.Get<ItemModel>(x => x.Id == SelectedItemTapped.Id);
+                    // var selectedItem = SqLiteService.Get<ItemModel>(x => x.Id == SelectedItemTapped.Id);
                     //await MessagePopup.Instance.Show(SelectedItemTapped.Id.ToString());
                     var param = new NavigationParameters
                         {
-                            {ParamKey.SelectedItemId.ToString(), SelectedItemTapped.productId},
+                            {ParamKey.SelectedItem.ToString(), SelectedItemTapped},
+                            {ParamKey.CategoryId.ToString(), SelectedItemTapped.CategoryId},
                          //{nameof(StatusOfLeadModel), StatusOfLeadModel.CreateLead},
                         };
 
@@ -107,6 +87,5 @@ namespace SmartMarket.ViewModels
             });
         }
         #endregion
-
     }
 }

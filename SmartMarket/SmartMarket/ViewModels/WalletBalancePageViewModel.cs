@@ -80,7 +80,7 @@ namespace SmartMarket.ViewModels
         {
             if (response == null)
             {
-                await MessagePopup.Instance.Show("Fail");
+                await MessagePopup.Instance.Show(TranslateExtension.Get("Fail"));
             }
             else
             {

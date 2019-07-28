@@ -43,7 +43,7 @@ namespace SmartMarket.Droid.Services.SQLiteService
                 var dir = new Java.IO.File(GetDatabasePath() + "/Images");
                 dir.Mkdirs();
 
-                var file = new Java.IO.File(dir, $"com.Fairflexx_{DateTime.Now.Ticks}.png");
+                var file = new Java.IO.File(dir, $"com.SmartMarket_{DateTime.Now.Ticks}.png");
 
                 if (!file.Exists())
                 {

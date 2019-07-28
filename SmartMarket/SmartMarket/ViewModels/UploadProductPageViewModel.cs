@@ -10,6 +10,7 @@ using SmartMarket.Enums;
 using SmartMarket.Files;
 using SmartMarket.Interfaces.HttpService;
 using SmartMarket.Interfaces.LocalDatabase;
+using SmartMarket.Localization;
 using SmartMarket.Models;
 using SmartMarket.Models.API;
 using SmartMarket.Services.HttpService;
@@ -136,7 +137,21 @@ namespace SmartMarket.ViewModels
                 var image = new ListImage()
                 {
                     ImageList = ImageSource.FromStream(() => new MemoryStream(ListImageStream[i])),
-            };
+                };
+                ListImage.Add(image);
+            }
+        }
+        public ICommand ChooseSomePhotosReceiveCommand { get; }
+
+        private async Task ChooseSomesPhotosReceiveExecute()
+        {
+            await ChooseSomePhotosExecute();
+            for (int i = 0; i < ListImageStream.Count; i++)
+            {
+                var image = new ListImage()
+                {
+                    ImageList = ImageSource.FromStream(() => new MemoryStream(ListImageStream[i])),
+                };
                 ListImage.Add(image);
             }
         }
@@ -167,12 +182,13 @@ namespace SmartMarket.ViewModels
             TakePhotoReceiveCommand = new DelegateCommand(async () => await TakePhotoReceiveExecute());
             ChoosePhotoReceiveCommand = new DelegateCommand(async () => await ChoosePhotoReceiveExecute());
             TakeSomePhotosReceiveCommand = new DelegateCommand(async () => await TakeSomePhotosReceiveExecute());
+            ChooseSomePhotosReceiveCommand = new DelegateCommand(async () => await ChooseSomesPhotosReceiveExecute());
             UploadItemCommand = new DelegateCommand(UploadItemExcute);
-            ItemName = "Test 2";
-            Price = "40";
-            Count = "5";
-            Manufacturer = "Manufacturer 2";
-            Detail = "Detail 2";
+            //ItemName = "Test 2";
+            //Price = "40";
+            //Count = "5";
+            //Manufacturer = "Manufacturer 2";
+            //Detail = "Detail 2";
 
         }
 
@@ -325,7 +341,7 @@ namespace SmartMarket.ViewModels
             if (list.Count != 0)
             {
                 CategoryList = new ObservableCollection<Category>(list);
-                SelectedCategory = CategoryList.First();
+               // SelectedCategory = CategoryList.First();
             }
         }
         #endregion
@@ -361,7 +377,7 @@ namespace SmartMarket.ViewModels
         {
             if (response == null)
             {
-                await MessagePopup.Instance.Show("Fail");
+                await MessagePopup.Instance.Show(TranslateExtension.Get("Fail"));
             }
             else
             {
@@ -405,7 +421,7 @@ namespace SmartMarket.ViewModels
         {
             if (response == null)
             {
-                await MessagePopup.Instance.Show("Fail");
+                await MessagePopup.Instance.Show(TranslateExtension.Get("Fail"));
                 // get event list fail
                 //await MessagePopup.Instance.Show(TranslateExtension.Get("GetListEventsFailed"));
             }
@@ -510,6 +526,81 @@ namespace SmartMarket.ViewModels
             }
 
             _takePhoto = true;
+            await CrossMedia.Current.Initialize();
+        }
+
+        #endregion
+
+        #region Choose Some Photos
+
+        private bool _choosePhotos = true;
+
+
+        public async Task ChooseSomePhotosExecute()
+        {
+            if (!_takePhoto || !_choosePhoto)
+                return;
+
+            _choosePhotos = false;
+
+            if (!CrossMedia.Current.IsPickPhotoSupported)
+            {
+                await MessagePopup.Instance.Show(message: "No Pick Image Support", closeButtonText: "OK");
+            }
+            else
+            {
+                var storageStatus = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Storage);
+
+                if (storageStatus != PermissionStatus.Granted)
+                {
+                    var results =
+                        await
+                            CrossPermissions.Current.RequestPermissionsAsync(Permission.Storage);
+                    storageStatus = results[Permission.Storage];
+                }
+
+                if (storageStatus == PermissionStatus.Granted)
+                {
+                    ListBase = new List<string>();
+                    ListImageStream = new List<byte[]>();
+                    ListImage = new ObservableCollection<ListImage>();
+                    bool isChoose = true;
+                    int i = 0;
+                    while (isChoose && i <3)
+                    {
+                        var file = await CrossMedia.Current.PickPhotoAsync();
+                        //Small delay
+                        if (file != null)
+                        {
+                            await Task.Delay(TimeSpan.FromMilliseconds(150));
+                            var memoryStream = new MemoryStream();
+                            file.GetStream().CopyTo(memoryStream);
+
+                            byte[] image = memoryStream.ToArray();
+                            var resizeImage = await FileService.ResizeImage(image, file.Path, 4);
+                            BaseImage = Convert.ToBase64String(resizeImage);
+                            ListBase.Add(BaseImage);
+                            ListImageStream.Add(image);
+                            //await ChangeImage(file.Path, image);
+                            //dispose mediafile
+                            file.Dispose();
+                        }
+                        else
+                        {
+                            isChoose = false;
+                        }
+                    }
+                    
+                }
+                else
+                {
+                    await MessagePopup.Instance.Show(message: "Permission", closeButtonText: "OK");
+                    //On iOS you may want to send your user to the settings screen.
+                    CrossPermissions.Current.OpenAppSettings();
+                }
+            }
+
+            _choosePhoto = true;
             await CrossMedia.Current.Initialize();
         }
 

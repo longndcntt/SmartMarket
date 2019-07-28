@@ -81,7 +81,7 @@ namespace SmartMarket.ViewModels
             if (IsLogin)
             {
                 UserInfo = SqLiteService.Get<UserModel>(x => x.Id != -1);
-                IsAdmin = UserInfo.Email == "admin@admin.com" ? true : false;
+                IsAdmin = UserInfo.IsStore;
                 IsExistImage = !string.IsNullOrEmpty(UserInfo.Image);
             }
         }
@@ -113,7 +113,7 @@ namespace SmartMarket.ViewModels
         {
             if (IsLogin)
             {
-                await Navigation.NavigateAsync(PageManager.WalletBalancePage);
+                await Navigation.NavigateAsync(PageManager.ViewedProductPage);
             }
             else
             {
@@ -163,6 +163,7 @@ namespace SmartMarket.ViewModels
                 SqLiteService.DeleteAll<NotificationModel>();
                 App.Settings.IsLogin = false;
                 IsAdmin = false;
+                UserInfo = null;
                 IsLogin = false;
                 SqLiteService.Update(App.Settings);
             });

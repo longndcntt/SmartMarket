@@ -3,6 +3,9 @@
     public enum ParamKey
     {
         Category,
+        CategoryId,
+        CategoryName,
+
         SelectedItem,
         SelectedItemId,
         CoinInWallet,

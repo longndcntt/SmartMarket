@@ -34,8 +34,7 @@ namespace SmartMarket.ViewModels
             var a = SqLiteService.GetList<NotificationModel>(x => x.Message != null || x.Message != "");
             if (a != null)
             {
-                var b = a.OrderByDescending(x=>x.DatTimeStamp);
-                NotificationList = new ObservableCollection<NotificationModel>(b);
+                NotificationList = new ObservableCollection<NotificationModel>(a.OrderByDescending(x => x.DateTimeSend));
             }
         }
     }

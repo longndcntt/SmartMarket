@@ -312,4 +312,47 @@
   <data name="UpcomingPayment" xml:space="preserve">
     <value>Upcoming payment, please add {0} coin to your wallet</value>
   </data>
+  <data name="PaymentError" xml:space="preserve">
+    <value>Payment fail {0} coin for {1} item, {1} will be returned to owner.</value>
+  </data>
+  <data name="PaymentSuccess" xml:space="preserve">
+    <value>Payment success {0} coin for {1} item.</value>
+  </data>
+  <data name="Success" xml:space="preserve">
+    <value>Success</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>Address</value>
+  </data>
+  <data name="ChoosePicture" xml:space="preserve">
+    <value>Choose picture</value>
+  </data>
+  <data name="TakePicture" xml:space="preserve">
+    <value>Take picture</value>
+  </data>
+  <data name="ElectronicsAndGadgets" xml:space="preserve">
+    <value>Electronics and Gadgets</value>
+  </data>
+  <data name="Fashion" xml:space="preserve">
+    <value>Fashion</value>
+  </data>
+  <data name="HomeAndFurniture" xml:space="preserve">
+    <value>Home and Furniture</value>
+  </data>
+  <data name="OfficeAndIndustry" xml:space="preserve">
+    <value>Office and Industry</value>
+  </data>
+  <data name="SportAndHealth" xml:space="preserve">
+    <value>Sport and Health</value>
+  </data>
+  <data name="Fail" xml:space="preserve">
+    <value>Get connection fail.
+Please try again.</value>
+  </data>
+  <data name="NewProduct" xml:space="preserve">
+    <value>New Product</value>
+  </data>
+  <data name="UploadSuccess" xml:space="preserve">
+    <value>Upload success</value>
+  </data>
 </root>

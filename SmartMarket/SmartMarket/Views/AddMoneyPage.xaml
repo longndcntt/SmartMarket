@@ -46,7 +46,7 @@
                        HorizontalOptions="FillAndExpand">
                 <StackLayout Orientation="Horizontal"
                              HorizontalOptions="Center">
-                    <Label Text="{Binding AmountCoin,StringFormat='Available is : {0:N}'}"
+                    <Label Text="{Binding AmountCoin,StringFormat='Số dư : {0:N0}'}"
                            TextColor="{StaticResource SGreen}"
                            HorizontalOptions="CenterAndExpand"
                            VerticalOptions="CenterAndExpand"
@@ -62,7 +62,7 @@
                        HorizontalOptions="FillAndExpand">
                 <StackLayout Orientation="Horizontal"
                              HorizontalOptions="Center">
-                    <Label Text="1.000 đ = 1"
+                    <Label Text="10 đ = 1"
                            TextColor="{StaticResource SGreen}"
                            HorizontalOptions="CenterAndExpand"
                            VerticalOptions="CenterAndExpand"
@@ -92,9 +92,10 @@
                            TextColor="{StaticResource SGreen}"
                            HorizontalOptions="FillAndExpand"
                            VerticalOptions="CenterAndExpand"
+                               Keyboard="Numeric"
                            FontSize="28"/>
                         <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                            <Label Text="{Binding AddAmountCoin, StringFormat='~ {0:N}'}"
+                            <Label Text="{Binding AddAmountCoin, StringFormat='~ \{0:N0\}'}"
                                FontSize="26"
                                    TextColor="{StaticResource Blue}"/>
                             <Image Source="ic_coin"/>

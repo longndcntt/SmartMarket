@@ -18,6 +18,7 @@ namespace SmartMarket.Models
         public string Address { get; set; }
         public string DayOfBirth { get; set; }
         public bool Gender { get; set; }
+        public bool IsStore { get; set; }
         public string NumberID { get; set; }
         public string PhoneNumber { get; set; }
         public string Image { get; set; }

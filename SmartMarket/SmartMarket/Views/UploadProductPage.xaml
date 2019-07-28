@@ -7,6 +7,7 @@
                xmlns:xlabControl="clr-namespace:SmartMarket.Controls.CustomLabelEntry"
                xmlns:xfxcontrol="clr-namespace:Xfx;assembly=Xfx.Controls"
                xmlns:controls="clr-namespace:SmartMarket.Controls"
+               NavigationPage.HasNavigationBar="False"
                prism:ViewModelLocator.AutowireViewModel="True"
                xmlns:localization ="clr-namespace:SmartMarket.Localization"
                xmlns:ffImage="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
@@ -17,32 +18,94 @@
                      Padding="10"
                  VerticalOptions="FillAndExpand">
             <StackLayout>
-                <!--Image-->
-                <ffImage:CachedImage Source="{Binding Image}" 
-                                     Aspect="AspectFit"
-                                     HorizontalOptions="Center"
-                                     ></ffImage:CachedImage>
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="1"/>
+                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <!--Take picture button-->
-                    <Button Grid.Column="0"
-                            HorizontalOptions="EndAndExpand"
-                            Text="Take picture"
+                    <StackLayout Grid.Column="0">
+                        <Label Text="Ảnh hiển thị sản phẩm"
+                       FontSize="{StaticResource NormalLabelFont}"
+                         HorizontalOptions="CenterAndExpand"/>
+                        <!--Image-->
+                        <ffImage:CachedImage Source="{Binding Image}" 
+                                     Aspect="AspectFit"
+                                              HeightRequest="250"
+                             WidthRequest="250"
+                                     HorizontalOptions="Center"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <!--Take picture button-->
+                            <Button Grid.Column="0"
+                            HorizontalOptions="CenterAndExpand"
+                                    HeightRequest="80"
+                                    FontSize="{StaticResource NormalLabelFont}"
+                            Text="{localization:Translate TakePicture}"
                             Command="{Binding TakePhotoReceiveCommand}"/>
-                    <!--Pick picture button-->
-                    <Button Grid.Column="1"
-                                HorizontalOptions="Start"
-                                Text="Pick picture"
+                            <!--Pick picture button-->
+                            <Button Grid.Column="1"
+                                    HeightRequest="80"
+                                HorizontalOptions="CenterAndExpand"
+                                    FontSize="{StaticResource NormalLabelFont}"
+                                Text="{localization:Translate ChoosePicture}"
                                 Command="{Binding ChoosePhotoReceiveCommand}"></Button>
-                    <Button Grid.Column="2"
-                            HorizontalOptions="EndAndExpand"
-                            Text="Take picture"
+
+                        </Grid>
+                    </StackLayout>
+                   
+                    <StackLayout Grid.Column="2">
+                        <Label Text="Ảnh chi tiết sản phẩm"
+                       FontSize="{StaticResource NormalLabelFont}"
+                         HorizontalOptions="CenterAndExpand"/>
+                        <abstractions:CarouselViewControl ItemsSource="{Binding ListImage}"
+                                              Orientation="Horizontal"
+                                               HeightRequest="250"
+                             WidthRequest="250"
+                                                      x:Name="carouselViewControl"
+                                                      ShowIndicators="True"
+                                              IsSwipeEnabled="True"
+                                              CurrentPageIndicatorTintColor="Yellow"
+                                          Position="{Binding Position}">
+                            <abstractions:CarouselViewControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid HorizontalOptions="FillAndExpand">
+                                        <ffImage:CachedImage Source="{Binding ImageList}"
+                                                       LoadingPlaceholder="loading.png"
+                                               CacheType="None"/>
+                                        <Grid.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Path=BindingContext.ZoomImageCommand, Source={x:Reference Name=carouselViewControl}}"
+                                                      CommandParameter="{Binding}"/>
+                                        </Grid.GestureRecognizers>
+                                    </Grid>
+                                </DataTemplate>
+                            </abstractions:CarouselViewControl.ItemTemplate>
+                        </abstractions:CarouselViewControl>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Button Grid.Column="0"
+                            HorizontalOptions="CenterAndExpand"
+                                    HeightRequest="80"
+                                    FontSize="{StaticResource NormalLabelFont}"
+                            Text="{localization:Translate TakePicture}"
                             Command="{Binding TakeSomePhotosReceiveCommand}"/>
+                            <Button Grid.Column="1"
+                                    HeightRequest="80"
+                                    FontSize="{StaticResource NormalLabelFont}"
+                            HorizontalOptions="CenterAndExpand"
+                            Text="{localization:Translate ChoosePicture}"
+                            Command="{Binding ChooseSomePhotosReceiveCommand}"/>
+                        </Grid>
+                    </StackLayout>
                 </Grid>
+
+                
 
                 <Grid RowSpacing="0">
                     <Grid.ColumnDefinitions>
@@ -90,6 +153,7 @@
                     <xlabControl:BorderEditor Grid.Row="5" Placeholder="{localization:Translate Detail}" 
                                  FontSize="{StaticResource NormalLabelFont}"
                                               Theme="White"
+                                              BackgroundColor="DimGray"
                                               HeightRequest="100"
                                         VerticalOptions="CenterAndExpand" 
                                          Text="{Binding Detail}"/>

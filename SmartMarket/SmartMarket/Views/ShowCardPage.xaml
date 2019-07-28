@@ -62,11 +62,25 @@
                            FontSize="{StaticResource SuperLargeLabelFont}"
                            HorizontalOptions="StartAndExpand"
                            TextColor="{StaticResource SGray}"/>
-                        <Label Text="{Binding Total,Converter={StaticResource Key=CovertToCurrency}}"
+                        <StackLayout HorizontalOptions="EndAndExpand"
+                                                    Grid.Row="2"
+                                                     VerticalOptions="CenterAndExpand"
+                                                     Orientation="Horizontal">
+                            <Label Text="{Binding Total,StringFormat=\{0:N\}}"
+                                                   VerticalOptions="Center"
+                                                  FontAttributes="Bold"
+                                                   FontSize="{StaticResource SuperLargeLabelFont}"
+                                                   TextColor="{StaticResource SGreen}"/>
+                            <Image Source="ic_coin"
+                                                   VerticalOptions="Center"
+                                                   WidthRequest="25"
+                                                   HeightRequest="25"/>
+                        </StackLayout>
+                        <!--<Label Text="{Binding Total,Converter={StaticResource Key=CovertToCurrency}}"
                            VerticalOptions="CenterAndExpand"
                            FontSize="{StaticResource SuperLargeLabelFont}"
                            HorizontalOptions="EndAndExpand"
-                           TextColor="{StaticResource SGreen}"/>
+                           TextColor="{StaticResource SGreen}"/>-->
                     </StackLayout>
                 </Frame>
                 <StackLayout x:Name="listItem"

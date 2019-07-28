@@ -250,7 +250,7 @@
     <value>Thêm tiền vào ví</value>
   </data>
   <data name="WalletBallance" xml:space="preserve">
-    <value>Ví điện tử</value>
+    <value>Ví cá nhân</value>
   </data>
   <data name="Category" xml:space="preserve">
     <value>Danh mục</value>
@@ -311,5 +311,48 @@
   </data>
   <data name="UpcomingPayment" xml:space="preserve">
     <value>Sắp đến kì hạn thanh toán, vui lòng nạp thêm {0} xu vào ví.</value>
+  </data>
+  <data name="PaymentError" xml:space="preserve">
+    <value>Thanh toán thất bại, {0} xu cho sản phảm {1}, {1} bị trả về.</value>
+  </data>
+  <data name="PaymentSuccess" xml:space="preserve">
+    <value>Thanh toán thành công, {0} xu cho sản phẩm {1}</value>
+  </data>
+  <data name="Success" xml:space="preserve">
+    <value>Thành công</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>Địa chỉ</value>
+  </data>
+  <data name="ChoosePicture" xml:space="preserve">
+    <value>Chọn ảnh</value>
+  </data>
+  <data name="TakePicture" xml:space="preserve">
+    <value>Chụp ảnh</value>
+  </data>
+  <data name="ElectronicsAndGadgets" xml:space="preserve">
+    <value>Điện tử và đồ tiện ích</value>
+  </data>
+  <data name="Fashion" xml:space="preserve">
+    <value>Thời trang</value>
+  </data>
+  <data name="HomeAndFurniture" xml:space="preserve">
+    <value>Nội thất và trang trí</value>
+  </data>
+  <data name="OfficeAndIndustry" xml:space="preserve">
+    <value>Văn phòng phẩm</value>
+  </data>
+  <data name="SportAndHealth" xml:space="preserve">
+    <value>Thể thao và sức khỏe</value>
+  </data>
+  <data name="Fail" xml:space="preserve">
+    <value>Kết nối thất bại.
+Vui lòng thử lại.</value>
+  </data>
+  <data name="NewProduct" xml:space="preserve">
+    <value>Sản phẩm mới</value>
+  </data>
+  <data name="UploadSuccess" xml:space="preserve">
+    <value>Đăng thành công</value>
   </data>
 </root>

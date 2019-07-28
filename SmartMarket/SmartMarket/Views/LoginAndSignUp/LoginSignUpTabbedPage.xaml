@@ -7,6 +7,7 @@
              android:TabbedPage.ToolbarPlacement="Bottom"
                            xmlns:loginpage="clr-namespace:SmartMarket.Views.LoginAndSignUp"
                            BarBackgroundColor="#d8d8d8"
+                           NavigationPage.HasNavigationBar="False"
             BarTextColor="{StaticResource SDarkTextColor}"
            xmlns:controls="clr-namespace:SmartMarket.Controls"
                            xmlns:localization="clr-namespace:SmartMarket.Localization"

@@ -3,6 +3,7 @@ using Prism.Mvvm;
 using Prism.Navigation;
 using SmartMarket.Enums;
 using SmartMarket.Interfaces.LocalDatabase;
+using SmartMarket.Localization;
 using SmartMarket.Models;
 using SmartMarket.Utilities;
 using SmartMarket.ViewModels.Base;
@@ -36,28 +37,28 @@ namespace SmartMarket.ViewModels
                     new Category()
                 {
                         Id=1,
-                    CategoryName = "Electronics and Gadgets",
+                    CategoryName = TranslateExtension.Get("ElectronicsAndGadgets"),
                     Image = "ic_history",
                 },
                 new Category()
                 {
                     Id=2,
-                    CategoryName = "Home and Furniture",
+                    CategoryName = TranslateExtension.Get("HomeAndFurniture"),
                     Image = "ic_history",
                 },new Category()
                 {
                     Id=3,
-                    CategoryName = "Sport and Health",
+                    CategoryName = TranslateExtension.Get("SportAndHealth"),
                     Image = "ic_history",
                 },new Category()
                 {
                     Id=4,
-                    CategoryName = "Fashion",
+                    CategoryName = TranslateExtension.Get("Fashion"),
                     Image = "ic_history",
                 },new Category()
                 {
                     Id=5,
-                    CategoryName = "Office and Industry",
+                    CategoryName = TranslateExtension.Get("OfficeAndIndustry"),
                     Image = "ic_history",
                 }};
                 foreach (var item in CategoryList)
@@ -133,7 +134,8 @@ namespace SmartMarket.ViewModels
                 {
                     var param = new NavigationParameters
                 {
-                    {ParamKey.Category.ToString(), SelectedCategory},
+                    {ParamKey.CategoryId.ToString(), SelectedCategory.Id},
+                    {ParamKey.CategoryName.ToString(), SelectedCategory.CategoryName},
                     //{nameof(StatusOfLeadModel), StatusOfLeadModel.CreateLead},
                 };
 

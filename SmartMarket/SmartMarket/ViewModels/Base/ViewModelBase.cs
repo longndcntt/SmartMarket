@@ -112,10 +112,12 @@ namespace SmartMarket.ViewModels.Base
             BackCommand = new DelegateCommand(async () => await BackExecute());
             SearchCommand = new DelegateCommand<string>(SearchExcute);
             ZoomImageCommand = new DelegateCommand<object>(ZoomImageExe);
+            CheckCartCommand = new DelegateCommand(NavigateShowCardPage);
         }
 
         #endregion
 
+        public ICommand CheckCartCommand { get; set; }
         #region CheckBusy
 
         protected async Task CheckBusy(Func<Task> function)
@@ -258,10 +260,8 @@ namespace SmartMarket.ViewModels.Base
             //false is default value when system call back press
             //return false;
             //BackExecute();
-            Task.Run(async () =>
-            {
-                await BackExecute();
-            });
+           
+                BackExecute();
 
             return true;
 
