@@ -135,6 +135,7 @@
 
                     <xfxcontrol:XfxEntry Grid.Row="2" Placeholder="{localization:Translate Price}" 
                                  FontSize="{StaticResource NormalLabelFont}"
+                                         Keyboard="Numeric"
                                          VerticalOptions="CenterAndExpand"
                                          Text="{Binding Price}"/>
 

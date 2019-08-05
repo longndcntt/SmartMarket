@@ -145,6 +145,7 @@ namespace SmartMarket.ViewModels
             if (response == null)
             {
                 await MessagePopup.Instance.Show(TranslateExtension.Get("Fail"));
+                return;
             }
             else
             {

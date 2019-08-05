@@ -183,7 +183,7 @@ namespace SmartMarket.ViewModels
         }
 
 
-        public async override void OnFirstTimeAppear()
+        public async override void OnAppear()
         {
             try
             {
@@ -191,8 +191,8 @@ namespace SmartMarket.ViewModels
                 ListRandom = new ObservableCollection<ItemModel>(tempRandomAll);
                 var temp2 = await LoadData(ApiUrl.GetItemByCategory("1"));
                 ListItem1 = new ObservableCollection<ItemModel>(temp2);
-                //var temp3 = await LoadData(ApiUrl.GetItemByCategory("2"));
-                //ListItem2 = new ObservableCollection<ItemModel>(temp3);
+                var temp3 = await LoadData(ApiUrl.GetItemByCategory("2"));
+                ListItem2 = new ObservableCollection<ItemModel>(temp3);
                 var temp4 = await LoadData(ApiUrl.GetItemByCategory("3"));
                 ListItem3 = new ObservableCollection<ItemModel>(temp4);
                 var temp5 = await LoadData(ApiUrl.GetItemByCategory("4"));
@@ -204,6 +204,7 @@ namespace SmartMarket.ViewModels
             {
                 Debug.WriteLine(e.Message);
                 await MessagePopup.Instance.Show(TranslateExtension.Get("Fail"));
+                return;
             }
           
         }
@@ -295,8 +296,8 @@ namespace SmartMarket.ViewModels
                 ListRandom = new ObservableCollection<ItemModel>(tempRandomAll);
                 var temp2 = await LoadData(ApiUrl.GetItemByCategory("1"));
                 ListItem1 = new ObservableCollection<ItemModel>(temp2);
-                //var temp3 = await LoadData(ApiUrl.GetItemByCategory("2"));
-                //ListItem2 = new ObservableCollection<ItemModel>(temp3);
+                var temp3 = await LoadData(ApiUrl.GetItemByCategory("2"));
+                ListItem2 = new ObservableCollection<ItemModel>(temp3);
                 var temp4 = await LoadData(ApiUrl.GetItemByCategory("3"));
                 ListItem3 = new ObservableCollection<ItemModel>(temp4);
                 var temp5 = await LoadData(ApiUrl.GetItemByCategory("4"));
@@ -308,6 +309,7 @@ namespace SmartMarket.ViewModels
             {
                 Debug.WriteLine(e.Message);
                 await MessagePopup.Instance.Show(TranslateExtension.Get("Fail"));
+                return;
             }
         }
         #endregion

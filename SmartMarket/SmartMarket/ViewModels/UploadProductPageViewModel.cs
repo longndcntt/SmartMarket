@@ -104,6 +104,13 @@ namespace SmartMarket.ViewModels
             set => SetProperty(ref _Detail, value);
         }
 
+        private bool _isEdit;
+        public bool IsEdit
+        {
+            get => _isEdit;
+            set => SetProperty(ref _isEdit, value);
+        }
+
         private ObservableCollection<Category> _categoryList;
 
         public ObservableCollection<Category> CategoryList
@@ -191,6 +198,61 @@ namespace SmartMarket.ViewModels
             //Detail = "Detail 2";
 
         }
+
+        //#region Navigate
+        //public async override void OnNavigatedNewToAsync(INavigationParameters parameters)
+        //{
+        //    base.OnNavigatedNewToAsync(parameters);
+        //    if (parameters != null)
+        //    {
+        //        int itemID = -1;
+        //        if (parameters.ContainsKey(ParamKey.IsEdit.ToString()))
+        //        {
+        //            // SelectedCategory = (Category)parameters[ParamKey.Category.ToString()];
+        //            IsEdit = (bool)parameters[ParamKey.IsEdit.ToString()];
+        //            if (IsEdit)
+        //            {
+        //                var ItemModelId = (int)parameters[ParamKey.SelectedItemId.ToString()];
+        //                if (ItemModelId != -1)
+        //                {
+        //                    //Load itemdetails
+        //                    var url = ApiUrl.GetItemDetails() + ItemModelId;
+        //                    await LoadingPopup.Instance.Show();
+        //                    var response = await HttpRequest.GetTaskAsync<ModelRestFul>(url);
+        //                    await GetItemCallBack(response);
+        //                    //Load itemdisplay
+        //                    await LoadItemSelected(ItemModelId);
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
+
+        //#region LoadItemSelected
+        //private async Task LoadItemSelected(int itemId)
+        //{
+        //    var url = ApiUrl.GetItemSelected(itemId.ToString());
+        //    var tempItem = await HttpRequest.GetTaskAsync<ModelRestFul>(url);
+        //    var a = tempItem.Deserialize<ItemModel>(tempItem.Result);
+            
+        //}
+        //#endregion
+
+        //private async Task GetItemCallBack(ModelRestFul response)
+        //{
+        //    if (response.ErrorCode != 200)
+        //    {
+        //        await MessagePopup.Instance.Show(TranslateExtension.Get("Fail"));
+        //        return;
+        //    }
+        //    var ItemSelectedDetails = response.Deserialize<ItemDetails>(response.Result);
+        //    SelectedCategory = SqLiteService.Get<Category>(x=> x.Id == ItemSelectedDetails.Id);
+        //    Detail = ItemSelectedDetails.Detail;
+        //    ListImage = ItemSelectedDetails.Images;
+        //    Manufacturer = Manufacturer,
+        //    await LoadingPopup.Instance.Hide();
+        //}
+        //#endregion
 
         #region Choose Photo
 
@@ -341,7 +403,7 @@ namespace SmartMarket.ViewModels
             if (list.Count != 0)
             {
                 CategoryList = new ObservableCollection<Category>(list);
-               // SelectedCategory = CategoryList.First();
+                // SelectedCategory = CategoryList.First();
             }
         }
         #endregion
@@ -360,10 +422,10 @@ namespace SmartMarket.ViewModels
                     CategoryId = SelectedCategory.Id,
                     ItemName = ItemName,
                     Price = Int32.Parse(Price),
-                    Count = Int32.Parse(Count),
+                    Available = Int32.Parse(Count),
                     Image = BaseImage,
-                    Manufacturer = Manufacturer,
-                    Detail = Detail,
+                    Manufacturer = string.IsNullOrEmpty(Manufacturer) ? string.Empty : Manufacturer,
+                    Detail = string.IsNullOrEmpty(Detail)? string.Empty : Detail,
                     WalletAddress = UserInfo.WalletAddress,
                     Images = ListBase,
                 };
@@ -378,6 +440,7 @@ namespace SmartMarket.ViewModels
             if (response == null)
             {
                 await MessagePopup.Instance.Show(TranslateExtension.Get("Fail"));
+                return;
             }
             else
             {
@@ -392,6 +455,11 @@ namespace SmartMarket.ViewModels
                     {
                         await UploadToBlockchain(stringSigned);
                     }
+                }
+                else
+                {
+                    await MessagePopup.Instance.Show(TranslateExtension.Get("Fail"));
+                    return;
                 }
             }
         }
@@ -422,6 +490,7 @@ namespace SmartMarket.ViewModels
             if (response == null)
             {
                 await MessagePopup.Instance.Show(TranslateExtension.Get("Fail"));
+                return;
                 // get event list fail
                 //await MessagePopup.Instance.Show(TranslateExtension.Get("GetListEventsFailed"));
             }
@@ -502,8 +571,8 @@ namespace SmartMarket.ViewModels
 
                             byte[] image = memoryStream.ToArray();
                             var resizeImage = await FileService.ResizeImage(image, file.Path, 4);
-                            BaseImage = Convert.ToBase64String(resizeImage);
-                            ListBase.Add(BaseImage);
+                            var BaseImageList = Convert.ToBase64String(resizeImage);
+                            ListBase.Add(BaseImageList);
                             ListImageStream.Add(image);
                             //await ChangeImage(file.Path, image);
                             //dispose mediafile
@@ -566,7 +635,7 @@ namespace SmartMarket.ViewModels
                     ListImage = new ObservableCollection<ListImage>();
                     bool isChoose = true;
                     int i = 0;
-                    while (isChoose && i <3)
+                    while (isChoose && i < 3)
                     {
                         var file = await CrossMedia.Current.PickPhotoAsync();
                         //Small delay
@@ -578,8 +647,8 @@ namespace SmartMarket.ViewModels
 
                             byte[] image = memoryStream.ToArray();
                             var resizeImage = await FileService.ResizeImage(image, file.Path, 4);
-                            BaseImage = Convert.ToBase64String(resizeImage);
-                            ListBase.Add(BaseImage);
+                            var BaseImageList = Convert.ToBase64String(resizeImage);
+                            ListBase.Add(BaseImageList);
                             ListImageStream.Add(image);
                             //await ChangeImage(file.Path, image);
                             //dispose mediafile
@@ -590,7 +659,7 @@ namespace SmartMarket.ViewModels
                             isChoose = false;
                         }
                     }
-                    
+
                 }
                 else
                 {
@@ -606,6 +675,8 @@ namespace SmartMarket.ViewModels
 
         #endregion
     }
+
+
 
     public class ListImage
     {

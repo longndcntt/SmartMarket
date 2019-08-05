@@ -67,7 +67,7 @@ namespace SmartMarket
         {
             Settings = new AppSettings();
             Settings = _sqLiteService.GetSettings();
-            Settings.HttpUrl1 = "http://35.194.122.245:3000/";
+            Settings.HttpUrl1 = "http://35.240.206.186:3000/";
             await NavigationService.NavigateAsync($"NavigationPage/{PageManager.TabbedMainPage}");
 
         }
@@ -200,6 +200,9 @@ namespace SmartMarket
             containerRegistry.RegisterForNavigation<UploadProductPage, UploadProductPageViewModel>();
             containerRegistry.RegisterForNavigation<PurchaseedProduct, PurchaseedProductViewModel>();
             containerRegistry.RegisterForNavigation<ViewedProductPage, ViewedProductPageViewModel>();
+            containerRegistry.RegisterForNavigation<SelledItemPage, SelledItemPageViewModel>();
+            containerRegistry.RegisterForNavigation<StatisticPage, StatisticPageViewModel>();
+            containerRegistry.RegisterForNavigation<GoToShopPage, GoToShopPageViewModel>();
         }
     }
 }

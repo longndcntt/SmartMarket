@@ -3,14 +3,13 @@
                 xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
-             prism:ViewModelLocator.AutowireViewModel="True"
                NavigationPage.HasNavigationBar="False"
-               xmlns:localization ="clr-namespace:SmartMarket.Localization"
+               xmlns:localization="clr-namespace:SmartMarket.Localization"
                xmlns:controls="clr-namespace:SmartMarket.Controls"
                xmlns:behaviors="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
-               xmlns:buttonBorder="clr-namespace:SmartMarket.Controls.CustomLabelEntry"
                xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
-               x:Class="SmartMarket.Views.PurchaseedProduct">
+               prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="SmartMarket.Views.SelledItemPage">
     <StackLayout VerticalOptions="FillAndExpand"
                  HorizontalOptions="FillAndExpand">
         <!--Header View-->
@@ -37,14 +36,14 @@
                          VerticalOptions="Center">
                 <Label FontAttributes="Bold"
                        FontSize="{StaticResource SuperLargeLabelFont}"
-                       Text="{localization:Translate PuchasedItems}"
+                       Text="{localization:Translate SelledItem}"
                        TextColor="{StaticResource SDarkerTextColor}"/>
             </StackLayout>
         </Grid>
         <!--Content-->
-        <Frame Padding="5,5,5,10"
+        <Frame Padding="5"
                VerticalOptions="FillAndExpand">
-            <ListView ItemsSource="{Binding PuchasedItemList}"
+            <ListView ItemsSource="{Binding SelledItemList}"
                   SelectedItem="{Binding SelectedItemTapped}"
                   VerticalOptions="FillAndExpand"
                   HorizontalOptions="FillAndExpand"
@@ -55,11 +54,9 @@
                     <DataTemplate>
                         <controls:CustomViewCell SelectedBackgroundColor="White">
                             <Frame BorderColor="{Binding StatusExchange}"
-                                       Margin="5">
-                                <Grid Padding="5"
-                                      RowSpacing="2">
+                                       Margin="2">
+                                <Grid Padding="5" RowSpacing="2">
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="auto"/>
                                         <RowDefinition Height="auto"/>
                                         <RowDefinition Height="auto"/>
                                         <RowDefinition Height="auto"/>
@@ -69,28 +66,20 @@
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
                                     <forms:CachedImage Source="{Binding productInfo.Image}"
-                                   HorizontalOptions="Start"
-                                   VerticalOptions="Center"
-                                                       Margin="5"
-                                   HeightRequest="70"
-                                   WidthRequest="70"
-                                     Style="{StaticResource ImageBase}"
-                                   Grid.Column="0"
-                                   Grid.Row="0" Grid.RowSpan="2"/>
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center"
+                                           HeightRequest="80"
+                                           WidthRequest="80"
+                                             Style="{StaticResource ImageBase}"
+                                           Grid.Column="0"
+                                           Grid.Row="0" Grid.RowSpan="2"/>
                                     <Label Text="{Binding productInfo.ItemName}"
-                                   Margin="10,0"
-                                   FontSize="{StaticResource NormalLabelFont}"
-                                                  FontAttributes="Bold"
-                                   VerticalOptions="CenterAndExpand"
-                                   Grid.Row="0"
-                                   Grid.Column="1"/>
-                                    <Label Text="{Binding seller.FullName, StringFormat='Người bán: {0}'}"
                                            Margin="10,0"
+                                           FontAttributes="Bold"
                                            FontSize="{StaticResource NormalLabelFont}"
                                            VerticalOptions="CenterAndExpand"
-                                           HorizontalOptions="StartAndExpand"
-                                           Grid.Row="2"
-                                           Grid.Column="1"/>
+                                           Grid.Row="0"
+                                           Grid.Column="1"/> 
                                     <Label Text="{Binding StatusExchangeString}"
                                            Margin="10,0"
                                            TextColor="{Binding StatusExchange}"
@@ -99,7 +88,7 @@
                                            HorizontalOptions="StartAndExpand"
                                            Grid.Row="3"
                                            Grid.Column="1"/>
-                                    <StackLayout HorizontalOptions="StartAndExpand"
+                                    <StackLayout HorizontalOptions="FillAndExpand"
                                                     Grid.Row="1"
                                                 Grid.Column="1"
                                                  Margin="10,0"
@@ -118,7 +107,7 @@
                                                    VerticalOptions="Center"
                                                   FontAttributes="Bold"
                                                    FontSize="{StaticResource NormalLabelFont}"
-                                               HorizontalOptions="End"/>
+                                               HorizontalOptions="EndAndExpand"/>
                                     </StackLayout>
                                     <!--<Label FontSize="{StaticResource NormalLabelFont}"
                                         HorizontalOptions="StartAndExpand"
@@ -127,10 +116,18 @@
                                         TextColor="{StaticResource Blue}"
                                         Text="{Binding productInfo.Price, Converter={StaticResource CovertToCurrency}}"
                                         FontAttributes="Bold"/>-->
+                                    <Label Text="{Binding buyer.FullName,StringFormat='Người mua: {0}'}"
+                                           Margin="10,0"
+                                           FontSize="{StaticResource NormalLabelFont}"
+                                           VerticalOptions="CenterAndExpand"
+                                           Grid.Row="2"
+                                           Grid.Column="1"/>
                                 </Grid>
                             </Frame>
                         </controls:CustomViewCell>
+
                     </DataTemplate>
+
                 </ListView.ItemTemplate>
                 <ListView.Behaviors>
                     <behaviors:EventToCommandBehavior EventName="ItemTapped"

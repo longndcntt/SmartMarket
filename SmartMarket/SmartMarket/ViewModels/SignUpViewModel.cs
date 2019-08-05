@@ -33,6 +33,7 @@ namespace SmartMarket.ViewModels
        : base(navigationService: navigationService, sqliteService: sqLiteService, httpRequest: httpRequest, fileService: fileService)
         {
             SignUpCommand = new DelegateCommand(SignupExcute);
+            EditCommand = new DelegateCommand(EditUserExcute);
             ChoosePhotoCommand = new DelegateCommand(async () => await ChoosePhotoReceiveExecute());
         }
         #endregion
@@ -112,7 +113,7 @@ namespace SmartMarket.ViewModels
 
         private string _portraitImageBase;
         public string PortraitImageBase
-        { 
+        {
             get => _portraitImageBase;
             set => SetProperty(ref _portraitImageBase, value);
         }
@@ -136,6 +137,7 @@ namespace SmartMarket.ViewModels
                     PhoneNumber = UserInfo.PhoneNumber;
                     SelectedGender = UserInfo.Gender ? 1 : 0;
                     DateOfBirth = UserInfo.DayOfBirth;
+                    Keystore = UserInfo.Keystore;
                 }
             }
         }
@@ -169,14 +171,14 @@ namespace SmartMarket.ViewModels
                 {
                     var url = ApiUrl.UserRegister();
 
-                //Create Keystore
-                Keystore = Wallet.CreateWallet(Password);
+                    //Create Keystore
+                    Keystore = Wallet.CreateWallet(Password);
 
-                //Encrypt Password
-                //Password = Wallet.CryptPassword(Password);
+                    //Encrypt Password
+                    //Password = Wallet.CryptPassword(Password);
 
 
-                var userRegister = new UserModel()
+                    var userRegister = new UserModel()
                     {
                         Email = Email,
                         Password = Password,
@@ -207,6 +209,7 @@ namespace SmartMarket.ViewModels
             if (response == null)
             {
                 await MessagePopup.Instance.Show(TranslateExtension.Get("Fail"));
+                return;
             }
             else
             {
@@ -252,6 +255,7 @@ namespace SmartMarket.ViewModels
             if (response == null)
             {
                 await MessagePopup.Instance.Show(TranslateExtension.Get("Fail"));
+                return;
                 // get event list fail
                 //await MessagePopup.Instance.Show(TranslateExtension.Get("GetListEventsFailed"));
             }
@@ -266,7 +270,31 @@ namespace SmartMarket.ViewModels
 
                     await DeviceExtension.BeginInvokeOnMainThreadAsync(async () =>
                     {
-                        await Navigation.NavigateAsync(PageManager.LoginSignUpTabbedPage);
+                        if (!IsEdit)
+                        {
+                            await Navigation.NavigateAsync(PageManager.LoginSignUpTabbedPage);
+                           
+                        }
+                        else
+                        {
+                            var url = ApiUrl.UserLogin();
+                            //Username = "admin@gm.com";
+                            //Password = "admin";
+                            //Username = "test1@gm.com";
+                            //Password = "123456";
+                            //Username = "PhucNH@gm.com";
+                            //Password = "123456";
+                            var param = new UserIdentity
+                            {
+                                Email = Email,
+                                Password = Password
+                            };
+
+                            var httpContent = param.ObjectToStringContent();
+                            var loginResponse = await HttpRequest.PostTaskAsync<ModelRestFul>(url, httpContent);
+                            await LoginCallBack(loginResponse);
+                            await Navigation.GoBackToRootAsync();
+                        }
                     });
 
                 }
@@ -355,5 +383,143 @@ namespace SmartMarket.ViewModels
             PortraitImageSource = ImageSource.FromStream(() => new MemoryStream(ImageStream));
         }
         #endregion
+
+        #region EditUserInfo
+        public ICommand EditCommand { get; set; }
+        private async void EditUserExcute()
+        {
+            await LoadingPopup.Instance.Show(TranslateExtension.Get("SignUp"));
+            if (string.IsNullOrEmpty(Email))
+            {
+                await MessagePopup.Instance.Show(TranslateExtension.Get("UsernameEmpty"));
+                return;
+            }
+            if (string.IsNullOrEmpty(Password))
+            {
+                await MessagePopup.Instance.Show(TranslateExtension.Get("PasswordEmpty"));
+                return;
+            }
+            if (string.IsNullOrEmpty(PortraitImageBase))
+            {
+                await MessagePopup.Instance.Show(TranslateExtension.Get("ImageEmpty"));
+                return;
+            }
+
+
+            await Task.Run(async () =>
+             {
+                 var url = ApiUrl.EditUser();
+
+                //Create Keystore
+                //Encrypt Password
+                //Password = Wallet.CryptPassword(Password);
+
+
+                var userRegister = new UserModel()
+                 {
+                     Email = Email,
+                     Password = Password,
+                     Keystore = Keystore,
+                     FullName = FullName,
+                     DayOfBirth = DateOfBirth,
+                     Gender = SelectedGender == 0 ? true : false,
+                     Address = Address,
+                     NumberID = "012345678",
+                     PhoneNumber = PhoneNumber,
+                     WalletAddress = UserInfo.WalletAddress,
+                     Image = PortraitImageBase,
+                    //IdentityImage = string.Empty,
+                };
+
+                 var httpContent = userRegister.ObjectToStringContent();
+                 ModelRestFul test = new ModelRestFul();
+                 var a = test.Serialize<object>(Keystore);
+                 var response = await HttpRequest.PutTaskAsync<ModelRestFul>(url, httpContent);
+                 await EditCallBack(response);
+             });
+        }
+
+        private async Task EditCallBack(ModelRestFul response)
+        {
+            if (response == null)
+            {
+                await MessagePopup.Instance.Show(TranslateExtension.Get("Fail"));
+                return;
+            }
+            else
+            {
+                try
+                {
+                    var transaction = response.Deserialize<Transaction>(response.Result);
+                    if (transaction != null)
+                    {
+                        //  Password = Wallet.DecryptPassword(Password, DateTime.UtcNow.ToString("yyyy-MM-dd"));
+                        //  Password = Wallet.DecryptPassword(Password, DateTime.UtcNow.ToString("yyyy-MM-dd"));
+
+                        var signer = new Signer();
+                        var stringSigned = signer.Sign(UserInfo.PrivateKey, transaction);
+                        //var transactionID = transaction.Transaction;
+                        if (!string.IsNullOrEmpty(stringSigned))
+                        {
+                            await UploadToBlockchain(stringSigned);
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.Write(e.Message);
+                }
+                finally
+                {
+                    await LoadingPopup.Instance.Hide();
+                }
+            }
+        }
+        #endregion
+
+        private async Task LoginCallBack(ModelRestFul response)
+        {
+            if (response == null)
+            {
+                // login fail
+                await MessagePopup.Instance.Show(TranslateExtension.Get("Username_PasswordIncorrect"));
+                return;
+            }
+            try
+            {
+                var user = response.Deserialize<UserModel>(response.Result);
+                if (user == null)
+                {
+                    // login fail
+                    await MessagePopup.Instance.Show(TranslateExtension.Get("Username_PasswordIncorrect"));
+                    return;
+                }
+                user.WalletAddress = UserInfo.WalletAddress;
+                user.PrivateKey = UserInfo.PrivateKey;
+                App.Settings.IsLogin = true;
+                SqLiteService.Update(App.Settings);
+
+                SqLiteService.Update(user);
+            }
+            catch (Exception e)
+            {
+                Debug.Write(e.Message);
+            }
+            finally
+            {
+                await LoadingPopup.Instance.Hide();
+            }
+            // login successfull - get user info & navigate to upload page
+
+
+            //IsShowLoginForm = false;
+
+            //AddHeaderToken(token: user.AccessToken);
+
+
+            ////await LoadingPopup.Instance.Hide();
+
+            //await GetEventListExecute(user.ClientId);
+        }
     }
 }

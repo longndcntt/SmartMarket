@@ -54,6 +54,9 @@ namespace SmartMarket.ViewModels
             PurchasedProdcutCommand = new DelegateCommand(PurchasedProdcutExcute);
             ViewedProdcutCommand = new DelegateCommand(ViewedProdcutExcute);
             UploadItemCommand = new DelegateCommand(UploadItemExcute);
+            GoToShopCommand = new DelegateCommand(GoToShopExcute);
+            SelledProdcutCommand = new DelegateCommand(SelledProductExcute);
+            StatisticCommand = new DelegateCommand(StatisticExcute);
 
             LogOutCommand = new DelegateCommand(LogOutExcute);
             // IsLogin = App.Settings.IsLogin;
@@ -69,6 +72,15 @@ namespace SmartMarket.ViewModels
             if (!IsLogin)
             {
                 await Navigation.NavigateAsync(PageManager.LoginSignUpTabbedPage);
+            }
+            else
+            {
+                var param = new NavigationParameters()
+                {
+                    {ParamKey.UserInfo.ToString(), UserInfo},
+                    {ParamKey.IsEdit.ToString(), true},
+                };
+                await Navigation.NavigateAsync(PageManager.SignUpPage, param);
             }
         }
         #endregion
@@ -122,7 +134,7 @@ namespace SmartMarket.ViewModels
         }
         #endregion
 
-        #region ViewedProdcut
+        #region PurchasedProdcutCommand
         public ICommand PurchasedProdcutCommand { get; set; }
         private async void PurchasedProdcutExcute()
         {
@@ -136,6 +148,23 @@ namespace SmartMarket.ViewModels
             }
         }
         #endregion
+
+        #region SelledProdcutCommand
+        public ICommand SelledProdcutCommand { get; set; }
+        private async void SelledProductExcute()
+        {
+            if (IsLogin && IsAdmin)
+            {
+                await Navigation.NavigateAsync(PageManager.SelledItemPage);
+            }
+            else
+            {
+                await Navigation.NavigateAsync(PageManager.LoginSignUpTabbedPage);
+            }
+        }
+        #endregion
+
+        
 
         #region NavigateWalletBalancePage
         public ICommand NavigateWalletBalancePage { get; set; }
@@ -171,6 +200,21 @@ namespace SmartMarket.ViewModels
 
         #endregion
 
+        #region GoToShopCommand
+        public ICommand GoToShopCommand { get; set; }
+        private async void GoToShopExcute()
+        {
+            if (IsLogin && IsAdmin)
+            {
+                await Navigation.NavigateAsync(PageManager.GoToShopPage);
+            }
+            else
+            {
+                await Navigation.NavigateAsync(PageManager.LoginSignUpTabbedPage);
+            }
+        }
+        #endregion
+
         #region UploadItemCommand
         public ICommand UploadItemCommand { get; set; }
         private async void UploadItemExcute()
@@ -178,6 +222,21 @@ namespace SmartMarket.ViewModels
             if (IsLogin && IsAdmin)
             {
                 await Navigation.NavigateAsync(PageManager.UploadProductPage);
+            }
+            else
+            {
+                await Navigation.NavigateAsync(PageManager.LoginSignUpTabbedPage);
+            }
+        }
+        #endregion
+
+        #region UploadItemCommand
+        public ICommand StatisticCommand { get; set; }
+        private async void StatisticExcute()
+        {
+            if (IsLogin && IsAdmin)
+            {
+                await Navigation.NavigateAsync(PageManager.StatisticPage);
             }
             else
             {

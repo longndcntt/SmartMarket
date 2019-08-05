@@ -256,7 +256,7 @@
     <value>Danh mục</value>
   </data>
   <data name="GoToShop" xml:space="preserve">
-    <value>Đến cửa hàng</value>
+    <value>Cửa hàng cá nhân</value>
   </data>
   <data name="Statics" xml:space="preserve">
     <value>Thống kê</value>
@@ -354,5 +354,35 @@ Vui lòng thử lại.</value>
   </data>
   <data name="UploadSuccess" xml:space="preserve">
     <value>Đăng thành công</value>
+  </data>
+  <data name="PaymentFail" xml:space="preserve">
+    <value>Mua thất bại</value>
+  </data>
+  <data name="PaymentPending" xml:space="preserve">
+    <value>Đang thanh toán</value>
+  </data>
+  <data name="Once" xml:space="preserve">
+    <value>1 lần</value>
+  </data>
+  <data name="Third" xml:space="preserve">
+    <value>3 lần</value>
+  </data>
+  <data name="Twice" xml:space="preserve">
+    <value>2 lần</value>
+  </data>
+  <data name="DeleteSuccess" xml:space="preserve">
+    <value>Xóa thành công</value>
+  </data>
+  <data name="ImageEmpty" xml:space="preserve">
+    <value>Chưa chọn ảnh</value>
+  </data>
+  <data name="SelledProduct" xml:space="preserve">
+    <value>Sản phẩm đã bán</value>
+  </data>
+  <data name="AllUser" xml:space="preserve">
+    <value>Danh sách người mua</value>
+  </data>
+  <data name="Statistic" xml:space="preserve">
+    <value>Thống kê</value>
   </data>
 </root>

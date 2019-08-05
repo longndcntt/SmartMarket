@@ -14,22 +14,21 @@ using SmartMarket.Views.Popups;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Xamarin.Forms;
 
 namespace SmartMarket.ViewModels
 {
-    public class PurchaseedProductViewModel : ViewModelBase
-    {
-
+	public class SelledItemPageViewModel : ViewModelBase
+	{
         #region Properties
-        private ObservableCollection<ExchangeModel> _puchasedItemList;
-        public ObservableCollection<ExchangeModel> PuchasedItemList
+        private ObservableCollection<ExchangeModel> _selledItemList;
+        public ObservableCollection<ExchangeModel> SelledItemList
         {
-            get => _puchasedItemList;
-            set => SetProperty(ref _puchasedItemList, value);
+            get => _selledItemList;
+            set => SetProperty(ref _selledItemList, value);
         }
 
         private ExchangeModel _selectedItem;
@@ -40,7 +39,7 @@ namespace SmartMarket.ViewModels
         }
         #endregion
         #region Constructor
-        public PurchaseedProductViewModel(INavigationService navigationService, IPageDialogService pageDialogService, ISqLiteService sqLiteService, IHttpRequest httpRequest)
+        public SelledItemPageViewModel(INavigationService navigationService, IPageDialogService pageDialogService, ISqLiteService sqLiteService, IHttpRequest httpRequest)
             : base(navigationService: navigationService, dialogService: pageDialogService, sqliteService: sqLiteService, httpRequest: httpRequest)
         {
             ItemTappedCommand = new DelegateCommand(SelectedItemExcutWithoutPara);
@@ -55,7 +54,7 @@ namespace SmartMarket.ViewModels
             if (!string.IsNullOrEmpty(UserInfo.WalletAddress))
             {
                 await LoadingPopup.Instance.Show(TranslateExtension.Get("Loading3dot"));
-                var url = ApiUrl.GetPurchasedItems(UserInfo.WalletAddress);
+                var url = ApiUrl.GetSelledItems(UserInfo.WalletAddress);
 
                 var response = await HttpRequest.GetTaskAsync<ModelRestFul>(url);
                 await GetWalletCallBack(response);
@@ -76,8 +75,8 @@ namespace SmartMarket.ViewModels
                 var b = serializer.Deserialize<ObservableCollection<ExchangeModel>>(a);
                 if (b != null)
                 {
-                    PuchasedItemList = new ObservableCollection<ExchangeModel>(b.OrderByDescending(x => x.unixtime));
-                    foreach (var item in PuchasedItemList)
+                   SelledItemList = new ObservableCollection<ExchangeModel>(b.OrderByDescending(x=>x.unixtime));
+                    foreach (var item in SelledItemList)
                     {
                         item.StatusExchange = (item.remain > 0) ? (item.isDone) ? Color.Red : Color.Orange : Color.LightGreen;
                         item.StatusExchangeString = (item.remain > 0) ? (item.isDone) ? TranslateExtension.Get("PaymentFail") : TranslateExtension.Get("PaymentPending") : TranslateExtension.Get("Success");
@@ -96,7 +95,7 @@ namespace SmartMarket.ViewModels
             {
                 if (SelectedItemTapped != null)
                 {
-                   // var selectedItem = SqLiteService.Get<ItemModel>(x => x.Id == SelectedItemTapped.Id);
+                    // var selectedItem = SqLiteService.Get<ItemModel>(x => x.Id == SelectedItemTapped.Id);
                     //await MessagePopup.Instance.Show(SelectedItemTapped.Id.ToString());
                     var param = new NavigationParameters
                         {
@@ -109,6 +108,5 @@ namespace SmartMarket.ViewModels
             });
         }
         #endregion
-
     }
 }

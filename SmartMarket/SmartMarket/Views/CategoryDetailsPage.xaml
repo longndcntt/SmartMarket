@@ -299,7 +299,7 @@
                                    VerticalOptions="CenterAndExpand"
                                    Grid.Row="0"
                                    Grid.Column="1"/>
-                                        <Label FontSize="{StaticResource NormalLabelFont}"
+                                        <!--<Label FontSize="{StaticResource NormalLabelFont}"
                                         HorizontalOptions="StartAndExpand"
                                            VerticalOptions="CenterAndExpand"
                                            Margin="10,0"
@@ -307,7 +307,22 @@
                                        Grid.Column="1"
                                         TextColor="{StaticResource Blue}"
                                         Text="{Binding StringPrice}"
-                                        FontAttributes="Bold"/>
+                                        FontAttributes="Bold"/>-->
+                                        <StackLayout HorizontalOptions="StartAndExpand"
+                                                   Grid.Row="1"
+                                                    Grid.Column="1"
+                                                     VerticalOptions="Center"
+                                                     Orientation="Horizontal">
+                                            <Label Text="{Binding StringPrice}"
+                                                   VerticalOptions="Center"
+                                                  FontAttributes="Bold"
+                                                   FontSize="{StaticResource NormalLabelFont}"
+                                                   TextColor="{StaticResource Blue}"/>
+                                            <Image Source="ic_coin"
+                                                   VerticalOptions="Center"
+                                                   WidthRequest="25"
+                                                   HeightRequest="25"/>
+                                        </StackLayout>
                                     </Grid>
                                 </controls:CustomViewCell>
 

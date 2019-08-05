@@ -148,15 +148,15 @@
                            Theme="WhiteGreen"/>-->
             <controls1:BorderButton Text="{localization:Translate SignUp}" Command="{Binding SignUpCommand}"
                                 IsVisible="{Binding IsEdit,Converter={StaticResource Key=IsTrueConverter}}"
-                                 Margin="10,5,0,10"
+                                 Margin="10,5,10,10"
                             HorizontalOptions="FillAndExpand"
                                 VerticalOptions="EndAndExpand"
                                 Grid.Row="1"
                     BackgroundColor="White"
                                      Theme="WhiteBlue"/>
-            <controls1:BorderButton Text="{localization:Translate Edit}" Command="{Binding SignUpCommand}"
+            <controls1:BorderButton Text="{localization:Translate Edit}" Command="{Binding EditCommand}"
                                 IsVisible="{Binding IsEdit}"
-                                 Margin="10,5,0,10"
+                                 Margin="10,5,10,10"
                             HorizontalOptions="FillAndExpand"
                                 VerticalOptions="EndAndExpand"
                                 Grid.Row="1"

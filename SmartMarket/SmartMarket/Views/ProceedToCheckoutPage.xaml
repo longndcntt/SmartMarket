@@ -66,7 +66,27 @@
                                          RowSpacing="10"/>
                     </StackLayout>
                 </Frame>
-                
+                <Frame Padding="10"
+                   HorizontalOptions="FillAndExpand"
+                   VerticalOptions="StartAndExpand">
+                    <StackLayout Orientation="Vertical"
+                             HorizontalOptions="FillAndExpand"
+                             VerticalOptions="StartAndExpand">
+                        <Label Text="Số lần thanh toán: "
+                               Grid.Row="0" Grid.Column="0"
+                               FontAttributes="Bold"
+                               VerticalOptions="CenterAndExpand"
+                               FontSize="{StaticResource NormalLabelFont}"
+                               TextColor="{StaticResource SGray}"></Label>
+                        <radio:SelectionView SelectionType="RadioButton"
+                                         ItemsSource="{Binding ChooseScheduleWay}"
+                                         ItemDisplayBinding="{Binding .}"
+                                             SelectedIndex="{Binding SelectedSchedule}"
+                                         ColumnNumber="1"
+                                         RowSpacing="10"/>
+                    </StackLayout>
+                </Frame>
+
                 <Frame Padding="10"
                    HorizontalOptions="FillAndExpand"
                    HeightRequest="60">

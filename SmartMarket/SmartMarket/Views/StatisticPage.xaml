@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<base:BasePage xmlns:base="clr-namespace:SmartMarket.Views.Base"
+               xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             xmlns:forms="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
+               xmlns:controls="clr-namespace:SmartMarket.Controls"
+               xmlns:localization="clr-namespace:SmartMarket.Localization"
+               NavigationPage.HasNavigationBar="False"
+               xmlns:converters="clr-namespace:SmartMarket.Converters"
+               xmlns:behaviors="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
+               prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="SmartMarket.Views.StatisticPage">
+    <ContentPage.Resources>
+        <converters:IsTrueConverter x:Key="IsTrueConverter"/>
+        <converters:RatingConverter x:Key="ratingConverter"/>
+    </ContentPage.Resources>
+    <ScrollView>
+        <StackLayout HorizontalOptions="FillAndExpand"
+                     VerticalOptions="FillAndExpand">
+            <Grid BackgroundColor="SkyBlue"
+                  HeightRequest="50"
+                  RowSpacing="0"
+                  Padding="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="50"/>
+                </Grid.ColumnDefinitions>
+                <controls:ImageButton x:Name="backImage"
+                                      Grid.Column="0"
+                                      HorizontalOptions="CenterAndExpand"
+                                      VerticalOptions="CenterAndExpand"
+                                      Source="ic_left_arrow"
+                                      Style="{StaticResource ImageBase}"
+                                      Command="{Binding BackCommand}"/>
+                <!--HeaderContent-->
+                <StackLayout IsVisible="True"
+                         Grid.Column="1" Grid.ColumnSpan="2"
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="Center">
+                    <Label FontAttributes="Bold"
+                       FontSize="{StaticResource SuperLargeLabelFont}"
+                       Text="{localization:Translate Statistic}"
+                       TextColor="{StaticResource SDarkerTextColor}"/>
+                </StackLayout>
+            </Grid>
+            <StackLayout Padding="5"
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="FillAndExpand">
+                <Frame Padding="10"
+                   HorizontalOptions="FillAndExpand"
+                   HeightRequest="60">
+                    <StackLayout Orientation="Horizontal"
+                             HorizontalOptions="FillAndExpand"
+                             VerticalOptions="Center"
+                             Padding="10">
+                        <Label Text="{localization:Translate Total}"
+                           VerticalOptions="CenterAndExpand"
+                           FontSize="{StaticResource SuperLargeLabelFont}"
+                           HorizontalOptions="StartAndExpand"
+                           TextColor="{StaticResource SGray}"/>
+                        <StackLayout HorizontalOptions="EndAndExpand"
+                                                    Grid.Row="2"
+                                                     VerticalOptions="CenterAndExpand"
+                                                     Orientation="Horizontal">
+                            <Label Text="{Binding Total,StringFormat=\{0:N\}}"
+                                                   VerticalOptions="Center"
+                                                  FontAttributes="Bold"
+                                                   FontSize="{StaticResource SuperLargeLabelFont}"
+                                                   TextColor="{StaticResource SGreen}"/>
+                            <Image Source="ic_coin"
+                                                   VerticalOptions="Center"
+                                                   WidthRequest="25"
+                                                   HeightRequest="25"/>
+                        </StackLayout>
+                        
+                    </StackLayout>
+                </Frame>
+                <forms:ChartView Chart="{Binding Chart}"
+                         EnableTouchEvents="True"
+                         HeightRequest="300">
+                </forms:ChartView>
+                <Frame Padding="5">
+                    <StackLayout>
+                        <Label Text="{localization:Translate AllUser}"
+                               HorizontalOptions="CenterAndExpand"
+                               VerticalOptions="StartAndExpand"
+                               TextColor="{StaticResource SkyBlue}"
+                               Margin="0,5"
+                               FontSize="{StaticResource SuperLargeLabelFont}"/>
+                        <ListView ItemsSource="{Binding UserExchangeList}"
+                                  VerticalOptions="FillAndExpand"
+                                  HorizontalOptions="FillAndExpand"
+                                  Margin="10,5"
+                                  HasUnevenRows="True"
+                                  x:Name="lstCategory">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <controls:CustomViewCell SelectedBackgroundColor="White">
+                                        <StackLayout Padding="10"
+                                                     HorizontalOptions="FillAndExpand"
+                                                     VerticalOptions="CenterAndExpand"
+                                                     Orientation="Horizontal">
+                                            <Label Text="{Binding FullName}"
+                                                   Margin="10,0"
+                                                   FontSize="{StaticResource LargeLabelFont}"
+                                                   VerticalOptions="CenterAndExpand"
+                                                   Grid.Row="0"
+                                                   Grid.Column="1"/>
+                                            <StackLayout HorizontalOptions="EndAndExpand"
+                                                   Grid.Row="1"
+                                                    Grid.Column="1"
+                                                     VerticalOptions="Center"
+                                                     Orientation="Horizontal">
+                                                <Label Text="{Binding TotalPrice}"
+                                                   VerticalOptions="Center"
+                                                  FontAttributes="Bold"
+                                                   FontSize="{StaticResource LargeLabelFont}"
+                                                   TextColor="{StaticResource Blue}"/>
+                                                <Image Source="ic_coin"
+                                                   VerticalOptions="Center"
+                                                   WidthRequest="25"
+                                                   HeightRequest="25"/>
+                                            </StackLayout>
+                                        </StackLayout>
+                                    </controls:CustomViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+        </StackLayout>
+    </ScrollView>
+</base:BasePage>

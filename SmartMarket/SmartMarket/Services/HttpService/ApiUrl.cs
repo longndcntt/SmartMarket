@@ -33,6 +33,11 @@ namespace SmartMarket.Services.HttpService
             return Link("tokens/transfer");
         }
 
+        public static string DeleteItem()
+        {
+            return Link($"product/delete");
+        }
+
         public static string UploadItem()
         {
             return Link("product/add");
@@ -56,6 +61,16 @@ namespace SmartMarket.Services.HttpService
         public static string GetPurchasedItems(string walletAdress)
         {
             return Link($"exchange/buy/{walletAdress}");
+        }
+
+        public static string GetItemOfShop(string walletAdress)
+        {
+            return Link($"product/store/{walletAdress}");
+        }
+
+        public static string GetSelledItems(string walletAdress)
+        {
+            return Link($"exchange/sell/{walletAdress}");
         }
 
         public static string GetRandomItems()
@@ -96,6 +111,11 @@ namespace SmartMarket.Services.HttpService
         public static string UserRegister()
         {
             return Link("signup");
+        }
+
+        public static string EditUser()
+        {
+            return Link("account");
         }
 
         public static string UserLogin()

@@ -12,11 +12,13 @@ namespace SmartMarket.Models.API
         public double Price { get; set; }
         public double[] Times
         {
-            get => new double[] { 0, 60 };
+            get /*=> new double[] { 0, 60 }*/;
+            set;
         }
         public double[] Values
         {
-            get => new double[] { Price / 2, Price / 2 };
+            get;
+            set;
         }
     }
 }

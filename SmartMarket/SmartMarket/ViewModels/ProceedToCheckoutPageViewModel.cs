@@ -47,6 +47,14 @@ namespace SmartMarket.ViewModels
                 TranslateExtension.Get("Standard"),
                 TranslateExtension.Get("Express"),
             };
+
+            ChooseScheduleWay = new ObservableCollection<string>()
+            {
+                TranslateExtension.Get("Once"),
+                TranslateExtension.Get("Twice"),
+                TranslateExtension.Get("Third"),
+            };
+
             CheckoutCommand = new DelegateCommand(CheckoutExcute);
 
             if (App.Settings.IsLogin)
@@ -78,6 +86,7 @@ namespace SmartMarket.ViewModels
             if (response == null)
             {
                 await MessagePopup.Instance.Show(TranslateExtension.Get("Fail"));
+                return;
             }
             else
             {
@@ -117,6 +126,25 @@ namespace SmartMarket.ViewModels
             set => SetProperty(ref _chooseShippingList, value);
         }
 
+        private ObservableCollection<string> _chooseScheduleWay;
+        public ObservableCollection<string> ChooseScheduleWay
+        {
+            get => _chooseScheduleWay;
+            set => SetProperty(ref _chooseScheduleWay, value);
+        }
+
+        private int _selectedSchedule = 0;
+        public int SelectedSchedule
+        {
+            get => _selectedSchedule;
+            set
+            {
+                SetProperty(ref _selectedSchedule, value);
+            }
+        }
+
+        private double[] TimeSchedule;
+        private double[] MoneySchedule;
         private double shipping;
         private int _selectedShipping = 0;
         public int SelectedShipping
@@ -165,14 +193,32 @@ namespace SmartMarket.ViewModels
 
             await Task.Run(async () =>
             {
+                double i = 0;
                 foreach (var item in ItemOfOrder)
                 {
+                    if (SelectedSchedule == 0)
+                    {
+                        MoneySchedule = new double[] { item.Price };
+                            TimeSchedule = new double[] { 0};
+                    }
+                    else if (SelectedSchedule == 1)
+                    {
+                        MoneySchedule = new double[] { item.Price /2 , item.Price /2};
+                            TimeSchedule = new double[] { i, 60+i};
+                    }
+                    else
+                    {
+                        MoneySchedule = new double[] { item.Price / 3, item.Price / 3, item.Price - item.Price*2/3 };
+                            TimeSchedule = new double[] { i, 60+i, 120+i};
+                    }
                     var url = ApiUrl.ExchangeProduct();
                     var buyItem = new BuyItem()
                     {
                         WalletAddress = UserInfo.WalletAddress,
                         Price = item.Price,
                         ProductId = item.ProductId,
+                        Times = TimeSchedule,
+                        Values = MoneySchedule,
                     };
                     //string sData = Newtonsoft.Json.JsonConvert.SerializeObject(buyItem);
                     //var httpContent = new StringContent(sData, System.Text.Encoding.UTF8);
@@ -182,13 +228,14 @@ namespace SmartMarket.ViewModels
                     await AddCoinCallBack(response);
                 }
                 await LoadingPopup.Instance.Hide();
+                SqLiteService.DeleteAll<OrderDetails>();
                 await DeviceExtension.BeginInvokeOnMainThreadAsync(async () =>
                     {
                         var param = new NavigationParameters()
                 {
                     {ParamKey.CoinInWallet.ToString(), SubTotal},
                 };
-                        await Navigation.NavigateAsync(PageManager.MessagePage,param);
+                        await Navigation.NavigateAsync(PageManager.MessagePage, param);
                     });
             });
         }
@@ -199,6 +246,7 @@ namespace SmartMarket.ViewModels
             if (response == null)
             {
                 await MessagePopup.Instance.Show(TranslateExtension.Get("Fail"));
+                return;
             }
             else
             {
@@ -231,6 +279,7 @@ namespace SmartMarket.ViewModels
             if (response == null)
             {
                 await MessagePopup.Instance.Show(TranslateExtension.Get("Fail"));
+                return;
                 // get event list fail
                 //await MessagePopup.Instance.Show(TranslateExtension.Get("GetListEventsFailed"));
             }

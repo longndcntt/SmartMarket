@@ -94,6 +94,7 @@
                     </StackLayout>
                     <!--ProductPurchase-->
                     <StackLayout Orientation="Horizontal"
+                                  IsVisible="{Binding IsAdmin,Converter={StaticResource Key=IsTrueConverter}}"
                          Spacing="10">
                         <Image Source="ic_purchasedproducts"
                     HorizontalOptions="Start"/>
@@ -105,6 +106,22 @@
                                    Margin="5,8"/>
                         <StackLayout.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding PurchasedProdcutCommand}"/>
+                        </StackLayout.GestureRecognizers>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Horizontal"
+                                 IsVisible="{Binding IsAdmin}"
+                         Spacing="10">
+                        <Image Source="ic_purchasedproducts"
+                    HorizontalOptions="Start"/>
+                        <Label Text="{localization:TranslateExtension SelledProduct}"
+                                   FontSize="{DynamicResource NormalLabelFont}"
+                                   HorizontalOptions="FillAndExpand"
+                                   VerticalOptions="CenterAndExpand"
+                                   TextColor="Black"
+                                   Margin="5,8"/>
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SelledProdcutCommand}"/>
                         </StackLayout.GestureRecognizers>
                     </StackLayout>
 
@@ -175,7 +192,7 @@
                                    TextColor="Black"
                                    Margin="5,8"/>
                         <StackLayout.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding FAQCommand}"/>
+                            <TapGestureRecognizer Command="{Binding GoToShopCommand}"/>
                         </StackLayout.GestureRecognizers>
                     </StackLayout>
 
@@ -205,7 +222,7 @@
                                    TextColor="Black"
                                    Margin="5,8"/>
                         <StackLayout.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding FAQCommand}"/>
+                            <TapGestureRecognizer Command="{Binding StatisticCommand}"/>
                         </StackLayout.GestureRecognizers>
                     </StackLayout>
                     <BoxView Color="DimGray" HeightRequest="1" VerticalOptions="Start" Margin="5"/>

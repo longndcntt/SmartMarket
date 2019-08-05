@@ -333,7 +333,7 @@
                              VerticalOptions="Center"></BoxView>
                         </StackLayout>
 
-                        <controls:HorizontalScrollList ItemsSource="{Binding ListItem4}"
+                        <controls:HorizontalScrollList ItemsSource="{Binding ListItem2}"
                                                    Margin="0,5,0,0">
                             <controls:HorizontalScrollList.ItemTemplate>
                                 <DataTemplate>
