@@ -8,6 +8,7 @@
              xmlns:controls="clr-namespace:SmartMarket.Controls"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
                prism:ViewModelLocator.AutowireViewModel="True"
+               xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" ios:Page.UseSafeArea="true"
              xmlns:auto="clr-namespace:dotMorten.Xamarin.Forms;assembly=dotMorten.Xamarin.Forms.AutoSuggestBox"
               xmlns:localization="clr-namespace:SmartMarket.Localization"
              xmlns:buttonBorder="clr-namespace:SmartMarket.Controls.CustomLabelEntry"

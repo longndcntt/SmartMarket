@@ -52,7 +52,7 @@ namespace SmartMarket.ViewModels
             set
             {
                 SetProperty(ref _amountCoin, value);
-                AmountMoney = AmountCoin * 1000;
+                AmountMoney = AmountCoin * 10;
             }
         }
         #endregion

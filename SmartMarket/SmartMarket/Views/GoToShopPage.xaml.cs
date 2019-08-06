@@ -14,7 +14,7 @@ namespace SmartMarket.Views
 
         private void DeleteProduct_Clicked(object sender, System.EventArgs e)
         {
-            var id = (sender as BorderButton).ClassId;
+            var id = (sender as Button).ClassId;
             var vm = (GoToShopPageViewModel)BindingContext;
             vm?.DeleteItemExcute(id);
         }

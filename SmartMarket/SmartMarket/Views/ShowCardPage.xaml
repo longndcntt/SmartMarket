@@ -6,6 +6,7 @@
              xmlns:localization="clr-namespace:SmartMarket.Localization"
                xmlns:converters1="clr-namespace:SmartMarket.Coverter"
                xmlns:converters="clr-namespace:SmartMarket.Converters"
+               xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" ios:Page.UseSafeArea="true"
                xmlns:buttonBorder="clr-namespace:SmartMarket.Controls.CustomLabelEntry"
                NavigationPage.HasNavigationBar="False"
                xmlns:controls="clr-namespace:SmartMarket.Controls"
@@ -87,9 +88,9 @@
                          HorizontalOptions="FillAndExpand"
                          VerticalOptions="FillAndExpand"
                          Spacing="0"/>
-                <buttonBorder:BorderButton Text="{localization:Translate ProceedToCheckout}"
+                <Button Text="{localization:Translate ProceedToCheckout}"
                                                    HorizontalOptions="FillAndExpand"
-                                                   Theme="Red"
+                                                   BackgroundColor="Red"
                                                    TextColor="White"
                                                    FontSize="{StaticResource NormalLabelFont}"
                                                    Command="{Binding NavigateToCheckoutCommand}"/>

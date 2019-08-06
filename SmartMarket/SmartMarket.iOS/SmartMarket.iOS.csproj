@@ -567,13 +567,13 @@
     <BundleResource Include="Resources\ic_store%403x.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\ic_transferCash.png" />
+    <BundleResource Include="Resources\ic_transfercash.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\ic_transferCash%402x.png" />
+    <BundleResource Include="Resources\ic_transfercash%402x.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\ic_transferCash%403x.png" />
+    <BundleResource Include="Resources\ic_transfercash%403x.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\ic_uploadItem.png" />
@@ -628,6 +628,21 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\ic_buyItem%403x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\sony_product.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\two.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\backgroud_1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\loading.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\one.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Multilingual App Toolkit\Microsoft.Multilingual.Xamarin.iOS.targets" Label="MultilingualAppToolkit" Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\Multilingual App Toolkit\v$(MultilingualAppToolkitVersion)\Microsoft.Multilingual.Xamarin.iOS.targets')" />

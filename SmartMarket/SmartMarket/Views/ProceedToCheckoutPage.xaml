@@ -6,6 +6,7 @@
              prism:ViewModelLocator.AutowireViewModel="True"
                 xmlns:localization="clr-namespace:SmartMarket.Localization"
                NavigationPage.HasNavigationBar="False"
+               xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" ios:Page.UseSafeArea="true"
              xmlns:controls="clr-namespace:SmartMarket.Controls"
              xmlns:radio="clr-namespace:SmartMarket.Controls.InputKit"
              xmlns:buttonBorder="clr-namespace:SmartMarket.Controls.CustomLabelEntry"
@@ -192,9 +193,9 @@
                                 Command="{Binding NavigateToWalletCommand}"/>
                     </Grid>
                 </Frame>
-                <buttonBorder:BorderButton Text="{localization:Translate Confirm}"
+                <Button Text="{localization:Translate Confirm}"
                                                    HorizontalOptions="FillAndExpand"
-                                                   Theme="Red"
+                                                   BackgroundColor="Red"
                                                    TextColor="White"
                                                    FontSize="{StaticResource NormalLabelFont}"
                                                    Command="{Binding CheckoutCommand}"/>

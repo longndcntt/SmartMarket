@@ -6,6 +6,7 @@
              xmlns:controls="clr-namespace:SmartMarket.Controls"
              xmlns:localization="clr-namespace:SmartMarket.Localization"
              NavigationPage.HasNavigationBar="False"
+               xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" ios:Page.UseSafeArea="true"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="SmartMarket.Views.NotificationPage">
     <ContentPage.Resources>

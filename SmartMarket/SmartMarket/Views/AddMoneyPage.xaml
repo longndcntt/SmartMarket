@@ -8,6 +8,7 @@
                xmlns:radio="clr-namespace:SmartMarket.Controls.InputKit"
                NavigationPage.HasNavigationBar="False"
                xmlns:customlabelentry="clr-namespace:SmartMarket.Controls.CustomLabelEntry"
+               xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" ios:Page.UseSafeArea="true"
                prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="SmartMarket.Views.AddMoneyPage">
     <ScrollView>
@@ -98,7 +99,9 @@
                             <Label Text="{Binding AddAmountCoin, StringFormat='~ \{0:N0\}'}"
                                FontSize="26"
                                    TextColor="{StaticResource Blue}"/>
-                            <Image Source="ic_coin"/>
+                            <Image Source="ic_coin"
+                                   HeightRequest="25"
+                                   WidthRequest="25"/>
                         </StackLayout>
                         
                     </StackLayout>
@@ -118,8 +121,8 @@
                                          RowSpacing="10"/>
                     </StackLayout>
                 </Frame>
-                <customlabelentry:BorderButton Text="{localization:Translate Confirm}"
-                                               Theme="WhiteRed"
+                <Button Text="{localization:Translate Confirm}"
+                        BackgroundColor="Red"
                                                TextColor="White"
                                                Command="{Binding AddCoinCommand}"
                                       FontSize="{StaticResource NormalLabelFont}"

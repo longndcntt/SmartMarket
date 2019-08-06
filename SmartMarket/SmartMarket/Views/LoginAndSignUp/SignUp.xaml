@@ -5,6 +5,7 @@
              xmlns:xfxcontrol="clr-namespace:Xfx;assembly=Xfx.Controls"
              xmlns:localization="clr-namespace:SmartMarket.Localization"
              xmlns:controls1="clr-namespace:SmartMarket.Controls.CustomLabelEntry"
+            xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" ios:Page.UseSafeArea="true"
              xmlns:xlabControl="clr-namespace:XLabs.Forms.Controls;assembly=XLabs.Forms"
              xmlns:radio="clr-namespace:SmartMarket.Controls.InputKit"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
@@ -16,6 +17,11 @@
 
     <ContentPage.Resources>
         <converters:IsTrueConverter x:Key="IsTrueConverter"/>
+        <Style TargetType="Entry">
+            <Setter Property="Margin" Value="5,10,5,10"></Setter>
+            <Setter Property="FontSize" Value="18"></Setter>
+            <Setter Property="HeightRequest" Value="35"/>
+        </Style>
     </ContentPage.Resources>
     <ScrollView>
         <Grid HorizontalOptions="FillAndExpand"
@@ -29,7 +35,7 @@
                Grid.Row="0"
            HorizontalOptions="FillAndExpand"
            VerticalOptions="CenterAndExpand">
-                <Grid RowSpacing="0">
+                <Grid RowSpacing="15">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
@@ -50,11 +56,12 @@
                                             DownsampleHeight="300"
                                             DownsampleWidth="300"
                                             Aspect="AspectFit"/>
-                        <controls1:BorderButton Command="{Binding ChoosePhotoCommand}"
+                        <Button Command="{Binding ChoosePhotoCommand}"
                             HorizontalOptions="CenterAndExpand"
                             VerticalOptions="CenterAndExpand"
                             Margin="2"
-                                                Theme="WhiteBlue"
+                                                BackgroundColor="Blue"
+                                TextColor="White"
                             Text="{localization:Translate ChoosePicture}"/>
                     </StackLayout>
                     <xfxcontrol:XfxEntry Grid.Row="1" Placeholder="Email" 
@@ -98,7 +105,7 @@
                                                WidthRequest="150"
                                                VerticalOptions="CenterAndExpand"
                                                FontSize="{StaticResource NormalLabelFont}"/>
-                        <controls:ImageDatePicker VerticalOptions="CenterAndExpand"
+                        <!--<controls:ImageDatePicker VerticalOptions="CenterAndExpand"
                                                Image="icon_calendar"
                                                ImageAlignment="Right"
                                  FontSize="{StaticResource NormalLabelFont}"
@@ -106,7 +113,7 @@
                                                      
                                                      MaximumDate="{x:Static sys:DateTime.Now}"
                                                      HorizontalOptions="FillAndExpand"
-                                 Date="{Binding DateOfBirth, Mode=OneWayToSource}"/>
+                                 Date="{Binding DateOfBirth, Mode=OneWayToSource}"/>-->
                     </StackLayout>
 
                     <StackLayout Orientation="Horizontal"
@@ -146,22 +153,22 @@
                             FontSize="20"
                             BorderRadius="1"
                            Theme="WhiteGreen"/>-->
-            <controls1:BorderButton Text="{localization:Translate SignUp}" Command="{Binding SignUpCommand}"
+            <Button Text="{localization:Translate SignUp}" Command="{Binding SignUpCommand}"
                                 IsVisible="{Binding IsEdit,Converter={StaticResource Key=IsTrueConverter}}"
                                  Margin="10,5,10,10"
                             HorizontalOptions="FillAndExpand"
                                 VerticalOptions="EndAndExpand"
                                 Grid.Row="1"
-                    BackgroundColor="White"
-                                     Theme="WhiteBlue"/>
-            <controls1:BorderButton Text="{localization:Translate Edit}" Command="{Binding EditCommand}"
+                                TextColor="White"
+                                     BackgroundColor="Blue"/>
+            <Button Text="{localization:Translate Edit}" Command="{Binding EditCommand}"
                                 IsVisible="{Binding IsEdit}"
                                  Margin="10,5,10,10"
                             HorizontalOptions="FillAndExpand"
                                 VerticalOptions="EndAndExpand"
                                 Grid.Row="1"
-                    BackgroundColor="White"
-                                     Theme="WhiteBlue"/>
+                                TextColor="White"
+                                     BackgroundColor="Blue"/>
         </Grid>
     </ScrollView>
 </ContentPage>

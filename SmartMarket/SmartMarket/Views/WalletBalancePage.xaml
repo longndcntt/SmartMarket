@@ -6,6 +6,7 @@
                xmlns:controls="clr-namespace:SmartMarket.Controls"
                xmlns:localization="clr-namespace:SmartMarket.Localization"
                xmlns:converters1="clr-namespace:SmartMarket.Coverter"
+               xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" ios:Page.UseSafeArea="true"
                xmlns:converters="clr-namespace:SmartMarket.Converters"
                NavigationPage.HasNavigationBar="False"
                prism:ViewModelLocator.AutowireViewModel="True"
@@ -13,7 +14,6 @@
     <ContentPage.Resources>
         <converters:IsTrueConverter x:Key="IsTrueConverter"/>
         <converters1:CovertToCurrency x:Key="CovertToCurrency"/>
-        <converters:RatingConverter x:Key="ratingConverter"/>
     </ContentPage.Resources>
     <ScrollView>
         <StackLayout VerticalOptions="FillAndExpand"
@@ -85,6 +85,7 @@
                                  HorizontalOptions="Center"
                                  VerticalOptions="Center">
                         <Image Source="ic_plus" HorizontalOptions="Start"
+                               HeightRequest="35" WidthRequest="35"
                                VerticalOptions="Center"/>
                         <Label Text="{localization:Translate AddMoneyToWallet}"
                            HorizontalOptions="Start"

@@ -7,6 +7,7 @@
                 xmlns:localization="clr-namespace:SmartMarket.Localization"
                NavigationPage.HasNavigationBar="False"
                xmlns:converters="clr-namespace:SmartMarket.Converters"
+               xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" ios:Page.UseSafeArea="true"
                xmlns:buttonBorder="clr-namespace:SmartMarket.Controls.CustomLabelEntry"
                xmlns:converters1="clr-namespace:SmartMarket.Coverter"
                xmlns:abstractions="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions"
@@ -196,16 +197,18 @@
                                    VerticalOptions="CenterAndExpand"
                                Text="{Binding Count}"/>
                     </StackLayout>
-                    <buttonBorder:BorderButton Text="{localization:Translate AddToCart}"
+                    <Button Text="{localization:Translate AddToCart}"
                                                    HorizontalOptions="FillAndExpand"
                                                    FontSize="{StaticResource NormalLabelFont}"
-                                                   Theme="Red"
+                                                   BackgroundColor="Red"
+                            BorderRadius="5"
                                                    TextColor="White"
                                                    Command="{Binding AddToCartCommand}"/>
 
-                    <buttonBorder:BorderButton Text="{localization:Translate BuyIt}"
+                    <Button Text="{localization:Translate BuyIt}"
                                                    HorizontalOptions="FillAndExpand"
-                                                   Theme="Red"
+                                                   BackgroundColor="Red"
+                            BorderRadius="5"
                                                    TextColor="White"
                                                    FontSize="{StaticResource NormalLabelFont}"
                                                    Command="{Binding NavigateToCartCommand}"/>
@@ -296,11 +299,12 @@
                                             HorizontalOptions="CenterAndExpand"
                                             Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
                                             InitialValue="{Binding Value}"/>
-                            <buttonBorder:BorderButton Text="Submit"
+                            <Button Text="Submit"
+                                    TextColor="White"
                                                        Command="{Binding SubmitReviewCommand}"
                                                        Grid.Row="3" Grid.Column="1"
                                                        HorizontalOptions="EndAndExpand"
-                                                       Theme="WhiteRed"/>
+                                                       BackgroundColor="Red"/>
                         </Grid>
                     </Frame>
                 </StackLayout>

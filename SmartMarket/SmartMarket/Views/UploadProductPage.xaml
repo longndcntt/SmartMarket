@@ -6,6 +6,7 @@
                xmlns:radio="clr-namespace:SmartMarket.Controls.InputKit"
                xmlns:xlabControl="clr-namespace:SmartMarket.Controls.CustomLabelEntry"
                xmlns:xfxcontrol="clr-namespace:Xfx;assembly=Xfx.Controls"
+               xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" ios:Page.UseSafeArea="true"
                xmlns:controls="clr-namespace:SmartMarket.Controls"
                NavigationPage.HasNavigationBar="False"
                prism:ViewModelLocator.AutowireViewModel="True"
@@ -119,13 +120,13 @@
                         <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <controls:ImagePicker Grid.Row="0" 
+                    <!--<controls:ImagePicker Grid.Row="0" 
                                           Title="{localization:Translate Category}" 
                                           FontSize="{StaticResource NormalLabelFont}"
                                          VerticalOptions="CenterAndExpand"
                                          ItemsSource="{Binding CategoryList}"
                                           SelectedItem="{Binding SelectedCategory}"
-                                          ItemDisplayBinding="{Binding CategoryName}"/>
+                                          ItemDisplayBinding="{Binding CategoryName}"/>-->
 
                     <xfxcontrol:XfxEntry Grid.Row="1" Placeholder="{localization:Translate ItemName}" 
                                      ActivePlaceholderColor="DimGray"

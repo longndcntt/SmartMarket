@@ -7,6 +7,7 @@
                xmlns:controls="clr-namespace:SmartMarket.Controls"
                NavigationPage.HasNavigationBar="False"
                prism:ViewModelLocator.AutowireViewModel="True"
+               xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" ios:Page.UseSafeArea="true"
              x:Class="SmartMarket.Views.MessagePage">
     <controls:FrameButton HorizontalOptions="FillAndExpand"
                           VerticalOptions="FillAndExpand" 

@@ -8,6 +8,7 @@
                xmlns:localization="clr-namespace:SmartMarket.Localization"
                NavigationPage.HasNavigationBar="False"
                xmlns:converters="clr-namespace:SmartMarket.Converters"
+               xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" ios:Page.UseSafeArea="true"
                xmlns:behaviors="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
                prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="SmartMarket.Views.StatisticPage">

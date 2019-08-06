@@ -7,6 +7,7 @@
                prism:ViewModelLocator.AutowireViewModel="True"
                NavigationPage.HasNavigationBar="False"
                xmlns:localization="clr-namespace:SmartMarket.Localization"
+               xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" ios:Page.UseSafeArea="true"
                xmlns:behaviors="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
                x:Class="SmartMarket.Views.ViewedProductPage">
     <StackLayout VerticalOptions="FillAndExpand"

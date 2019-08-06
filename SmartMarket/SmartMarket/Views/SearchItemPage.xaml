@@ -6,6 +6,7 @@
                xmlns:localization="clr-namespace:SmartMarket.Localization"
                xmlns:converters="clr-namespace:SmartMarket.Converters"
                xmlns:behaviors="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
+               xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" ios:Page.UseSafeArea="true"
                xmlns:controls="clr-namespace:SmartMarket.Controls"
                NavigationPage.HasNavigationBar="False"
                xmlns:auto="clr-namespace:dotMorten.Xamarin.Forms;assembly=dotMorten.Xamarin.Forms.AutoSuggestBox"
@@ -106,7 +107,23 @@
                                    VerticalOptions="CenterAndExpand"
                                    Grid.Row="0"
                                    Grid.Column="1"/>
-                            <Label FontSize="{StaticResource NormalLabelFont}"
+                            <StackLayout HorizontalOptions="StartAndExpand"
+                                                    Grid.Row="1"
+                                                Grid.Column="1"
+                                                 Margin="10,0"
+                                                     VerticalOptions="CenterAndExpand"
+                                                     Orientation="Horizontal">
+                                <Label Text="{Binding Price}"
+                                                   VerticalOptions="Center"
+                                                  FontAttributes="Bold"
+                                                   FontSize="{StaticResource NormalLabelFont}"
+                                                   TextColor="{StaticResource Blue}"/>
+                                <Image Source="ic_coin"
+                                                   VerticalOptions="Center"
+                                                   WidthRequest="25"
+                                                   HeightRequest="25"/>
+                            </StackLayout>
+                            <!--<Label FontSize="{StaticResource NormalLabelFont}"
                                         HorizontalOptions="StartAndExpand"
                                            VerticalOptions="CenterAndExpand"
                                            Margin="10,0"
@@ -114,7 +131,7 @@
                                        Grid.Column="1"
                                         TextColor="{StaticResource Blue}"
                                         Text="{Binding Price, Converter={StaticResource CovertToCurrency}}"
-                                        FontAttributes="Bold"/>
+                                        FontAttributes="Bold"/>-->
                         </Grid>
                     </controls:CustomViewCell>
 

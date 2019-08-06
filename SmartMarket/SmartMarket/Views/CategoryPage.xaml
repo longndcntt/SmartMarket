@@ -9,6 +9,7 @@
               xmlns:localization="clr-namespace:SmartMarket.Localization"
              xmlns:converters="clr-namespace:SmartMarket.Converters"
              xmlns:behaviors="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
+               xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" ios:Page.UseSafeArea="true"
              BackgroundColor="White"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="SmartMarket.Views.CategoryPage">

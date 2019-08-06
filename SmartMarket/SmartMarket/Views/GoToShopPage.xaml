@@ -6,6 +6,7 @@
                xmlns:localization="clr-namespace:SmartMarket.Localization"
                xmlns:controls="clr-namespace:SmartMarket.Controls"
                NavigationPage.HasNavigationBar="False"
+               xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" ios:Page.UseSafeArea="true"
                xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
                xmlns:behaviors="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
                xmlns:customlabelentry="clr-namespace:SmartMarket.Controls.CustomLabelEntry"
@@ -94,9 +95,9 @@
                                                  Grid.Row="3"
                                                  Grid.Column="1"
                                                  HorizontalOptions="EndAndExpand">
-                                        <customlabelentry:BorderButton Text="{localization:Translate Delete}"
-                                                                        Theme="WhiteRed"
-                                                                       TextColor="White"
+                                        <Button Text="{localization:Translate Delete}"
+                                                TextColor="White"
+                                                                        BackgroundColor="Red"
                                                                       ClassId="{Binding Id}"
                                                                       x:Name="deleteProduct"
                                                                       Clicked="DeleteProduct_Clicked"/>

@@ -3,6 +3,7 @@
                            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                            xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
                             xmlns:localization="clr-namespace:SmartMarket.Localization"
+                           xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" ios:Page.UseSafeArea="true"
                            android:TabbedPage.IsSwipePagingEnabled="True"
                            android:TabbedPage.ToolbarPlacement="Bottom"
                            BarBackgroundColor="#d8d8d8"
@@ -17,8 +18,8 @@
                            x:Class="SmartMarket.Views.TabbedMainPage" >
     <views:MainPage Title="{localization:Translate MainPage}" Icon="ic_mainpage"></views:MainPage>
     <!--<views:CategoryPage Title="Category" Icon="ic_category"></views:CategoryPage>-->
-    <views:CategoryPage Title="{localization:Translate Category}" Icon="ic_category" HeightRequest="50"></views:CategoryPage>
-    <views:NotificationPage Title="{localization:Translate Notifications}" Icon="ic_notification2" HeightRequest="50"></views:NotificationPage>
+    <views:CategoryPage Title="{localization:Translate Category}"  Icon="ic_category"></views:CategoryPage>
+    <views:NotificationPage Title="{localization:Translate Notifications}" Icon="ic_notification2"></views:NotificationPage>
     <views:ProfileUserPage Title="{localization:Translate ProfileUser}" Icon="ic_profile"></views:ProfileUserPage>
 
 </controls:BottomNavTabPage>

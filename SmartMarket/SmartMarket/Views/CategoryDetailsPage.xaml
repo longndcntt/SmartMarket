@@ -9,6 +9,7 @@
              xmlns:localization="clr-namespace:SmartMarket.Localization"
                xmlns:converters="clr-namespace:SmartMarket.Converters"
                xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
+               xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" ios:Page.UseSafeArea="true"
                xmlns:converters1="clr-namespace:SmartMarket.Coverter"
                xmlns:behaviors="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
                xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
@@ -37,7 +38,6 @@
                                       HorizontalOptions="CenterAndExpand"
                                       VerticalOptions="CenterAndExpand"
                                       Source="ic_left_arrow"
-                                      IsVisible="{Binding IsSearch}"
                                       Style="{StaticResource ImageBase}"
                                       Command="{Binding BackCommand}"/>
                 <!--HeaderContent-->

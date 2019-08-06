@@ -7,6 +7,7 @@
              xmlns:controls="clr-namespace:SmartMarket.Controls"
              xmlns:converters="clr-namespace:SmartMarket.Converters"
                xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+               xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" ios:Page.UseSafeArea="true"
                NavigationPage.HasNavigationBar="False"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="SmartMarket.Views.ProfileUserPage">
@@ -27,8 +28,7 @@
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Image WidthRequest="50"
-                           HeightRequest="50"
+                    <Image WidthRequest="50" HeightRequest="50"
                            IsVisible="{Binding IsExistImage,Converter={StaticResource Key=IsTrueConverter}}"
                            Source="ic_user"
                            Grid.RowSpan="2" Grid.Row="0"
@@ -81,6 +81,7 @@
                     <StackLayout Orientation="Horizontal"
                          Spacing="10">
                         <Image Source="ic_viewedproducts"
+                               WidthRequest="45" HeightRequest="45"
                     HorizontalOptions="Start"/>
                         <Label Text="{localization:TranslateExtension ViewedProducts}"
                                    FontSize="{DynamicResource NormalLabelFont}"
@@ -97,6 +98,7 @@
                                   IsVisible="{Binding IsAdmin,Converter={StaticResource Key=IsTrueConverter}}"
                          Spacing="10">
                         <Image Source="ic_purchasedproducts"
+                               WidthRequest="45" HeightRequest="45"
                     HorizontalOptions="Start"/>
                         <Label Text="{localization:TranslateExtension PurchasedProducts}"
                                    FontSize="{DynamicResource NormalLabelFont}"
@@ -113,6 +115,7 @@
                                  IsVisible="{Binding IsAdmin}"
                          Spacing="10">
                         <Image Source="ic_purchasedproducts"
+                               WidthRequest="45" HeightRequest="45"
                     HorizontalOptions="Start"/>
                         <Label Text="{localization:TranslateExtension SelledProduct}"
                                    FontSize="{DynamicResource NormalLabelFont}"
@@ -129,6 +132,7 @@
                     <StackLayout Orientation="Horizontal"
                          Spacing="10">
                         <Image Source="ic_notification"
+                               WidthRequest="45" HeightRequest="45"
                     HorizontalOptions="Start"/>
                         <Label Text="{localization:TranslateExtension Notifications}"
                                    FontSize="{DynamicResource NormalLabelFont}"
@@ -143,7 +147,8 @@
                     <!--Digital Coin-->
                     <StackLayout Orientation="Horizontal"
                          Spacing="10">
-                        <Image Source="ic_transfercash"
+                        <Image Source="ic_wallet"
+                               WidthRequest="45" HeightRequest="45"
                     HorizontalOptions="Start"/>
                         <Label Text="{localization:TranslateExtension WalletBallance}"
                                    FontSize="{DynamicResource NormalLabelFont}"
@@ -184,6 +189,7 @@
                     <StackLayout Orientation="Horizontal"
                          Spacing="10">
                         <Image Source="ic_goToShop"
+                               WidthRequest="45" HeightRequest="45"
                     HorizontalOptions="Start"/>
                         <Label Text="{localization:TranslateExtension GoToShop}"
                                    FontSize="{DynamicResource NormalLabelFont}"
@@ -199,6 +205,7 @@
                     <StackLayout Orientation="Horizontal"
                          Spacing="10">
                         <Image Source="ic_uploadItem"
+                               WidthRequest="45" HeightRequest="45"
                     HorizontalOptions="Start"/>
                         <Label Text="{localization:TranslateExtension UploadItem}"
                                    FontSize="{DynamicResource NormalLabelFont}"
@@ -214,6 +221,7 @@
                     <StackLayout Orientation="Horizontal"
                          Spacing="10">
                         <Image Source="ic_statics"
+                               WidthRequest="45" HeightRequest="45"
                     HorizontalOptions="Start"/>
                         <Label Text="{localization:TranslateExtension Statics}"
                                    FontSize="{DynamicResource NormalLabelFont}"
@@ -237,6 +245,7 @@
                     <StackLayout Orientation="Horizontal"
                          Spacing="10">
                         <Image Source="ic_help"
+                               WidthRequest="45" HeightRequest="45"
                     HorizontalOptions="Start"/>
                         <Label Text="{localization:TranslateExtension Helps}"
                                    FontSize="{DynamicResource NormalLabelFont}"
@@ -252,6 +261,7 @@
                     <StackLayout Orientation="Horizontal"
                          Spacing="10">
                         <Image Source="ic_logout"
+                               WidthRequest="45" HeightRequest="45"
                     HorizontalOptions="Start"/>
                         <Label Text="{localization:TranslateExtension LogOut}"
                                    FontSize="{DynamicResource NormalLabelFont}"
