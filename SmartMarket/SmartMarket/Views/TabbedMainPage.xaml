@@ -17,8 +17,8 @@
                            x:Class="SmartMarket.Views.TabbedMainPage" >
     <views:MainPage Title="{localization:Translate MainPage}" Icon="ic_mainpage"></views:MainPage>
     <!--<views:CategoryPage Title="Category" Icon="ic_category"></views:CategoryPage>-->
-    <views:CategoryPage Title="{localization:Translate Category}" Icon="ic_category"></views:CategoryPage>
-    <views:NotificationPage Title="{localization:Translate Notifications}" Icon="ic_notification2"></views:NotificationPage>
+    <views:CategoryPage Title="{localization:Translate Category}" Icon="ic_category" HeightRequest="50"></views:CategoryPage>
+    <views:NotificationPage Title="{localization:Translate Notifications}" Icon="ic_notification2" HeightRequest="50"></views:NotificationPage>
     <views:ProfileUserPage Title="{localization:Translate ProfileUser}" Icon="ic_profile"></views:ProfileUserPage>
 
 </controls:BottomNavTabPage>
